@@ -1,0 +1,7 @@
+[build]
+  command = "next build"
+  publish = ".next"
+
+# Official Next.js runtime: enables API routes, image optimization and SSR.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

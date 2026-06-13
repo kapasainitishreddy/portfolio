@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens (Suminagashi palette + typography)
+   --------------------------------------------------------------------------- */
+@theme {
+  --color-ink: #080a0c;
+  --color-charcoal: #171a1e;
+  --color-rice: #f2efe8;
+  --color-soft: #faf8f3;
+  --color-indigo: #26345e;
+  --color-silver: #a9adb4;
+  --color-copper: #8a5a3c;
+
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+* {
+  border-color: color-mix(in srgb, var(--color-silver) 18%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-rice);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-indigo) 70%, transparent);
+  color: var(--color-soft);
+}
+
+/* visible, consistent focus ring for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--color-silver);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.font-mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-silver);
+}
+
+/* ---------------------------------------------------------------------------
+   Ink background
+   --------------------------------------------------------------------------- */
+.ink-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--color-ink);
+}
+
+.ink-bg__veil {
+  position: absolute;
+  inset: 0;
+  /* darken edges so editorial content keeps strong contrast */
+  background:
+    radial-gradient(120% 120% at 50% 20%, transparent 40%, rgba(8, 10, 12, 0.55) 100%),
+    linear-gradient(to bottom, rgba(8, 10, 12, 0.35), rgba(8, 10, 12, 0.15) 30%, rgba(8, 10, 12, 0.55));
+  pointer-events: none;
+}
+
+/* static CSS-only fallback */
+.ink-static {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 60% at 30% 30%, color-mix(in srgb, var(--color-indigo) 55%, transparent), transparent 70%),
+    radial-gradient(70% 70% at 75% 70%, color-mix(in srgb, var(--color-charcoal) 80%, transparent), transparent 75%),
+    var(--color-ink);
+}
+
+.ink-static__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--color-silver) 30%, transparent);
+  filter: blur(0.5px);
+}
+.ink-static__ring--1 {
+  width: 60vmax; height: 60vmax; left: 8%; top: 6%;
+  box-shadow: 0 0 0 18vmax color-mix(in srgb, var(--color-indigo) 12%, transparent) inset;
+}
+.ink-static__ring--2 {
+  width: 38vmax; height: 38vmax; right: 6%; bottom: 4%;
+  box-shadow: 0 0 0 10vmax color-mix(in srgb, var(--color-charcoal) 40%, transparent) inset;
+}
+.ink-static__ring--3 {
+  width: 22vmax; height: 22vmax; left: 44%; top: 40%;
+  box-shadow: 0 0 0 6vmax color-mix(in srgb, var(--color-silver) 8%, transparent) inset;
+}
+.ink-static__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 120% at 50% 40%, transparent 45%, rgba(8, 10, 12, 0.7) 100%);
+}
+
+/* ---------------------------------------------------------------------------
+   Surfaces (paper / glass), used sparingly
+   --------------------------------------------------------------------------- */
+.surface {
+  background: color-mix(in srgb, var(--color-charcoal) 62%, transparent);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid color-mix(in srgb, var(--color-silver) 14%, transparent);
+  border-radius: 14px;
+}
+
+.surface-paper {
+  background: color-mix(in srgb, var(--color-rice) 92%, transparent);
+  color: var(--color-ink);
+  border-radius: 14px;
+}
+
+.hairline {
+  border-top: 1px solid color-mix(in srgb, var(--color-silver) 18%, transparent);
+}
+
+/* shared link underline */
+.link-quiet {
+  position: relative;
+  color: var(--color-rice);
+  transition: color 0.3s ease;
+}
+.link-quiet::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: var(--color-silver);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-quiet:hover::after,
+.link-quiet:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* skip link */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--color-soft);
+  color: var(--color-ink);
+  border-radius: 8px;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* utility: clamp content width */
+.content-pad {
+  padding-inline: clamp(1.25rem, 5vw, 6rem);
+}
