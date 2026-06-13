@@ -6,6 +6,7 @@ import { navItems, site, socials } from "@/data/site";
 import { GitHubIcon, LinkedInIcon, FileIcon, MenuIcon, CloseIcon } from "./icons";
 import InkControl from "@/components/ink/InkControl";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
+import ModeToggle from "@/components/theme/ModeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
 export default function Navigation() {
@@ -88,6 +89,7 @@ export default function Navigation() {
             <LinkedInIcon />
           </a>
           <ThemeSwitcher />
+          <ModeToggle />
           {theme === "ink" && <InkControl />}
           <button
             type="button"

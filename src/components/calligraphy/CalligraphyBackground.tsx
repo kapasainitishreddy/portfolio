@@ -2,16 +2,19 @@
 
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "@/lib/accessibility/useReducedMotion";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 /**
- * Shodō (calligraphy) background. The cursor becomes a sumi brush that paints
- * tapered, speed-sensitive ink trails which slowly dry and fade. When the
- * visitor is idle, a "ghost brush" paints a flowing demonstration stroke with a
- * directional arrowhead at its tip. Reduced-motion users get a still composition.
+ * Shodō (calligraphy) background. The cursor is a sumi brush that paints
+ * tapered, speed-sensitive ink trails which slowly dry and fade away. A ghost
+ * brush continuously demonstrates flowing strokes with a directional arrowhead
+ * so the canvas is alive the moment it loads — even before you touch it. The
+ * palette flips with light / dark mode. Reduced-motion users get a still piece.
  */
 export default function CalligraphyBackground() {
   const ref = useRef<HTMLCanvasElement>(null);
   const reduced = useReducedMotion();
+  const { mode } = useTheme();
 
   useEffect(() => {
     const canvas = ref.current;
@@ -19,11 +22,28 @@ export default function CalligraphyBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const light = mode === "light";
+    const baseRGB = light ? "244, 240, 231" : "10, 12, 14";
+    const bone = light ? "#211c16" : "#efe9dd"; // ink colour of the strokes
+    let accentColor = light ? "#9a7a2e" : "#c2a35f";
+    try {
+      accentColor =
+        getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() ||
+        accentColor;
+    } catch {
+      /* noop */
+    }
+
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
     let height = 0;
     let raf = 0;
     let running = true;
+
+    const paintBase = () => {
+      ctx.fillStyle = `rgb(${baseRGB})`;
+      ctx.fillRect(0, 0, width, height);
+    };
 
     const resize = () => {
       width = window.innerWidth;
@@ -34,11 +54,6 @@ export default function CalligraphyBackground() {
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       paintBase();
-    };
-
-    const paintBase = () => {
-      ctx.fillStyle = "#0a0c0e";
-      ctx.fillRect(0, 0, width, height);
     };
 
     // pointer state
@@ -72,7 +87,7 @@ export default function CalligraphyBackground() {
       alpha: number,
     ) => {
       const speed = Math.hypot(x1 - x0, y1 - y0);
-      const w = Math.max(1.4, base - speed * 0.18);
+      const w = Math.max(1.6, base - speed * 0.18);
       ctx.strokeStyle = color;
       ctx.globalAlpha = alpha;
       ctx.lineWidth = w;
@@ -92,14 +107,13 @@ export default function CalligraphyBackground() {
       ctx.globalAlpha = 1;
     };
 
-    // ghost demonstration stroke
+    // ghost demonstration strokes
     const strokes: { x: number; y: number }[][] = [];
     const buildStrokes = () => {
       strokes.length = 0;
       const cx = width * 0.5;
       const cy = height * 0.5;
       const s = Math.min(width, height) * 0.34;
-      // a few flowing S / sweep paths in normalized space
       const paths = [
         [[-0.9, -0.5], [-0.3, -0.7], [0.2, -0.1], [-0.1, 0.4], [0.6, 0.7]],
         [[-0.7, 0.6], [0.0, 0.2], [0.3, -0.4], [0.9, -0.6]],
@@ -110,7 +124,6 @@ export default function CalligraphyBackground() {
         strokes.push(p.map(([nx, ny]) => ({ x: cx + nx * s * (width > height ? 1.3 : 0.9), y: cy + ny * s })));
       }
     };
-    buildStrokes();
 
     // catmull-rom point sampling for smooth ghost path
     const sample = (pts: { x: number; y: number }[], t: number) => {
@@ -141,22 +154,13 @@ export default function CalligraphyBackground() {
     let strokeIdx = 0;
     let strokeT = 0;
     let strokePrev = { x: 0, y: 0 };
-    let idle = 0; // frames since last pointer move
+    let idle = 80; // start mid-demonstration so the canvas is alive immediately
     let lastPointer = { x: px, y: py };
 
-    const bone = "#efe9dd";
-    let accentColor = "#c2a35f";
-    try {
-      accentColor =
-        getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() || accentColor;
-    } catch {
-      /* noop */
-    }
-
     const frame = () => {
-      // gentle dry: fade the whole canvas toward ink so strokes evaporate
+      // gentle dry: fade the whole canvas toward the page colour so strokes evaporate
       ctx.globalAlpha = 1;
-      ctx.fillStyle = "rgba(10, 12, 14, 0.045)";
+      ctx.fillStyle = `rgba(${baseRGB}, 0.045)`;
       ctx.fillRect(0, 0, width, height);
 
       // pointer brush
@@ -168,8 +172,8 @@ export default function CalligraphyBackground() {
       }
       lastPointer = { x: px, y: py };
 
-      // ghost demonstration brush when idle
-      if (!reduced && idle > 60) {
+      // ghost demonstration brush — runs on load and whenever idle
+      if (!reduced && idle > 24) {
         const pts = strokes[strokeIdx];
         if (strokeT === 0) strokePrev = sample(pts, 0);
         strokeT += 0.012;
@@ -187,9 +191,9 @@ export default function CalligraphyBackground() {
           ctx.fillStyle = accentColor;
           ctx.globalAlpha = 0.95;
           ctx.beginPath();
-          ctx.moveTo(10, 0);
-          ctx.lineTo(-4, -5);
-          ctx.lineTo(-4, 5);
+          ctx.moveTo(11, 0);
+          ctx.lineTo(-4, -6);
+          ctx.lineTo(-4, 6);
           ctx.closePath();
           ctx.fill();
           ctx.globalAlpha = 1;
@@ -200,7 +204,7 @@ export default function CalligraphyBackground() {
         if (strokeT >= 1) {
           strokeT = 0;
           strokeIdx = (strokeIdx + 1) % strokes.length;
-          idle = 30; // brief pause before next stroke
+          idle = 26; // brief pause, then keep demonstrating
         }
       }
 
@@ -213,9 +217,9 @@ export default function CalligraphyBackground() {
     };
 
     resize();
+    buildStrokes();
 
     if (reduced) {
-      // still composition: paint each demo stroke once
       for (const pts of strokes) {
         let prev = sample(pts, 0);
         for (let t = 0; t <= 1; t += 0.02) {
@@ -238,13 +242,14 @@ export default function CalligraphyBackground() {
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
+      running = false;
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [reduced]);
+  }, [reduced, mode]);
 
   return <canvas ref={ref} className="h-full w-full" aria-hidden />;
 }

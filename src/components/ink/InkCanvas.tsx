@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { inkFragmentShader, inkVertexShader } from "./inkShader";
 import { useInk } from "./InkProvider";
+import { useTheme } from "@/components/theme/ThemeProvider";
 import type { InkPattern } from "@/data/projects";
 import { usePerformanceTier } from "@/lib/hooks/usePerformanceTier";
 
@@ -22,6 +23,7 @@ function InkPlane() {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { size, viewport } = useThree();
   const { intensity, paused, pattern } = useInk();
+  const { mode } = useTheme();
   const tier = usePerformanceTier();
 
   // live interaction state held in refs to avoid re-renders
@@ -49,6 +51,7 @@ function InkPlane() {
       uIntensity: { value: 0.6 },
       uPattern: { value: 0 },
       uQuality: { value: 1 },
+      uMode: { value: 0 },
     }),
     [],
   );
@@ -101,6 +104,8 @@ function InkPlane() {
 
     u.uResolution.value.set(size.width, size.height);
     u.uQuality.value = tier === "high" ? 1 : 0;
+    // ease between dark (0) and light (1) palettes
+    u.uMode.value = THREE.MathUtils.lerp(u.uMode.value, mode === "light" ? 1 : 0, 0.08);
 
     // ease pointer + presence, and derive a smoothed velocity for the wake
     mouse.current.lerp(mouseTarget.current, 0.06);

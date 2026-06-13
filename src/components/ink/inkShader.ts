@@ -32,6 +32,7 @@ export const inkFragmentShader = /* glsl */ `
   uniform float uIntensity;   // user/system intensity 0..1
   uniform float uPattern;     // 0 default,1 network,2 waves,3 streams,4 typo,5 ledger,6 graph
   uniform float uQuality;     // 1.0 high, 0.0 low (fewer octaves)
+  uniform float uMode;        // 0.0 dark, 1.0 light
 
   // palette
   const vec3 INK_BLACK  = vec3(0.031, 0.039, 0.047); // #080A0C
@@ -142,15 +143,16 @@ export const inkFragmentShader = /* glsl */ `
     float veins = abs(sin(ink * 9.0 + rr2.x * 2.0 + ripple * 3.0));
     veins = pow(veins, 1.6);
 
-    float density = smoothstep(0.25, 0.85, ink);
-    density = mix(density, density * (0.6 + 0.4 * veins), 0.7);
+    // stronger contrast so the marbled ink reads clearly
+    float density = smoothstep(0.22, 0.82, ink);
+    density = mix(density, density * (0.55 + 0.45 * veins), 0.75);
 
     // colour: paper base, charcoal/indigo ink, silver edges
     vec3 col = RICE_PAPER;
-    col = mix(col, SILVER, smoothstep(0.30, 0.55, density) * 0.7);
-    col = mix(col, INDIGO, smoothstep(0.45, 0.72, density) * 0.8);
-    col = mix(col, CHARCOAL, smoothstep(0.62, 0.88, density));
-    col = mix(col, INK_BLACK, smoothstep(0.80, 1.0, density));
+    col = mix(col, SILVER, smoothstep(0.28, 0.52, density) * 0.8);
+    col = mix(col, INDIGO, smoothstep(0.42, 0.70, density) * 0.92);
+    col = mix(col, CHARCOAL, smoothstep(0.60, 0.88, density));
+    col = mix(col, INK_BLACK, smoothstep(0.78, 1.0, density));
 
     // silver vein highlights
     col = mix(col, SILVER, veins * smoothstep(0.4, 0.7, density) * 0.24);
@@ -165,9 +167,14 @@ export const inkFragmentShader = /* glsl */ `
     float grain = noise(uv * uResolution * 0.5) * 0.02;
     col += grain;
 
-    // soft vignette toward ink black for cinematic depth
+    // soft vignette: toward ink-black in dark mode, toward rice paper in light
     float vig = smoothstep(1.15, 0.35, distance(uv, vec2(0.5)));
-    col = mix(INK_BLACK, col, mix(0.78, 1.0, vig));
+    vec3 vigColor = mix(INK_BLACK, RICE_PAPER, uMode);
+    float vigFloor = mix(0.78, 0.90, uMode);
+    col = mix(vigColor, col, mix(vigFloor, 1.0, vig));
+
+    // in light mode lift the whole field toward paper so it reads bright
+    col = mix(col, mix(col, RICE_PAPER, 0.32), uMode);
 
     gl_FragColor = vec4(col, 1.0);
   }

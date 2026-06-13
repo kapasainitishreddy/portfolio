@@ -15,28 +15,61 @@
   --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-brush: var(--font-brush), "Brush Script MT", cursive;
+  --font-samurai: var(--font-samurai), var(--font-newsreader), serif;
 }
 
 /* ---------------------------------------------------------------------------
-   Per-theme accent. Overriding --color-copper recolours every accent spot
-   (badges, status dot, numbers) while --color-accent drives the new theme UI.
-   All three themes keep a dark, high-contrast canvas so text stays readable.
+   Light / dark palettes. Every theme supports BOTH modes (6 looks total).
+   Tailwind utilities (text-rice, bg-ink, …) all resolve to these variables,
+   so re-defining them per mode flips the whole site. --color-veil drives the
+   readability overlay above the animated canvas.
    --------------------------------------------------------------------------- */
-:root,
-[data-theme="ink"] {
-  --color-accent: #8a5a3c;
-  --color-copper: #8a5a3c;
+:root[data-mode="dark"] {
+  --color-ink: #080a0c;       /* page background */
+  --color-charcoal: #171a1e;  /* raised surfaces  */
+  --color-rice: #f2efe8;      /* primary text     */
+  --color-soft: #faf8f3;      /* text on accents  */
+  --color-silver: #a9adb4;    /* muted text       */
+  --color-indigo: #26345e;
+  --color-veil: 8, 10, 12;    /* rgb of the overlay */
+  --veil-strength: 0.55;
 }
-[data-theme="calligraphy"] {
+:root[data-mode="light"] {
+  --color-ink: #f4f0e7;       /* warm paper background */
+  --color-charcoal: #e7e1d4;  /* raised surfaces       */
+  --color-rice: #1c1814;      /* primary (dark) text   */
+  --color-soft: #faf8f3;      /* text on accents       */
+  --color-silver: #6a655c;    /* muted text            */
+  --color-indigo: #2c3b66;
+  --color-veil: 244, 240, 231;/* light overlay         */
+  --veil-strength: 0.42;
+}
+
+/* Per-theme accent (recolours badges, status dots, numbers + new theme UI). */
+:root[data-theme="ink"] {
+  --color-accent: #a8693f;
+  --color-copper: #a8693f;
+}
+:root[data-mode="dark"][data-theme="ink"] {
+  --color-accent: #b07242;
+  --color-copper: #b07242;
+}
+:root[data-theme="calligraphy"] {
+  --color-accent: #b8923f;
+  --color-copper: #b8923f;
+}
+:root[data-mode="dark"][data-theme="calligraphy"] {
   --color-accent: #c2a35f;
   --color-copper: #c2a35f;
 }
-[data-theme="samurai"] {
+:root[data-theme="samurai"] {
+  --color-accent: #c14a30;
+  --color-copper: #c14a30;
+}
+:root[data-mode="dark"][data-theme="samurai"] {
   --color-accent: #b3472f;
   --color-copper: #b3472f;
-}
-[data-theme="samurai"] body {
-  background-color: #0b0807;
 }
 
 /* ---------------------------------------------------------------------------
@@ -84,11 +117,37 @@ h1, h2, h3, h4 {
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.05;
-  text-shadow: 0 2px 8px rgba(8, 10, 12, 0.8);
+  text-shadow: 0 2px 8px rgba(var(--color-veil), calc(var(--veil-strength) + 0.25));
 }
 h1 {
   font-weight: 600;
-  text-shadow: 0 4px 16px rgba(8, 10, 12, 0.9);
+  text-shadow: 0 4px 16px rgba(var(--color-veil), calc(var(--veil-strength) + 0.35));
+}
+
+/* ---- Per-theme typography ------------------------------------------------- */
+/* Shodō: brush-calligraphy headings, readable serif body. */
+[data-theme="calligraphy"] body {
+  font-family: var(--font-serif);
+}
+[data-theme="calligraphy"] h1,
+[data-theme="calligraphy"] h2,
+[data-theme="calligraphy"] h3,
+[data-theme="calligraphy"] h4,
+[data-theme="calligraphy"] .font-serif {
+  font-family: var(--font-brush);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+/* Bushidō: sharp Japanese mincho headings. */
+[data-theme="samurai"] h1,
+[data-theme="samurai"] h2,
+[data-theme="samurai"] h3,
+[data-theme="samurai"] h4,
+[data-theme="samurai"] .font-serif {
+  font-family: var(--font-samurai);
+  font-weight: 700;
+  letter-spacing: 0.005em;
 }
 
 .font-mono-label {
@@ -113,10 +172,15 @@ h1 {
 .ink-bg__veil {
   position: absolute;
   inset: 0;
-  /* darken edges so editorial content keeps strong contrast */
+  /* fade edges toward the page colour so editorial content keeps contrast */
   background:
-    radial-gradient(120% 120% at 50% 20%, transparent 40%, rgba(8, 10, 12, 0.55) 100%),
-    linear-gradient(to bottom, rgba(8, 10, 12, 0.35), rgba(8, 10, 12, 0.15) 30%, rgba(8, 10, 12, 0.55));
+    radial-gradient(120% 120% at 50% 20%, transparent 40%, rgba(var(--color-veil), var(--veil-strength)) 100%),
+    linear-gradient(
+      to bottom,
+      rgba(var(--color-veil), calc(var(--veil-strength) * 0.64)),
+      rgba(var(--color-veil), calc(var(--veil-strength) * 0.27)) 30%,
+      rgba(var(--color-veil), var(--veil-strength))
+    );
   pointer-events: none;
 }
 
@@ -152,7 +216,7 @@ h1 {
 .ink-static__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(120% 120% at 50% 40%, transparent 45%, rgba(8, 10, 12, 0.7) 100%);
+  background: radial-gradient(120% 120% at 50% 40%, transparent 45%, rgba(var(--color-veil), 0.7) 100%);
 }
 
 /* ---------------------------------------------------------------------------

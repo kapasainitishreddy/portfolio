@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "@/lib/accessibility/useReducedMotion";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 interface Slash {
   x1: number;
@@ -27,6 +28,7 @@ interface Spark {
 export default function SamuraiBackground() {
   const ref = useRef<HTMLCanvasElement>(null);
   const reduced = useReducedMotion();
+  const { mode } = useTheme();
 
   useEffect(() => {
     const canvas = ref.current;
@@ -34,17 +36,25 @@ export default function SamuraiBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const light = mode === "light";
+    // dojo gradient + blade colours flip with mode
+    const dojoInner = light ? "#efe7d8" : "#15100f";
+    const dojoOuter = light ? "#ddd2bd" : "#080606";
+    const bladeCore = light ? "#3a1410" : "#fdece4";
+    const dustColor = light ? "rgba(90, 70, 55, 0.20)" : "rgba(220, 200, 180, 0.18)";
+
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
     let height = 0;
     let raf = 0;
     let running = true;
+    let sinceSlash = 0; // frames since the last slash (drives idle auto-slashes)
 
     const slashes: Slash[] = [];
     const sparks: Spark[] = [];
     const dust: { x: number; y: number; vx: number; vy: number; r: number }[] = [];
 
-    let accent = "#b3472f";
+    let accent = light ? "#b3472f" : "#c14a30";
     try {
       accent =
         getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() || accent;
@@ -104,19 +114,20 @@ export default function SamuraiBackground() {
     const onPointerDown = (e: PointerEvent) => {
       if (reduced) return;
       spawnSlash(e.clientX, e.clientY);
+      sinceSlash = 0;
     };
     window.addEventListener("pointerdown", onPointerDown, { passive: true });
 
     const drawBase = () => {
-      // dark dojo gradient
+      // dojo gradient (mode-aware)
       const g = ctx.createRadialGradient(width * 0.5, height * 0.35, 0, width * 0.5, height * 0.5, Math.max(width, height) * 0.8);
-      g.addColorStop(0, "#15100f");
-      g.addColorStop(1, "#080606");
+      g.addColorStop(0, dojoInner);
+      g.addColorStop(1, dojoOuter);
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, width, height);
 
       // faint vertical bamboo / shoji lines
-      ctx.strokeStyle = "rgba(179, 71, 47, 0.05)";
+      ctx.strokeStyle = light ? "rgba(120, 60, 40, 0.07)" : "rgba(179, 71, 47, 0.05)";
       ctx.lineWidth = 1;
       const step = width < 600 ? 90 : 130;
       for (let x = step; x < width; x += step) {
@@ -135,7 +146,7 @@ export default function SamuraiBackground() {
 
       // bright blade core
       ctx.globalAlpha = fade;
-      ctx.strokeStyle = "#fdece4";
+      ctx.strokeStyle = bladeCore;
       ctx.lineWidth = 3.2;
       ctx.lineCap = "round";
       ctx.shadowColor = accent;
@@ -156,8 +167,15 @@ export default function SamuraiBackground() {
     const frame = () => {
       drawBase();
 
+      // idle auto-slashes so the katana is alive without any clicks
+      sinceSlash++;
+      if (sinceSlash > 95 && slashes.length < 3) {
+        spawnSlash(width * (0.25 + Math.random() * 0.5), height * (0.25 + Math.random() * 0.5));
+        sinceSlash = 0;
+      }
+
       // dust
-      ctx.fillStyle = "rgba(220, 200, 180, 0.18)";
+      ctx.fillStyle = dustColor;
       for (const d of dust) {
         d.x += d.vx;
         d.y += d.vy;
@@ -194,7 +212,7 @@ export default function SamuraiBackground() {
           continue;
         }
         ctx.globalAlpha = a;
-        ctx.fillStyle = Math.random() < 0.5 ? "#ffebcc" : accent;
+        ctx.fillStyle = Math.random() < 0.5 ? (light ? "#7a2d18" : "#ffebcc") : accent;
         ctx.beginPath();
         ctx.arc(p.x, p.y, 2.2 * a + 0.6, 0, Math.PI * 2);
         ctx.fill();
@@ -218,6 +236,9 @@ export default function SamuraiBackground() {
       slashes.forEach(drawSlash);
       sparks.length = 0;
     } else {
+      // open with a katana cut so the theme reads instantly
+      spawnSlash(width * 0.4, height * 0.42);
+      sinceSlash = -40; // small delay before the next idle slash
       raf = requestAnimationFrame(frame);
     }
 
@@ -230,12 +251,13 @@ export default function SamuraiBackground() {
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
+      running = false;
       cancelAnimationFrame(raf);
       window.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [reduced]);
+  }, [reduced, mode]);
 
   return <canvas ref={ref} className="h-full w-full" aria-hidden />;
 }

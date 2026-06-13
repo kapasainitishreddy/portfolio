@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Inter, JetBrains_Mono } from "next/font/google";
+import { Newsreader, Inter, JetBrains_Mono, Ma_Shan_Zheng, Shippori_Mincho } from "next/font/google";
 import "./globals.css";
 import { site, socials } from "@/data/site";
 import { InkProvider } from "@/components/ink/InkProvider";
@@ -25,6 +25,22 @@ const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-mono",
+  display: "swap",
+});
+
+// Brush calligraphy display face for the Shodō theme (East-Asian brush style).
+const maShanZheng = Ma_Shan_Zheng({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-brush",
+  display: "swap",
+});
+
+// Sharp Japanese mincho serif for the Bushidō (samurai) theme.
+const shippori = Shippori_Mincho({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-samurai",
   display: "swap",
 });
 
@@ -91,12 +107,15 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html
+      lang="en"
+      className={`${newsreader.variable} ${inter.variable} ${jetbrains.variable} ${maShanZheng.variable} ${shippori.variable}`}
+    >
       <head>
-        {/* set the saved theme before paint to avoid a flash of the default */}
+        {/* set the saved theme + mode before paint to avoid a flash of the default */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('snrk_theme');if(t==='ink'||t==='calligraphy'||t==='samurai'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('snrk_theme');if(t==='ink'||t==='calligraphy'||t==='samurai'){document.documentElement.setAttribute('data-theme',t);}var m=localStorage.getItem('snrk_mode');document.documentElement.setAttribute('data-mode',(m==='light'||m==='dark')?m:'dark');}catch(e){}})();`,
           }}
         />
       </head>
