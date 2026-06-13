@@ -153,13 +153,13 @@ export const inkFragmentShader = /* glsl */ `
     col = mix(col, INK_BLACK, smoothstep(0.80, 1.0, density));
 
     // silver vein highlights
-    col = mix(col, SILVER, veins * smoothstep(0.4, 0.7, density) * 0.18);
+    col = mix(col, SILVER, veins * smoothstep(0.4, 0.7, density) * 0.24);
 
-    // pointer adds a faint indigo bloom; ripple adds silver wake
-    col = mix(col, INDIGO, pointer * 0.12);
-    col += SILVER * max(ripple, 0.0) * 0.10;
+    // pointer adds a luminous indigo bloom; ripple adds silver wake
+    col = mix(col, INDIGO, pointer * 0.18);
+    col += SILVER * max(ripple, 0.0) * 0.14;
     // luminous wake where the cursor is moving fast
-    col += SILVER * drag * min(vmag * 1.6, 0.5);
+    col += SILVER * drag * min(vmag * 2.0, 0.65);
 
     // subtle paper grain
     float grain = noise(uv * uResolution * 0.5) * 0.02;

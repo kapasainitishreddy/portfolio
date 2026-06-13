@@ -161,7 +161,7 @@ export default function CalligraphyBackground() {
 
       // pointer brush
       if (hasPointer && (px !== lastPointer.x || py !== lastPointer.y)) {
-        dab(lpx, lpy, px, py, bone, 10, 0.55);
+        dab(lpx, lpy, px, py, bone, 11, 0.62);
         idle = 0;
       } else {
         idle++;
@@ -174,7 +174,7 @@ export default function CalligraphyBackground() {
         if (strokeT === 0) strokePrev = sample(pts, 0);
         strokeT += 0.012;
         const cur = sample(pts, Math.min(1, strokeT));
-        dab(strokePrev.x, strokePrev.y, cur.x, cur.y, bone, 13, 0.5);
+        dab(strokePrev.x, strokePrev.y, cur.x, cur.y, bone, 14, 0.58);
 
         // arrowhead at the tip indicating stroke direction
         const dx = cur.x - strokePrev.x;

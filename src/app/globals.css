@@ -81,9 +81,14 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.05;
+  text-shadow: 0 2px 8px rgba(8, 10, 12, 0.8);
+}
+h1 {
+  font-weight: 600;
+  text-shadow: 0 4px 16px rgba(8, 10, 12, 0.9);
 }
 
 .font-mono-label {
@@ -213,4 +218,21 @@ h1, h2, h3, h4 {
 /* utility: clamp content width */
 .content-pad {
   padding-inline: clamp(1.25rem, 5vw, 6rem);
+}
+
+/* enhanced interactive elements */
+button, a[href^="#"], a[href^="http"] {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* subtle glow on hover for buttons/links with color */
+a[href^="#"],
+button {
+  text-decoration: none;
+}
+
+a[href^="#"]:hover,
+button:hover {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }

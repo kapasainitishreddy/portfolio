@@ -129,26 +129,26 @@ export default function SamuraiBackground() {
 
     const drawSlash = (s: Slash) => {
       const draw = Math.min(1, s.age / 6); // quick unsheath
-      const fade = Math.max(0, 1 - (s.age - 6) / 48);
+      const fade = Math.max(0, 1 - (s.age - 6) / 56);
       const ex = s.x1 + (s.x2 - s.x1) * draw;
       const ey = s.y1 + (s.y2 - s.y1) * draw;
 
       // bright blade core
       ctx.globalAlpha = fade;
       ctx.strokeStyle = "#fdece4";
-      ctx.lineWidth = 2.4;
+      ctx.lineWidth = 3.2;
       ctx.lineCap = "round";
       ctx.shadowColor = accent;
-      ctx.shadowBlur = 18;
+      ctx.shadowBlur = 26;
       ctx.beginPath();
       ctx.moveTo(s.x1, s.y1);
       ctx.lineTo(ex, ey);
       ctx.stroke();
       // crimson after-glow
       ctx.shadowBlur = 0;
-      ctx.globalAlpha = fade * 0.4;
+      ctx.globalAlpha = fade * 0.5;
       ctx.strokeStyle = accent;
-      ctx.lineWidth = 6;
+      ctx.lineWidth = 9;
       ctx.stroke();
       ctx.globalAlpha = 1;
     };
@@ -177,7 +177,7 @@ export default function SamuraiBackground() {
         const s = slashes[i];
         s.age++;
         drawSlash(s);
-        if (s.age > 54) slashes.splice(i, 1);
+        if (s.age > 62) slashes.splice(i, 1);
       }
 
       // sparks
@@ -194,10 +194,12 @@ export default function SamuraiBackground() {
           continue;
         }
         ctx.globalAlpha = a;
-        ctx.fillStyle = Math.random() < 0.5 ? "#ffd9a0" : accent;
+        ctx.fillStyle = Math.random() < 0.5 ? "#ffebcc" : accent;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.6 * a + 0.4, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 2.2 * a + 0.6, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowColor = accent;
+        ctx.shadowBlur = 12;
         ctx.globalAlpha = 1;
       }
 
