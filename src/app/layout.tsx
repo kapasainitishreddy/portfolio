@@ -3,7 +3,9 @@ import { Newsreader, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { site, socials } from "@/data/site";
 import { InkProvider } from "@/components/ink/InkProvider";
-import InkBackground from "@/components/ink/InkBackground";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import ThemedBackground from "@/components/theme/ThemedBackground";
+import ThemeExtras from "@/components/theme/ThemeExtras";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -90,15 +92,26 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${newsreader.variable} ${inter.variable} ${jetbrains.variable}`}>
+      <head>
+        {/* set the saved theme before paint to avoid a flash of the default */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('snrk_theme');if(t==='ink'||t==='calligraphy'||t==='samurai'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <InkProvider>
-          <InkBackground />
-          {children}
-        </InkProvider>
+        <ThemeProvider>
+          <InkProvider>
+            <ThemedBackground />
+            {children}
+            <ThemeExtras />
+          </InkProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

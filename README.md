@@ -23,6 +23,26 @@ custom GLSL ink engine running on React Three Fiber.
   favicon and social image, sitemap, robots, a contact API with spam protection,
   a dispersed-ink 404 page, and error boundaries.
 
+## Themes
+
+Visitors can switch between three living backgrounds from the navigation (the
+choice is remembered in `localStorage`). Each theme also gives sections their own
+reveal animation:
+
+- **Suminagashi (Ink)** — the WebGL marbled-ink engine. The ink now drags and
+  swirls around the cursor with a luminous wake, ripples on click and intensifies
+  on scroll. Sections fade up.
+- **Shodō (Calligraphy)** — your cursor becomes a sumi brush painting tapered,
+  speed-sensitive strokes that dry and fade. When idle, a ghost brush paints a
+  demonstration stroke with a directional arrow. A floating **draw pad** lets any
+  visitor paint their own ink on rice paper. Sections bleed in like ink on paper.
+- **Bushidō (Samurai)** — a dark dojo where every click unsheathes a katana slash
+  with a burst of sparks and drifting dust. Sections are sliced open along a blade
+  line as they enter view.
+
+All three keep a dark, high-contrast canvas so text stays readable, ship a static
+fallback, and fully respect `prefers-reduced-motion`.
+
 ## Tech stack
 
 | Area        | Choice                                   |

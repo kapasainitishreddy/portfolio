@@ -5,10 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { navItems, site, socials } from "@/data/site";
 import { GitHubIcon, LinkedInIcon, FileIcon, MenuIcon, CloseIcon } from "./icons";
 import InkControl from "@/components/ink/InkControl";
+import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -84,7 +87,8 @@ export default function Navigation() {
           >
             <LinkedInIcon />
           </a>
-          <InkControl />
+          <ThemeSwitcher />
+          {theme === "ink" && <InkControl />}
           <button
             type="button"
             className="flex h-9 w-9 items-center justify-center rounded-full text-rice lg:hidden"

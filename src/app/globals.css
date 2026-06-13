@@ -18,6 +18,28 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Per-theme accent. Overriding --color-copper recolours every accent spot
+   (badges, status dot, numbers) while --color-accent drives the new theme UI.
+   All three themes keep a dark, high-contrast canvas so text stays readable.
+   --------------------------------------------------------------------------- */
+:root,
+[data-theme="ink"] {
+  --color-accent: #8a5a3c;
+  --color-copper: #8a5a3c;
+}
+[data-theme="calligraphy"] {
+  --color-accent: #c2a35f;
+  --color-copper: #c2a35f;
+}
+[data-theme="samurai"] {
+  --color-accent: #b3472f;
+  --color-copper: #b3472f;
+}
+[data-theme="samurai"] body {
+  background-color: #0b0807;
+}
+
+/* ---------------------------------------------------------------------------
    Base
    --------------------------------------------------------------------------- */
 * {

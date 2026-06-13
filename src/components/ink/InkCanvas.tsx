@@ -27,6 +27,8 @@ function InkPlane() {
   // live interaction state held in refs to avoid re-renders
   const mouse = useRef(new THREE.Vector2(0.5, 0.5));
   const mouseTarget = useRef(new THREE.Vector2(0.5, 0.5));
+  const mousePrev = useRef(new THREE.Vector2(0.5, 0.5));
+  const mouseVel = useRef(new THREE.Vector2(0, 0));
   const mouseStr = useRef(0);
   const ripple = useRef(new THREE.Vector2(0.5, 0.5));
   const rippleClock = useRef(99);
@@ -39,6 +41,7 @@ function InkPlane() {
       uTime: { value: 0 },
       uResolution: { value: new THREE.Vector2(1, 1) },
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+      uMouseVel: { value: new THREE.Vector2(0, 0) },
       uMouseStr: { value: 0 },
       uRipple: { value: new THREE.Vector2(0.5, 0.5) },
       uRippleTime: { value: 99 },
@@ -99,10 +102,19 @@ function InkPlane() {
     u.uResolution.value.set(size.width, size.height);
     u.uQuality.value = tier === "high" ? 1 : 0;
 
-    // ease pointer + presence
+    // ease pointer + presence, and derive a smoothed velocity for the wake
     mouse.current.lerp(mouseTarget.current, 0.06);
+    const vx = (mouse.current.x - mousePrev.current.x) / dt;
+    const vy = (mouse.current.y - mousePrev.current.y) / dt;
+    mousePrev.current.copy(mouse.current);
+    mouseVel.current.x = THREE.MathUtils.lerp(mouseVel.current.x, vx, 0.25);
+    mouseVel.current.y = THREE.MathUtils.lerp(mouseVel.current.y, vy, 0.25);
     mouseStr.current = THREE.MathUtils.lerp(mouseStr.current, 0, 0.01);
     u.uMouse.value.copy(mouse.current);
+    u.uMouseVel.value.set(
+      paused ? 0 : mouseVel.current.x * intensity,
+      paused ? 0 : mouseVel.current.y * intensity,
+    );
     u.uMouseStr.value = paused ? 0 : mouseStr.current * intensity;
 
     // ripple

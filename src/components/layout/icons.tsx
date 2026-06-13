@@ -76,3 +76,30 @@ export const ArrowIcon = (props: SVGProps<SVGSVGElement>) => (
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
+
+export const InkDropIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg {...base(props)}>
+    <path d="M12 3c3.5 4.5 6 7.5 6 11a6 6 0 1 1-12 0c0-3.5 2.5-6.5 6-11Z" />
+  </svg>
+);
+
+export const BrushIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg {...base(props)}>
+    <path d="M14.5 3.5a2.1 2.1 0 0 1 3 3L11 13l-3 .5.5-3 6-7Z" />
+    <path d="M8 13.5c-2 .5-3 2-3.2 4.4-.04.5-.5 1.1-1.3 1.6 1.8 1.2 4.6 1 6-.6 1-1.1 1.1-2.6.5-3.9" />
+  </svg>
+);
+
+export const KatanaIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg {...base(props)}>
+    <path d="M3 21 18 6" />
+    <path d="m15 3 6 6-2.5 1L14 5.5 15 3Z" />
+    <path d="m6 18-2 2m1-4-1 1" />
+  </svg>
+);
+
+export const TrashIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg {...base(props)}>
+    <path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7" />
+  </svg>
+);

@@ -24,6 +24,7 @@ export const inkFragmentShader = /* glsl */ `
   uniform float uTime;
   uniform vec2  uResolution;
   uniform vec2  uMouse;       // normalized 0..1, y up
+  uniform vec2  uMouseVel;    // pointer velocity (normalized units / frame)
   uniform float uMouseStr;    // 0..1 pointer presence
   uniform vec2  uRipple;      // ripple origin, normalized
   uniform float uRippleTime;  // seconds since last ripple
@@ -85,6 +86,14 @@ export const inkFragmentShader = /* glsl */ `
     float md = distance(p, m);
     float pointer = uMouseStr * exp(-md * 3.2);
 
+    // pointer drag + swirl: ink follows the cursor and curls around it
+    vec2 mvel = uMouseVel;
+    mvel.x *= uResolution.x / uResolution.y;
+    float vmag = length(mvel);
+    vec2 toM = p - m;
+    float drag = uMouseStr * exp(-md * 2.6);
+    vec2 wake = drag * (mvel * 2.2 + vec2(-toM.y, toM.x) * vmag * 5.0);
+
     // ripple: expanding ring from last click
     vec2 r = uRipple;
     r.x *= uResolution.x / uResolution.y;
@@ -111,13 +120,16 @@ export const inkFragmentShader = /* glsl */ `
       flow = vec2(sin(p.y * 9.0 + t * 3.0), cos(p.x * 9.0 - t * 3.0)) * 0.14;
     }
 
+    // the cursor wake drags the whole field locally
+    flow += wake;
+
     // domain warp -> marbled veins
     vec2 q = vec2(
       fbm(p + flow + vec2(0.0, t), oct),
       fbm(p + flow + vec2(5.2, 1.3 - t), oct)
     );
 
-    float warpAmt = 1.6 + uActivity * 1.1 + pointer * 1.4 + ripple * 0.8;
+    float warpAmt = 1.6 + uActivity * 1.1 + pointer * 1.4 + ripple * 0.8 + vmag * uMouseStr * 6.0;
     vec2 rr2 = vec2(
       fbm(p + warpAmt * q + vec2(1.7, 9.2) + t * 0.5, oct),
       fbm(p + warpAmt * q + vec2(8.3, 2.8) - t * 0.5, oct)
@@ -146,6 +158,8 @@ export const inkFragmentShader = /* glsl */ `
     // pointer adds a faint indigo bloom; ripple adds silver wake
     col = mix(col, INDIGO, pointer * 0.12);
     col += SILVER * max(ripple, 0.0) * 0.10;
+    // luminous wake where the cursor is moving fast
+    col += SILVER * drag * min(vmag * 1.6, 0.5);
 
     // subtle paper grain
     float grain = noise(uv * uResolution * 0.5) * 0.02;
