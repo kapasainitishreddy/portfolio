@@ -130,7 +130,7 @@ export const inkFragmentShader = /* glsl */ `
       fbm(p + flow + vec2(5.2, 1.3 - t), oct)
     );
 
-    float warpAmt = 1.6 + uActivity * 1.1 + pointer * 1.4 + ripple * 0.8 + vmag * uMouseStr * 6.0;
+    float warpAmt = 1.8 + uActivity * 1.3 + pointer * 1.6 + ripple * 0.9 + vmag * uMouseStr * 7.2;
     vec2 rr2 = vec2(
       fbm(p + warpAmt * q + vec2(1.7, 9.2) + t * 0.5, oct),
       fbm(p + warpAmt * q + vec2(8.3, 2.8) - t * 0.5, oct)
@@ -139,29 +139,29 @@ export const inkFragmentShader = /* glsl */ `
     float ink = fbm(p + warpAmt * rr2, oct);
     ink = ink * 0.5 + 0.5;
 
-    // sharpen into marbled bands (Suminagashi rings)
-    float veins = abs(sin(ink * 9.0 + rr2.x * 2.0 + ripple * 3.0));
-    veins = pow(veins, 1.6);
+    // sharpen into marbled bands (Suminagashi rings) — more defined veins
+    float veins = abs(sin(ink * 10.5 + rr2.x * 2.4 + ripple * 3.8));
+    veins = pow(veins, 1.4);
 
     // stronger contrast so the marbled ink reads clearly
     float density = smoothstep(0.22, 0.82, ink);
     density = mix(density, density * (0.55 + 0.45 * veins), 0.75);
 
-    // colour: paper base, charcoal/indigo ink, silver edges
+    // colour: paper base, charcoal/indigo ink, silver edges — richer, more saturated
     vec3 col = RICE_PAPER;
-    col = mix(col, SILVER, smoothstep(0.28, 0.52, density) * 0.8);
-    col = mix(col, INDIGO, smoothstep(0.42, 0.70, density) * 0.92);
-    col = mix(col, CHARCOAL, smoothstep(0.60, 0.88, density));
-    col = mix(col, INK_BLACK, smoothstep(0.78, 1.0, density));
+    col = mix(col, SILVER, smoothstep(0.26, 0.50, density) * 0.9);
+    col = mix(col, INDIGO, smoothstep(0.38, 0.68, density) * 1.0);
+    col = mix(col, CHARCOAL, smoothstep(0.56, 0.85, density) * 1.05);
+    col = mix(col, INK_BLACK, smoothstep(0.75, 0.98, density));
 
-    // silver vein highlights
-    col = mix(col, SILVER, veins * smoothstep(0.4, 0.7, density) * 0.24);
+    // silver vein highlights — more pronounced
+    col = mix(col, SILVER, veins * smoothstep(0.35, 0.68, density) * 0.32);
 
-    // pointer adds a luminous indigo bloom; ripple adds silver wake
-    col = mix(col, INDIGO, pointer * 0.18);
-    col += SILVER * max(ripple, 0.0) * 0.14;
-    // luminous wake where the cursor is moving fast
-    col += SILVER * drag * min(vmag * 2.0, 0.65);
+    // pointer adds a rich indigo bloom; ripple adds silver wake
+    col = mix(col, INDIGO, pointer * 0.24);
+    col += SILVER * max(ripple, 0.0) * 0.18;
+    // luminous wake where the cursor is moving fast — brighter trail
+    col += SILVER * drag * min(vmag * 2.8, 0.8);
 
     // subtle paper grain
     float grain = noise(uv * uResolution * 0.5) * 0.02;
