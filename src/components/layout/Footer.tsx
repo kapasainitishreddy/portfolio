@@ -29,6 +29,9 @@ export default function Footer() {
             <Link href="/privacy" className="link-quiet flex items-center gap-2 text-sm text-silver">
               Privacy
             </Link>
+            <Link href="/terms" className="link-quiet flex items-center gap-2 text-sm text-silver">
+              Terms
+            </Link>
           </nav>
         </div>
 

@@ -10,7 +10,7 @@
  *  - links are optional; omit any you do not have yet
  */
 
-export type ProjectTag = "AI" | "Data" | "Blockchain" | "Networks" | "Privacy" | "Product";
+export type ProjectTag = "AI" | "Data" | "Blockchain" | "Networks" | "Privacy" | "Product" | "Hardware" | "Web3";
 
 export type InkPattern =
   | "network" // coordinated nodes
@@ -288,7 +288,175 @@ export const projects: Project[] = [
     technologies: ["Local-first storage", "TypeScript"],
     note: "Unsent is a reflective writing space, not a substitute for professional mental-health care. If you are struggling, please reach out to a qualified professional or a local support line.",
   },
+  {
+    id: "neural-mesh",
+    name: "Neural Mesh",
+    category: "Edge AI Hardware",
+    status: "In Development",
+    tags: ["Hardware", "AI", "Networks"],
+    inkPattern: "network",
+    summary:
+      "A distributed edge compute cluster designed for real-time AI inference at the network edge, with mesh networking and local model orchestration.",
+    problem:
+      "Running AI models on servers introduces latency, costs, and privacy risks. Edge deployment requires expensive custom hardware and complex orchestration.",
+    solution:
+      "Modular edge nodes that communicate via mesh networking, coordinate model deployment, and handle real-time inference with sub-10ms latency, all on consumer hardware.",
+    role: "Hardware architecture, distributed system design, edge ML orchestration.",
+    features: [
+      "Mesh network topology",
+      "Real-time model inference",
+      "Sub-10ms latency",
+      "Distributed load balancing",
+      "Model versioning and rollback",
+      "Hardware-agnostic deployment",
+      "Privacy-first processing",
+    ],
+    technologies: [
+      "NVIDIA Jetson",
+      "RaspberryPi 5",
+      "MQTT",
+      "Docker",
+      "ONNX Runtime",
+      "PyTorch",
+      "C++",
+      "Go",
+    ],
+  },
+  {
+    id: "spectra-labs",
+    name: "Spectra Labs",
+    category: "Biometric Authentication",
+    status: "Prototype",
+    tags: ["Hardware", "Privacy", "Product"],
+    inkPattern: "streams",
+    summary:
+      "A private biometric authentication device using spectral analysis instead of facial recognition, ensuring permanent anonymity and zero data storage.",
+    problem:
+      "Biometric systems leak identity and store sensitive data. Privacy-focused alternatives don't exist at scale.",
+    solution:
+      "A spectral-based authentication system that verifies you without ever capturing or storing your identity, using light spectrum analysis instead of images.",
+    role: "Hardware design, spectral algorithms, privacy framework.",
+    features: [
+      "Spectral biometric authentication",
+      "Zero identity storage",
+      "Sub-50ms verification",
+      "Multi-modal authentication",
+      "Offline-capable",
+      "GDPR and privacy-by-design",
+    ],
+    technologies: [
+      "Hyperspectral sensors",
+      "Raspberry Pi Compute Module",
+      "Signal processing",
+      "Edge ML",
+      "Rust",
+    ],
+  },
+  {
+    id: "lens-protocol",
+    name: "Lens Protocol Extension",
+    category: "Decentralized Social Layer",
+    status: "Active",
+    tags: ["Web3", "Networks", "Product"],
+    inkPattern: "ledger",
+    summary:
+      "A protocol extension for Lens that enables graph analytics, network influence scoring, and decentralized reputation without compromising user sovereignty.",
+    problem:
+      "Decentralized social lacks the analytics and reputation layers that make networks valuable. Existing solutions require centralized off-chain storage.",
+    solution:
+      "A smart contract-based reputation and influence system that lives on-chain, uses graph algorithms, and rewards network participants transparently.",
+    role: "Protocol design, smart contract architecture, graph analytics.",
+    features: [
+      "On-chain influence scoring",
+      "Network graph analysis",
+      "Decentralized reputation",
+      "Transparent incentive design",
+      "Cross-protocol composability",
+      "Real-time analytics",
+    ],
+    technologies: [
+      "Solidity",
+      "Lens Protocol",
+      "The Graph",
+      "Polygon",
+      "GraphQL",
+      "Python",
+    ],
+  },
+  {
+    id: "sentinel-ai",
+    name: "Sentinel AI",
+    category: "Threat Detection and Response",
+    status: "In Development",
+    tags: ["AI", "Networks", "Product"],
+    inkPattern: "network",
+    summary:
+      "An AI-powered security system that detects anomalous network behavior, predicts threats before they occur, and coordinates automated response with human oversight.",
+    problem:
+      "Security threats move faster than human response. Most detection systems react; they don't predict or coordinate defense.",
+    solution:
+      "A predictive threat detection system using graph analysis and behavioral AI that flags anomalies, predicts attack chains, and orchestrates response playbooks.",
+    role: "AI model architecture, threat detection algorithms, incident response design.",
+    features: [
+      "Real-time anomaly detection",
+      "Predictive threat scoring",
+      "Automated response orchestration",
+      "Human-in-the-loop approval",
+      "Network graph visualization",
+      "Incident timeline reconstruction",
+    ],
+    technologies: ["TensorFlow", "Network analysis", "Graph databases", "Python", "Go"],
+  },
+  {
+    id: "qubit-sync",
+    name: "QuBit Sync",
+    category: "Quantum-Safe Data Sync",
+    status: "Research",
+    tags: ["Blockchain", "Privacy", "Data"],
+    inkPattern: "default",
+    summary:
+      "A post-quantum cryptography layer for data synchronization across devices and networks, protecting against future quantum decryption.",
+    problem:
+      "Data synced today will be decrypted by quantum computers in 10+ years. Current encryption is quantum-vulnerable.",
+    solution:
+      "A lightweight post-quantum encryption layer using lattice-based cryptography that protects data sync, works offline, and is hardware-agnostic.",
+    role: "Cryptography implementation, protocol design, performance optimization.",
+    features: [
+      "Post-quantum encryption",
+      "Lightweight sync protocol",
+      "Offline-first design",
+      "Hardware-agnostic",
+      "Zero-knowledge proofs",
+      "Key rotation and refresh",
+    ],
+    technologies: ["Rust", "Liboqs", "CRYSTALS-Kyber", "libsodium", "WebAssembly"],
+  },
+  {
+    id: "flow-studio",
+    name: "Flow Studio",
+    category: "Visual System Design and Orchestration",
+    status: "Prototype",
+    tags: ["Product", "AI"],
+    inkPattern: "streams",
+    summary:
+      "A visual studio for designing and orchestrating complex multi-agent AI workflows without code, with real-time execution debugging and performance profiling.",
+    problem:
+      "AI orchestration requires deep coding skills. Non-technical teams can't visualize or modify agent flows without rewrites.",
+    solution:
+      "A node-based visual editor where you drag agents, connect data flows, set triggers, and see execution in real-time with a powerful debugging console.",
+    role: "UI/UX design, flow execution engine, debugging interface.",
+    features: [
+      "Node-based visual editor",
+      "Real-time execution view",
+      "Agent library",
+      "Data flow visualization",
+      "Trigger and condition builder",
+      "Performance profiler",
+      "One-click deployment",
+    ],
+    technologies: ["React", "D3.js", "TypeScript", "LangGraph", "Redis"],
+  },
 ];
 
 /** Filter chips shown above the project grid. */
-export const projectTags: ProjectTag[] = ["AI", "Data", "Blockchain", "Networks", "Privacy", "Product"];
+export const projectTags: ProjectTag[] = ["AI", "Hardware", "Web3", "Data", "Blockchain", "Networks", "Privacy", "Product"];

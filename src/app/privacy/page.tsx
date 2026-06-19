@@ -1,46 +1,71 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { site } from "@/data/site";
+import Navigation from "@/components/layout/Navigation";
+import Footer from "@/components/layout/Footer";
+import Loader from "@/components/layout/Loader";
+import Reveal from "@/components/layout/Reveal";
 
-export const metadata: Metadata = {
-  title: "Privacy",
-  description: "How this portfolio site handles your information.",
+export const metadata = {
+  title: "Privacy Policy",
+  description: "Privacy Policy for Sai Nitish Reddy Kapa",
 };
 
-export default function PrivacyPage() {
+export default function PrivacyPolicy() {
   return (
-    <main className="content-pad mx-auto max-w-3xl py-32">
-      <Link href="/" className="link-quiet text-sm text-silver">
-        ← Back home
-      </Link>
-      <h1 className="mt-8 font-serif text-rice" style={{ fontSize: "clamp(2rem, 5vw, 3.4rem)" }}>
-        Privacy
-      </h1>
-      <div className="mt-8 space-y-5 text-silver">
-        <p>
-          This is a personal portfolio website. It is built to respect your privacy and collects as
-          little information as possible.
-        </p>
-        <h2 className="font-serif text-2xl text-rice">Analytics</h2>
-        <p>
-          Analytics are disabled by default. No tracking or advertising cookies are set when you
-          browse this site.
-        </p>
-        <h2 className="font-serif text-2xl text-rice">Contact form</h2>
-        <p>
-          If you use the contact form, the information you submit (your name, email, optional
-          organization, reason and message) is used only to read and reply to your message. It is not
-          sold or shared, and is not used to train any model.
-        </p>
-        <h2 className="font-serif text-2xl text-rice">Your choices</h2>
-        <p>
-          You can request that any message you sent be deleted at any time by emailing{" "}
-          <a href={`mailto:${site.email}`} className="link-quiet text-rice">
-            {site.email}
-          </a>
-          .
-        </p>
-      </div>
-    </main>
+    <>
+      <Loader />
+      <Navigation />
+      <main className="min-h-screen">
+        <div className="content-pad mx-auto max-w-2xl py-20 space-y-12">
+          <Reveal>
+            <div className="space-y-4">
+              <h1 className="text-4xl font-serif text-rice">Privacy Policy</h1>
+              <p className="text-silver text-sm">Last updated: June 2026</p>
+            </div>
+          </Reveal>
+
+          <div className="space-y-8 text-silver">
+            <Reveal delay={0.1}>
+              <section className="space-y-3">
+                <h2 className="text-2xl font-serif text-rice">Overview</h2>
+                <p>
+                  Your privacy matters. This portfolio does not collect personal data. It is a static showcase of work and thoughts.
+                </p>
+              </section>
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <section className="space-y-3">
+                <h2 className="text-2xl font-serif text-rice">What We Collect</h2>
+                <ul className="space-y-2 ml-4">
+                  <li>• <strong>No cookies:</strong> This site uses no persistent cookies or tracking.</li>
+                  <li>• <strong>No analytics:</strong> Visitor analytics are disabled by default.</li>
+                  <li>• <strong>No login:</strong> No user accounts are required or stored.</li>
+                  <li>• <strong>Contact form:</strong> If you fill the contact form, your email is sent securely via Resend API.</li>
+                </ul>
+              </section>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <section className="space-y-3">
+                <h2 className="text-2xl font-serif text-rice">Third-Party Services</h2>
+                <p>This site is hosted on Vercel or Netlify. Both process minimal data for hosting only.</p>
+              </section>
+            </Reveal>
+
+            <Reveal delay={0.25}>
+              <section className="space-y-3">
+                <h2 className="text-2xl font-serif text-rice">Your Rights</h2>
+                <p>
+                  Request data deletion anytime at{" "}
+                  <a href="mailto:kapasainitishreddy@gmail.com" className="link-quiet text-rice hover:text-soft">
+                    kapasainitishreddy@gmail.com
+                  </a>
+                </p>
+              </section>
+            </Reveal>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }
