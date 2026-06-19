@@ -4,6 +4,7 @@ import "./globals.css";
 import { site, socials } from "@/data/site";
 import { InkProvider } from "@/components/ink/InkProvider";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { ModeProvider } from "@/components/theme/ModeContext";
 import ThemedBackground from "@/components/theme/ThemedBackground";
 import ThemeExtras from "@/components/theme/ThemeExtras";
 
@@ -124,13 +125,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <ThemeProvider>
-          <InkProvider>
-            <ThemedBackground />
-            {children}
-            <ThemeExtras />
-          </InkProvider>
-        </ThemeProvider>
+        <ModeProvider>
+          <ThemeProvider>
+            <InkProvider>
+              <ThemedBackground />
+              {children}
+              <ThemeExtras />
+            </InkProvider>
+          </ThemeProvider>
+        </ModeProvider>
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import Skills from "@/components/sections/Skills";
 import Projects from "@/components/sections/Projects";
 import CurrentlyBuilding from "@/components/sections/CurrentlyBuilding";
 import Experience from "@/components/sections/Experience";
+import WhyHireMe from "@/components/sections/WhyHireMe";
 import Certifications from "@/components/sections/Certifications";
 import Principles from "@/components/sections/Principles";
 import Contact from "@/components/sections/Contact";
@@ -26,6 +27,7 @@ export default function Home() {
         <Projects />
         <CurrentlyBuilding />
         <Experience />
+        <WhyHireMe />
         <Certifications />
         <Principles />
         <Contact />

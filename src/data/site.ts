@@ -8,7 +8,7 @@ export const site = {
   shortName: "Sai Nitish",
   initials: "SK",
   roles: ["AI Product Builder", "Data Scientist", "Blockchain Enthusiast", "Network Analyst"],
-  tagline: "AI • DATA • SYSTEMS • NETWORKS",
+  tagline: "Engineer with the heart of a writer",
   email: "kapasainitishreddy@gmail.com",
   location: "United States",
   // Used for SEO. Override with NEXT_PUBLIC_SITE_URL in production.

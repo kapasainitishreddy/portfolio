@@ -456,6 +456,40 @@ export const projects: Project[] = [
     ],
     technologies: ["React", "D3.js", "TypeScript", "LangGraph", "Redis"],
   },
+  {
+    id: "gtm-nexus",
+    name: "GTM Nexus",
+    category: "Go-To-Market Intelligence",
+    status: "Active Development",
+    tags: ["Product", "Data", "Networks"],
+    inkPattern: "ledger",
+    summary:
+      "An integrated GTM analysis platform combining market dynamics (Apex), reasoning (Perplexity), and inference (Hermes) to predict product-market fit, channel viability, and optimal positioning.",
+    problem:
+      "GTM decisions are made with fragmented data—market trends, competitive moves, user signals scattered across tools. Teams guess instead of deduce.",
+    solution:
+      "A unified platform that ingests market signals, reasons through scenarios, and generates predictive GTM playbooks. Combines Apodex for market analysis, Perplexity for reasoning, and Hermes for fast inference.",
+    role: "Product strategy, market modeling, reasoning integration.",
+    features: [
+      "Real-time market signal aggregation",
+      "Competitive positioning analysis",
+      "Channel viability scoring",
+      "Product-market fit prediction",
+      "Scenario reasoning engine",
+      "GTM playbook generation",
+      "Cohort analytics",
+      "Network effects modeling",
+    ],
+    technologies: [
+      "Perplexity AI",
+      "Hermes LLM",
+      "Apodex (market data)",
+      "Graph analysis",
+      "Python",
+      "PostgreSQL",
+      "React",
+    ],
+  },
 ];
 
 /** Filter chips shown above the project grid. */
