@@ -19,9 +19,19 @@ export default function ThemedBackground() {
     return <InkBackground />;
   }
 
+  if (theme === "samurai") {
+    return (
+      <div className="ink-bg" aria-hidden role="presentation">
+        <SamuraiBackground />
+        <div className="samurai-scanlines" />
+        <div className="ink-bg__veil samurai-veil" />
+      </div>
+    );
+  }
+
   return (
     <div className="ink-bg" aria-hidden role="presentation">
-      {theme === "calligraphy" ? <CalligraphyBackground /> : <SamuraiBackground />}
+      <CalligraphyBackground />
       <div className="ink-bg__veil" />
     </div>
   );

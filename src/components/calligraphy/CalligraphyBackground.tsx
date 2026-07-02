@@ -26,10 +26,11 @@ export default function CalligraphyBackground() {
     const baseRGB = light ? "244, 240, 231" : "10, 12, 14";
     const bone = light ? "#211c16" : "#efe9dd"; // ink colour of the strokes
     let accentColor = light ? "#9a7a2e" : "#c2a35f";
+    let sealColor = light ? "#b23a34" : "#d24b42"; // vermilion hanko
     try {
-      accentColor =
-        getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() ||
-        accentColor;
+      const style = getComputedStyle(document.documentElement);
+      accentColor = style.getPropertyValue("--color-accent").trim() || accentColor;
+      sealColor = style.getPropertyValue("--color-accent-2").trim() || sealColor;
     } catch {
       /* noop */
     }
@@ -43,6 +44,46 @@ export default function CalligraphyBackground() {
     const paintBase = () => {
       ctx.fillStyle = `rgb(${baseRGB})`;
       ctx.fillRect(0, 0, width, height);
+      // soft handmade-paper vignette so the field reads as washi, not flat fill
+      const vg = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.42,
+        Math.min(width, height) * 0.15,
+        width * 0.5,
+        height * 0.5,
+        Math.max(width, height) * 0.75,
+      );
+      vg.addColorStop(0, "rgba(0, 0, 0, 0)");
+      vg.addColorStop(1, light ? "rgba(120, 100, 70, 0.10)" : "rgba(0, 0, 0, 0.34)");
+      ctx.fillStyle = vg;
+      ctx.fillRect(0, 0, width, height);
+    };
+
+    // vermilion seal stamp (hanko) anchored bottom-left; redrawn each frame so it
+    // survives the drying fade and reads as a signature on the finished piece.
+    const drawSeal = () => {
+      const s = width < 600 ? 44 : 58;
+      const x = width < 600 ? 26 : 54;
+      const y = height - (width < 600 ? 26 : 54) - s;
+      ctx.save();
+      ctx.globalAlpha = light ? 0.82 : 0.9;
+      ctx.strokeStyle = sealColor;
+      ctx.lineWidth = Math.max(2.5, s * 0.06);
+      // weathered outer square
+      ctx.strokeRect(x, y, s, s);
+      // stylised brush glyph inside
+      ctx.lineWidth = Math.max(2, s * 0.05);
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(x + s * 0.24, y + s * 0.26);
+      ctx.lineTo(x + s * 0.76, y + s * 0.26);
+      ctx.moveTo(x + s * 0.5, y + s * 0.16);
+      ctx.lineTo(x + s * 0.5, y + s * 0.84);
+      ctx.moveTo(x + s * 0.28, y + s * 0.58);
+      ctx.lineTo(x + s * 0.72, y + s * 0.58);
+      ctx.stroke();
+      ctx.restore();
+      ctx.globalAlpha = 1;
     };
 
     const resize = () => {
@@ -88,11 +129,20 @@ export default function CalligraphyBackground() {
     ) => {
       const speed = Math.hypot(x1 - x0, y1 - y0);
       const w = Math.max(1.6, base - speed * 0.18);
-      ctx.strokeStyle = color;
-      ctx.globalAlpha = alpha;
-      ctx.lineWidth = w;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
+      // soft ink bleed: a wider, fainter halo under the stroke so the sumi feels
+      // wet and absorbed into the paper rather than drawn with a hard pen
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = alpha * 0.28;
+      ctx.lineWidth = w * 2.1;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+      // main stroke body
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = w;
       ctx.beginPath();
       ctx.moveTo(x0, y0);
       ctx.lineTo(x1, y1);
@@ -208,6 +258,8 @@ export default function CalligraphyBackground() {
         }
       }
 
+      drawSeal();
+
       if (running) raf = requestAnimationFrame(frame);
     };
 
@@ -228,6 +280,7 @@ export default function CalligraphyBackground() {
           prev = cur;
         }
       }
+      drawSeal();
     } else {
       raf = requestAnimationFrame(frame);
     }

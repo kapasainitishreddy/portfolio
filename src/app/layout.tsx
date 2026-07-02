@@ -116,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* set the saved theme + mode before paint to avoid a flash of the default */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('snrk_theme');if(t==='ink'||t==='calligraphy'||t==='samurai'){document.documentElement.setAttribute('data-theme',t);}var m=localStorage.getItem('snrk_mode');document.documentElement.setAttribute('data-mode',(m==='light'||m==='dark')?m:'dark');}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('snrk_theme');document.documentElement.setAttribute('data-theme',(t==='ink'||t==='calligraphy'||t==='samurai')?t:'samurai');var m=localStorage.getItem('snrk_mode');document.documentElement.setAttribute('data-mode',(m==='light'||m==='dark')?m:'dark');}catch(e){document.documentElement.setAttribute('data-theme','samurai');document.documentElement.setAttribute('data-mode','dark');}})();`,
           }}
         />
       </head>

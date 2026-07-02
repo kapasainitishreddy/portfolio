@@ -46,30 +46,43 @@
   --veil-strength: 0.42;
 }
 
-/* Per-theme accent (recolours badges, status dots, numbers + new theme UI). */
+/* Per-theme accent (recolours badges, status dots, numbers + new theme UI).
+   --color-accent-2 is a secondary accent; it defaults to the primary so only
+   the futuristic samurai theme needs to define a distinct value. */
+:root {
+  --color-accent: #a8693f;
+  --color-accent-2: var(--color-accent);
+}
 :root[data-theme="ink"] {
   --color-accent: #a8693f;
+  --color-accent-2: #4d6ea8;
   --color-copper: #a8693f;
 }
 :root[data-mode="dark"][data-theme="ink"] {
   --color-accent: #b07242;
+  --color-accent-2: #6f8fc4;
   --color-copper: #b07242;
 }
 :root[data-theme="calligraphy"] {
   --color-accent: #b8923f;
+  --color-accent-2: #b23a34;
   --color-copper: #b8923f;
 }
 :root[data-mode="dark"][data-theme="calligraphy"] {
   --color-accent: #c2a35f;
+  --color-accent-2: #d24b42;
   --color-copper: #c2a35f;
 }
+/* Bushidō — futuristic neon: crimson blade heat + cyan HUD light. */
 :root[data-theme="samurai"] {
-  --color-accent: #c14a30;
-  --color-copper: #c14a30;
+  --color-accent: #e11d48;
+  --color-accent-2: #0aa3c2;
+  --color-copper: #e11d48;
 }
 :root[data-mode="dark"][data-theme="samurai"] {
-  --color-accent: #b3472f;
-  --color-copper: #b3472f;
+  --color-accent: #ff2f52;
+  --color-accent-2: #38e8ff;
+  --color-copper: #ff2f52;
 }
 
 /* ---------------------------------------------------------------------------
@@ -299,4 +312,68 @@ button {
 a[href^="#"]:hover,
 button:hover {
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+/* ---------------------------------------------------------------------------
+   Bushidō — futuristic HUD layer
+   Neon scanlines + a lighter readability veil so the cyan grid and crimson
+   slashes stay visible behind editorial content. Layered above the canvas.
+   --------------------------------------------------------------------------- */
+.samurai-veil {
+  /* thinner than the default veil — let the neon breathe */
+  background:
+    radial-gradient(120% 120% at 50% 12%, transparent 46%, rgba(var(--color-veil), calc(var(--veil-strength) * 0.9)) 100%),
+    linear-gradient(
+      to bottom,
+      rgba(var(--color-veil), calc(var(--veil-strength) * 0.5)),
+      rgba(var(--color-veil), calc(var(--veil-strength) * 0.18)) 32%,
+      rgba(var(--color-veil), calc(var(--veil-strength) * 0.72)))
+  ;
+}
+
+.samurai-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* fine horizontal scanlines + a faint chromatic sheen */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(56, 232, 255, 0.05) 0px,
+    rgba(56, 232, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  animation: samurai-scan 8s linear infinite;
+}
+:root[data-mode="light"] .samurai-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(10, 90, 120, 0.06) 0px,
+    rgba(10, 90, 120, 0.06) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+}
+@keyframes samurai-scan {
+  from { background-position-y: 0; }
+  to { background-position-y: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .samurai-scanlines { animation: none; }
+}
+
+/* Futuristic mono labels + neon glow on samurai headings. */
+[data-theme="samurai"] .font-mono-label {
+  color: var(--color-accent-2);
+  letter-spacing: 0.32em;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--color-accent-2) 55%, transparent);
+}
+[data-theme="samurai"] h1 {
+  text-shadow:
+    0 0 18px color-mix(in srgb, var(--color-accent) 40%, transparent),
+    0 4px 16px rgba(var(--color-veil), calc(var(--veil-strength) + 0.35));
 }
