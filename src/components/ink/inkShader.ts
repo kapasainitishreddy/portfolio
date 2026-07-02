@@ -38,6 +38,7 @@ export const inkFragmentShader = /* glsl */ `
   const vec3 INK_BLACK  = vec3(0.031, 0.039, 0.047); // #080A0C
   const vec3 CHARCOAL   = vec3(0.090, 0.102, 0.118); // #171A1E
   const vec3 INDIGO     = vec3(0.149, 0.204, 0.369); // #26345E
+  const vec3 COPPER     = vec3(0.690, 0.447, 0.259); // #B07242 (second ink)
   const vec3 SILVER     = vec3(0.663, 0.678, 0.706); // #A9ADB4
   const vec3 RICE_PAPER = vec3(0.949, 0.937, 0.910); // #F2EFE8
 
@@ -139,29 +140,38 @@ export const inkFragmentShader = /* glsl */ `
     float ink = fbm(p + warpAmt * rr2, oct);
     ink = ink * 0.5 + 0.5;
 
-    // sharpen into marbled bands (Suminagashi rings) — more defined veins
+    // sharpen into marbled bands (Suminagashi rings) — more defined veins.
+    // A coarse ring set plus a finer secondary set gives concentric depth.
     float veins = abs(sin(ink * 10.5 + rr2.x * 2.4 + ripple * 3.8));
-    veins = pow(veins, 1.4);
+    veins = pow(veins, 1.9);
+    float fineVeins = abs(sin(ink * 22.0 + rr2.y * 3.1));
+    fineVeins = pow(fineVeins, 3.0);
+    veins = max(veins, fineVeins * 0.6);
 
     // stronger contrast so the marbled ink reads clearly
-    float density = smoothstep(0.22, 0.82, ink);
-    density = mix(density, density * (0.55 + 0.45 * veins), 0.75);
+    float density = smoothstep(0.20, 0.84, ink);
+    density = mix(density, density * (0.5 + 0.5 * veins), 0.82);
 
-    // colour: paper base, charcoal/indigo ink, silver edges — richer, more saturated
+    // two-tone ink: a slow low-freq mask decides whether deep ink pools read
+    // as cool indigo or warm copper — the classic multi-ink suminagashi look.
+    float tone = smoothstep(0.35, 0.65, fbm(p * 1.3 + rr2 + t * 0.2, 3.0) * 0.5 + 0.5);
+    vec3 deepInk = mix(INDIGO, COPPER, tone);
+
+    // colour: paper base, silver mid, two-tone deep ink, charcoal/black cores
     vec3 col = RICE_PAPER;
-    col = mix(col, SILVER, smoothstep(0.26, 0.50, density) * 0.9);
-    col = mix(col, INDIGO, smoothstep(0.38, 0.68, density) * 1.0);
-    col = mix(col, CHARCOAL, smoothstep(0.56, 0.85, density) * 1.05);
-    col = mix(col, INK_BLACK, smoothstep(0.75, 0.98, density));
+    col = mix(col, SILVER, smoothstep(0.24, 0.48, density) * 0.9);
+    col = mix(col, deepInk, smoothstep(0.36, 0.68, density) * 1.05);
+    col = mix(col, CHARCOAL, smoothstep(0.58, 0.86, density) * 1.05);
+    col = mix(col, INK_BLACK, smoothstep(0.76, 0.99, density));
 
-    // silver vein highlights — more pronounced
-    col = mix(col, SILVER, veins * smoothstep(0.35, 0.68, density) * 0.32);
+    // silver vein highlights on the ring crests — more pronounced
+    col = mix(col, SILVER, veins * smoothstep(0.32, 0.70, density) * 0.42);
 
-    // pointer adds a rich indigo bloom; ripple adds silver wake
-    col = mix(col, INDIGO, pointer * 0.24);
-    col += SILVER * max(ripple, 0.0) * 0.18;
+    // pointer blooms the local ink toward its two-tone hue; ripple adds silver wake
+    col = mix(col, deepInk, pointer * 0.30);
+    col += SILVER * max(ripple, 0.0) * 0.20;
     // luminous wake where the cursor is moving fast — brighter trail
-    col += SILVER * drag * min(vmag * 2.8, 0.8);
+    col += SILVER * drag * min(vmag * 2.8, 0.85);
 
     // subtle paper grain
     float grain = noise(uv * uResolution * 0.5) * 0.02;
