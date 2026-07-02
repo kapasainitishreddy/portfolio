@@ -39,11 +39,20 @@ export default function InkBackground() {
     return () => document.removeEventListener("visibilitychange", onVisibility);
   }, []);
 
-  const useStatic = !mounted || reducedMotion || !webgl;
+  const useCanvas = mounted && !reducedMotion && webgl;
 
   return (
     <div className="ink-bg" aria-hidden role="presentation">
-      {useStatic ? <StaticFallback /> : <InkCanvas frameloop={tabVisible ? "always" : "never"} />}
+      {/* The CSS suminagashi is ALWAYS painted as a base layer, so the theme is
+          never blank. When WebGL is available the live canvas draws on top of
+          it (transparent, so if a shader/context fails at runtime the static
+          ink still shows through instead of a black screen). */}
+      <StaticFallback />
+      {useCanvas && (
+        <div className="ink-bg__canvas">
+          <InkCanvas frameloop={tabVisible ? "always" : "never"} />
+        </div>
+      )}
       {/* paper veil keeps text crisp above the ink */}
       <div className="ink-bg__veil" />
     </div>

@@ -182,6 +182,11 @@ h1 {
   background-color: var(--color-ink);
 }
 
+.ink-bg__canvas {
+  position: absolute;
+  inset: 0;
+}
+
 .ink-bg__veil {
   position: absolute;
   inset: 0;

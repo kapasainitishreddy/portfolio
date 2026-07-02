@@ -6,9 +6,9 @@ export type Theme = "ink" | "calligraphy" | "samurai";
 export type Mode = "light" | "dark";
 
 export const THEMES: { id: Theme; label: string; tagline: string }[] = [
-  { id: "samurai", label: "Bushidō", tagline: "Neon katana — scroll to slash" },
   { id: "ink", label: "Suminagashi", tagline: "Floating ink" },
   { id: "calligraphy", label: "Shodō", tagline: "Living brush" },
+  { id: "samurai", label: "Bushidō", tagline: "Neon katana — scroll to slash" },
 ];
 
 const THEME_KEY = "snrk_theme";
@@ -25,7 +25,7 @@ interface ThemeState {
 const ThemeContext = createContext<ThemeState | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("samurai");
+  const [theme, setThemeState] = useState<Theme>("ink");
   const [mode, setModeState] = useState<Mode>("dark");
 
   // restore persisted choices
@@ -78,6 +78,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme(): ThemeState {
   const ctx = useContext(ThemeContext);
-  if (!ctx) return { theme: "samurai", setTheme: () => {}, mode: "dark", setMode: () => {}, toggleMode: () => {} };
+  if (!ctx) return { theme: "ink", setTheme: () => {}, mode: "dark", setMode: () => {}, toggleMode: () => {} };
   return ctx;
 }

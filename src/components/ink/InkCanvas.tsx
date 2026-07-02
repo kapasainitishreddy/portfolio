@@ -158,7 +158,7 @@ export default function InkCanvas({ frameloop = "always" }: { frameloop?: "alway
   const tier = usePerformanceTier();
   return (
     <Canvas
-      gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }}
+      gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
       dpr={tier === "high" ? [1, 1.75] : [1, 1]}
       orthographic
       camera={{ position: [0, 0, 1], near: 0.1, far: 10 }}
