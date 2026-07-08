@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sai Nitish Reddy Kapa — Forward Deployed Engineer</title>
+<style>
+  :root {
+    --ink: #14181d;
+    --muted: #5c666f;
+    --faint: #8a949d;
+    --line: #e2e5e9;
+    --copper: #b4652f;
+    --copper-soft: #f6ede4;
+    --indigo: #3f4b8c;
+    --bg: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); }
+  body {
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.2px;
+    line-height: 1.48;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @page { size: Letter; margin: 0; }
+
+  .page { width: 8.5in; min-height: 11in; padding: 0.55in 0.6in 0.5in; margin: 0 auto; }
+
+  /* ---------- header ---------- */
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 14px; }
+  .name { font-size: 27px; font-weight: 700; letter-spacing: -0.4px; }
+  .title { font-size: 12.5px; color: var(--copper); font-weight: 600; margin-top: 2px; letter-spacing: 0.2px; }
+  .contact { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 9.6px; color: var(--muted); }
+  .contact span { white-space: nowrap; }
+  .contact b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- layout ---------- */
+  .grid { display: grid; grid-template-columns: 1fr 2.05fr; gap: 22px; }
+  section { margin-bottom: 13px; }
+  h2 {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.3px;
+    color: var(--ink); font-weight: 700; margin-bottom: 7px;
+    padding-bottom: 3px; border-bottom: 1px solid var(--line);
+  }
+
+  .summary { font-size: 10.4px; color: #2c333a; margin-bottom: 14px; }
+  .summary b { color: var(--ink); }
+
+  /* approach section (signature) */
+  .approach { background: var(--copper-soft); border-left: 3px solid var(--copper); border-radius: 4px; padding: 11px 13px; margin-bottom: 15px; }
+  .approach h2 { border: 0; margin-bottom: 8px; color: var(--copper); padding-bottom: 0; }
+  .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+  .step { display: flex; gap: 8px; }
+  .step .n { flex: 0 0 auto; width: 17px; height: 17px; border-radius: 50%; background: var(--copper); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .step .t { font-weight: 700; color: var(--ink); }
+  .step .d { color: var(--muted); }
+
+  /* experience / projects */
+  .item { margin-bottom: 9px; }
+  .item:last-child { margin-bottom: 0; }
+  .item .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .item .role { font-weight: 700; font-size: 10.8px; }
+  .item .org { color: var(--indigo); font-weight: 600; font-size: 9.8px; }
+  .item .when { color: var(--faint); font-size: 9px; white-space: nowrap; }
+  ul { list-style: none; margin-top: 3px; }
+  li { position: relative; padding-left: 11px; color: #333b42; margin-bottom: 1.5px; }
+  li::before { content: ""; position: absolute; left: 1px; top: 5.5px; width: 3.5px; height: 3.5px; border-radius: 50%; background: var(--copper); }
+  li.proof { color: var(--ink); font-weight: 600; }
+  li.proof::before { background: var(--indigo); }
+
+  .case { margin-bottom: 10px; }
+  .case .cap { font-size: 8.6px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--copper); font-weight: 700; }
+  .case .cname { font-weight: 700; font-size: 10.6px; }
+  .case .cdesc { color: var(--muted); font-size: 9.6px; margin: 1px 0 3px; }
+  .nda { font-size: 8.4px; color: var(--faint); font-style: italic; margin-top: 2px; }
+
+  /* side rail */
+  .rail h2 { }
+  .skillgroup { margin-bottom: 9px; }
+  .skillgroup .lbl { font-weight: 700; font-size: 9.6px; margin-bottom: 2px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 3px; }
+  .tag { font-size: 8.6px; background: #f1f3f5; color: #3b434a; border-radius: 3px; padding: 1.5px 5px; }
+
+  .cert { margin-bottom: 7px; }
+  .cert .ct { font-weight: 700; font-size: 9.8px; }
+  .cert .ci { color: var(--muted); font-size: 9px; }
+  .badge { display: inline-block; font-size: 7.6px; font-weight: 700; letter-spacing: 0.4px; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; margin-left: 4px; vertical-align: middle; }
+  .badge.done { background: #e5f3ec; color: #1c7a4f; }
+  .badge.wip { background: #fbf0da; color: #9a6a10; }
+
+  .talk { background: #14181d; color: #f4efe6; border-radius: 5px; padding: 10px 11px; font-size: 9.4px; }
+  .talk b { color: #e8a06b; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="name">Sai Nitish Reddy Kapa</div>
+    <div class="title">Forward Deployed Engineer · AI Governance</div>
+    <div class="contact">
+      <span><b>Email</b> kapasainitishreddy@gmail.com</span>
+      <span><b>Location</b> United States · Remote-first</span>
+      <span><b>GitHub</b> github.com/kapasainitishreddy</span>
+      <span><b>LinkedIn</b> linkedin.com/in/kapasainitishreddy</span>
+    </div>
+  </header>
+
+  <p class="summary">
+    Forward Deployed Engineer who <b>embeds with teams to ship AI systems that work in the real world</b>. I sit with founders
+    and product teams, learn the domain firsthand, and turn messy requirements into deployed, integrated, and governed software.
+    FDE-certified through Educative and currently completing an AI Governance certification, so the systems I ship stay
+    monitored, explainable, and accountable after launch.
+  </p>
+
+  <!-- signature: how I approach every problem -->
+  <div class="approach">
+    <h2>How I Approach Every Problem</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div><span class="t">Embed &amp; observe.</span> <span class="d">Go to where the problem actually lives. Watch the real workflow and talk to real users before writing a line of code.</span></div></div>
+      <div class="step"><div class="n">2</div><div><span class="t">Frame the thinnest slice.</span> <span class="d">Define the smallest thing that delivers real value and can ship this week, then expand from evidence — not assumptions.</span></div></div>
+      <div class="step"><div class="n">3</div><div><span class="t">Integrate deeply.</span> <span class="d">Wire into the customer's real data, auth, APIs, and tools so the solution survives production, not just the demo.</span></div></div>
+      <div class="step"><div class="n">4</div><div><span class="t">Keep a human in the loop.</span> <span class="d">Design approvals, fallbacks, and review steps so AI accelerates people without ever removing accountability.</span></div></div>
+      <div class="step"><div class="n">5</div><div><span class="t">Govern &amp; hand over.</span> <span class="d">Add evals, monitoring, and audit logs; write runbooks and docs so it stays safe and the team can own it without me.</span></div></div>
+      <div class="step"><div class="n">6</div><div><span class="t">Iterate in the open.</span> <span class="d">Over-communicate, ship weekly, measure against real outcomes, and close the loop with the people who use it.</span></div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- side rail -->
+    <div class="rail">
+      <section>
+        <h2>Core Capabilities</h2>
+        <div class="skillgroup">
+          <div class="lbl">AI Engineering &amp; Governance</div>
+          <div class="tags">
+            <span class="tag">LLM &amp; agent orchestration</span><span class="tag">RAG</span><span class="tag">Prompt engineering</span>
+            <span class="tag">Model evaluation</span><span class="tag">Human-in-the-loop</span><span class="tag">Monitoring &amp; drift</span>
+            <span class="tag">Guardrails</span><span class="tag">Audit &amp; docs</span>
+          </div>
+        </div>
+        <div class="skillgroup">
+          <div class="lbl">Data &amp; Integration</div>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">API integration</span><span class="tag">Data pipelines</span>
+            <span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Power BI</span><span class="tag">Webhooks</span>
+          </div>
+        </div>
+        <div class="skillgroup">
+          <div class="lbl">Deployment &amp; Delivery</div>
+          <div class="tags">
+            <span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Prototyping</span><span class="tag">Netlify / Vercel</span>
+            <span class="tag">Runbooks</span><span class="tag">Prod debugging</span><span class="tag">Observability</span>
+          </div>
+        </div>
+        <div class="skillgroup">
+          <div class="lbl">Embedded Collaboration</div>
+          <div class="tags">
+            <span class="tag">Customer discovery</span><span class="tag">Requirements</span><span class="tag">Stakeholder comms</span>
+            <span class="tag">Technical translation</span><span class="tag">Demos &amp; enablement</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Certifications</h2>
+        <div class="cert">
+          <div class="ct">Forward Deployed Engineer <span class="badge done">Certified</span></div>
+          <div class="ci">Educative · Specialized Track</div>
+        </div>
+        <div class="cert">
+          <div class="ct">AI Governance <span class="badge wip">In progress</span></div>
+          <div class="ci">Responsible AI &amp; AI Governance · expected 2026</div>
+        </div>
+        <div class="cert">
+          <div class="ct">Google IT Support</div>
+          <div class="ci">Professional Certificate</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Let's Talk</h2>
+        <div class="talk">
+          I'm actively looking for <b>Forward Deployed Engineer</b> and <b>AI governance</b> work — and deliberately reaching
+          out to more people to sharpen my communication. If you're building something hard, I'd love a conversation.
+        </div>
+      </section>
+    </div>
+
+    <!-- main column -->
+    <div class="main">
+      <section>
+        <h2>Experience</h2>
+        <div class="item">
+          <div class="row"><span class="role">Forward Deployed Engineer <span style="font-weight:500;color:var(--muted)">(Freelance)</span></span><span class="when">2024 – Present</span></div>
+          <div class="org">Seed-Stage AI Startup · client confidential</div>
+          <ul>
+            <li>Embedded with a small founding team to take an AI product from prototype to production inside real customer environments</li>
+            <li>Built and integrated LLM-powered workflows against the customer's live data, auth, and internal tools, replacing brittle manual processes</li>
+            <li>Instrumented evaluations, logging, and human-in-the-loop review so the deployed system stayed accurate, safe, and auditable</li>
+            <li>Ran weekly feedback loops with end users and wrote architecture docs, runbooks, and governance controls for team handover</li>
+          </ul>
+        </div>
+        <div class="item">
+          <div class="row"><span class="role">Business Data Analyst</span><span class="when">Aug 2024 – Present</span></div>
+          <div class="org">Augmentare Inc.</div>
+          <ul>
+            <li>Deploy internal data tooling, dashboards, and reporting pipelines that put operational insight in front of decision-makers</li>
+            <li class="proof">Automated recurring reporting workflows, improving reporting efficiency by 28%</li>
+            <li>Integrate data across business and technical systems; translate findings into executive-ready reports</li>
+          </ul>
+        </div>
+        <div class="item">
+          <div class="row"><span class="role">AI Evaluation &amp; Governance Specialist</span><span class="when">Freelance</span></div>
+          <div class="org">Outlier AI</div>
+          <ul>
+            <li class="proof">Reviewed 1,800+ model responses and documented 30+ recurring failure modes as structured, actionable feedback</li>
+            <li>Evaluated AI outputs for factual accuracy, safety, reasoning, and instruction following — the judgment behind responsible AI governance</li>
+            <li>Supported human-in-the-loop review workflows that keep AI systems accountable and audit-ready</li>
+          </ul>
+        </div>
+        <div class="item">
+          <div class="row"><span class="role">Data Analyst</span><span class="when">Jun 2020 – Jan 2023</span></div>
+          <div class="org">VN Technologies</div>
+          <ul>
+            <li class="proof">Built recurring dashboards and data pipelines that reduced analysis turnaround by 30%</li>
+            <li>Partnered with cross-functional stakeholders to gather requirements, resolve inconsistencies, and manage revisions</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Selected FDE Case Studies <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--faint);font-size:8.4px">— client &amp; customer withheld under NDA</span></h2>
+        <div class="case">
+          <div class="cap">Forward Deployed · AI in Production</div>
+          <div class="cname">Embedded Support Copilot</div>
+          <div class="cdesc">Shipped an AI support copilot into a seed-stage startup's live workflow — from demo to daily-relied-on system.</div>
+          <ul>
+            <li class="proof">First-response time cut ~60% on covered ticket types · ~45% of routine tickets resolved with copilot-drafted answers · prototype→production in under 4 weeks</li>
+            <li>Grounded, cited answers from the live knowledge base; human approval before customer-facing sends; full interaction logging for audit</li>
+          </ul>
+        </div>
+        <div class="case">
+          <div class="cap">Forward Deployed · Data Integration</div>
+          <div class="cname">Production Data &amp; Ops Pipeline</div>
+          <div class="cdesc">Replaced a fragile spreadsheet reporting ritual with a deployed pipeline and real-time operations dashboard.</div>
+          <ul>
+            <li class="proof">~20 analyst-hours/week of manual reporting eliminated · weekly → near real-time · 99.5% pipeline uptime</li>
+            <li>Automated ingestion and reconciliation across four live sources with alerting; runbooks for team self-service ownership</li>
+          </ul>
+        </div>
+        <div class="case">
+          <div class="cap">Forward Deployed · Agent Automation</div>
+          <div class="cname">Customer Onboarding Agent</div>
+          <div class="cdesc">Human-in-the-loop agent that guided each new customer through setup and unblocked the founding team.</div>
+          <ul>
+            <li class="proof">Onboarding time cut from ~3 weeks to ~4 days · founder freed from ~90% of manual steps · zero irreversible actions without human approval</li>
+            <li>Guided, validated flow integrated with product provisioning APIs; ambiguity escalated to a human with full context</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>FDE × AI Governance Projects</h2>
+        <div class="case">
+          <div class="cname">GovSeal — Deployment Governance Console</div>
+          <div class="cdesc">A console that sits on top of deployed AI: continuous evaluation runs, drift &amp; quality monitoring, a human-approval workflow for changes, and a tamper-evident audit log — so the team that ships a model can prove it's still behaving.</div>
+        </div>
+        <div class="case">
+          <div class="cname">TraceGrid — LLM Evaluation &amp; Audit Platform</div>
+          <div class="cdesc">Captures the full trace of every response (input, prompt version, context, model, output), scores it for factuality, safety, bias, and policy, and feeds failing cases to a red-team and human-review queue — making AI behavior legible and contestable.</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+</body>
+</html>
