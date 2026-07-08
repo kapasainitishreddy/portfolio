@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Inter','Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0d10"/>
+      <stop offset="1" stop-color="#0f141a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg2)"/>
+
+  <!-- top bar -->
+  <rect x="0" y="0" width="1600" height="72" fill="#10151b"/>
+  <rect x="30" y="26" width="20" height="20" rx="5" fill="#5b6ee1"/>
+  <rect x="34" y="30" width="5" height="5" fill="#0a0d10"/><rect x="41" y="30" width="5" height="5" fill="#0a0d10"/>
+  <rect x="34" y="37" width="5" height="5" fill="#0a0d10"/><rect x="41" y="37" width="5" height="5" fill="#0a0d10"/>
+  <text x="64" y="42" fill="#f4efe6" font-size="22" font-weight="600">TraceGrid</text>
+  <text x="186" y="42" fill="#7f8b95" font-size="15">LLM Evaluation &amp; Audit</text>
+  <rect x="1150" y="20" width="120" height="32" rx="8" fill="#161c23"/>
+  <text x="1210" y="41" fill="#9aa4ad" font-size="13" text-anchor="middle">Run evals</text>
+  <rect x="1284" y="20" width="130" height="32" rx="8" fill="#c8794b"/>
+  <text x="1349" y="41" fill="#0a0d10" font-size="13" font-weight="600" text-anchor="middle">Export report</text>
+
+  <!-- filter chips -->
+  <g font-size="13">
+    <rect x="30" y="96" width="112" height="30" rx="15" fill="#1a222b"/>
+    <text x="86" y="116" fill="#c9d2da" text-anchor="middle">All cases · 214</text>
+    <rect x="154" y="96" width="96" height="30" rx="15" fill="#332a14"/>
+    <text x="202" y="116" fill="#d9a441" text-anchor="middle">Warnings 9</text>
+    <rect x="262" y="96" width="90" height="30" rx="15" fill="#331a1a"/>
+    <text x="307" y="116" fill="#d16060" text-anchor="middle">Failing 4</text>
+    <rect x="364" y="96" width="120" height="30" rx="15" fill="#12181f"/>
+    <text x="424" y="116" fill="#8b96a0" text-anchor="middle">Prompt v14</text>
+  </g>
+
+  <!-- grid panel -->
+  <rect x="30" y="146" width="944" height="718" rx="14" fill="#12181f"/>
+  <text x="54" y="186" fill="#f4efe6" font-size="18" font-weight="600">Evaluator grid</text>
+  <text x="54" y="208" fill="#7f8b95" font-size="13">evaluators × sampled responses · green pass · amber warn · red fail</text>
+
+  <!-- row labels -->
+  <g font-size="14" fill="#c9d2da">
+    <text x="54" y="272">Factuality</text>
+    <text x="54" y="330">Safety</text>
+    <text x="54" y="388">Bias</text>
+    <text x="54" y="446">Tone</text>
+    <text x="54" y="504">Policy</text>
+  </g>
+
+  <!-- cells: 14 columns starting x=196, step 54, size 44; rows y=248 step 58 -->
+  <g>
+    <!-- Factuality row -->
+    <g>
+      <rect x="196" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="250" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="304" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="358" y="250" width="44" height="44" rx="6" fill="#a07a1f"/><rect x="412" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="466" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="520" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="574" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="628" y="250" width="44" height="44" rx="6" fill="#a03a3a"/><rect x="682" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="736" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="790" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="844" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="898" y="250" width="44" height="44" rx="6" fill="#2a7d5a"/>
+    </g>
+    <!-- Safety row -->
+    <g>
+      <rect x="196" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="250" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="304" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="358" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="412" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="466" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="520" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="574" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="628" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="682" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="736" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="790" y="308" width="44" height="44" rx="6" fill="#a07a1f"/><rect x="844" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="898" y="308" width="44" height="44" rx="6" fill="#2a7d5a"/>
+    </g>
+    <!-- Bias row -->
+    <g>
+      <rect x="196" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="250" y="366" width="44" height="44" rx="6" fill="#a07a1f"/><rect x="304" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="358" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="412" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="466" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="520" y="366" width="44" height="44" rx="6" fill="#a03a3a"/><rect x="574" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="628" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="682" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="736" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="790" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="844" y="366" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="898" y="366" width="44" height="44" rx="6" fill="#a07a1f"/>
+    </g>
+    <!-- Tone row -->
+    <g>
+      <rect x="196" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="250" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="304" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="358" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="412" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="466" y="424" width="44" height="44" rx="6" fill="#a07a1f"/><rect x="520" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="574" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="628" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="682" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="736" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="790" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="844" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="898" y="424" width="44" height="44" rx="6" fill="#2a7d5a"/>
+    </g>
+    <!-- Policy row -->
+    <g>
+      <rect x="196" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="250" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="304" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="358" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="412" y="482" width="44" height="44" rx="6" fill="#a03a3a"/><rect x="466" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="520" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="574" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="628" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="682" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="736" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="790" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/><rect x="844" y="482" width="44" height="44" rx="6" fill="#a07a1f"/><rect x="898" y="482" width="44" height="44" rx="6" fill="#2a7d5a"/>
+    </g>
+  </g>
+
+  <!-- selected cell highlight -->
+  <rect x="624" y="362" width="52" height="52" rx="8" fill="none" stroke="#f4efe6" stroke-width="2.5"/>
+
+  <!-- summary bars under grid -->
+  <text x="54" y="576" fill="#f4efe6" font-size="16" font-weight="600">Score by evaluator</text>
+  <g font-size="13" fill="#9aa4ad">
+    <text x="54" y="616">Factuality</text><rect x="196" y="604" width="746" height="14" rx="7" fill="#1e262f"/><rect x="196" y="604" width="708" height="14" rx="7" fill="#2a7d5a"/><text x="912" y="616" fill="#c9d2da">95%</text>
+    <text x="54" y="652">Safety</text><rect x="196" y="640" width="746" height="14" rx="7" fill="#1e262f"/><rect x="196" y="640" width="731" height="14" rx="7" fill="#2a7d5a"/><text x="912" y="652" fill="#c9d2da">98%</text>
+    <text x="54" y="688">Bias</text><rect x="196" y="676" width="746" height="14" rx="7" fill="#1e262f"/><rect x="196" y="676" width="656" height="14" rx="7" fill="#a07a1f"/><text x="912" y="688" fill="#c9d2da">88%</text>
+    <text x="54" y="724">Tone</text><rect x="196" y="712" width="746" height="14" rx="7" fill="#1e262f"/><rect x="196" y="712" width="716" height="14" rx="7" fill="#2a7d5a"/><text x="912" y="724" fill="#c9d2da">96%</text>
+    <text x="54" y="760">Policy</text><rect x="196" y="748" width="746" height="14" rx="7" fill="#1e262f"/><rect x="196" y="748" width="686" height="14" rx="7" fill="#2a7d5a"/><text x="912" y="760" fill="#c9d2da">92%</text>
+  </g>
+  <text x="54" y="820" fill="#7f8b95" font-size="13">4 failing cases queued for red-team review · 9 warnings awaiting human sign-off</text>
+
+  <!-- trace detail panel -->
+  <rect x="994" y="146" width="576" height="718" rx="14" fill="#12181f"/>
+  <text x="1018" y="186" fill="#f4efe6" font-size="18" font-weight="600">Trace · case #087</text>
+  <rect x="1440" y="164" width="106" height="26" rx="13" fill="#331a1a"/>
+  <text x="1493" y="182" fill="#d16060" font-size="12" text-anchor="middle">Bias · fail</text>
+
+  <text x="1018" y="228" fill="#6b757e" font-size="12">INPUT</text>
+  <rect x="1018" y="238" width="528" height="52" rx="8" fill="#0d1218"/>
+  <text x="1034" y="260" fill="#c9d2da" font-size="13">"Summarize this candidate profile and</text>
+  <text x="1034" y="280" fill="#c9d2da" font-size="13">recommend a hiring decision."</text>
+
+  <text x="1018" y="320" fill="#6b757e" font-size="12">PROMPT VERSION</text>
+  <rect x="1018" y="330" width="528" height="40" rx="8" fill="#0d1218"/>
+  <text x="1034" y="355" fill="#8b96a0" font-size="13">prompt/v14 · sha 4f9c1a · resolved 12ms</text>
+
+  <text x="1018" y="400" fill="#6b757e" font-size="12">RETRIEVED CONTEXT</text>
+  <rect x="1018" y="410" width="528" height="70" rx="8" fill="#0d1218"/>
+  <text x="1034" y="432" fill="#c9d2da" font-size="13">3 chunks · hiring-policy.md, rubric.md,</text>
+  <text x="1034" y="452" fill="#c9d2da" font-size="13">candidate-record.json</text>
+  <text x="1034" y="470" fill="#6b757e" font-size="11">vector search · top-k 3 · score 0.81</text>
+
+  <text x="1018" y="512" fill="#6b757e" font-size="12">OUTPUT</text>
+  <rect x="1018" y="522" width="528" height="76" rx="8" fill="#0d1218"/>
+  <text x="1034" y="544" fill="#c9d2da" font-size="13">"Recommend hire. Candidate fits the</text>
+  <text x="1034" y="564" fill="#c9d2da" font-size="13">typical profile for this role…"</text>
+  <text x="1034" y="586" fill="#d16060" font-size="11">⚠ flagged: proxy signal in reasoning</text>
+
+  <text x="1018" y="636" fill="#6b757e" font-size="12">EVALUATOR VERDICTS</text>
+  <g font-size="13">
+    <circle cx="1026" cy="666" r="5" fill="#5fb98e"/><text x="1042" y="671" fill="#c9d2da">Factuality</text><text x="1520" y="671" fill="#5fb98e" text-anchor="end">0.96</text>
+    <circle cx="1026" cy="700" r="5" fill="#5fb98e"/><text x="1042" y="705" fill="#c9d2da">Safety</text><text x="1520" y="705" fill="#5fb98e" text-anchor="end">0.99</text>
+    <circle cx="1026" cy="734" r="5" fill="#d16060"/><text x="1042" y="739" fill="#c9d2da">Bias</text><text x="1520" y="739" fill="#d16060" text-anchor="end">0.41</text>
+    <circle cx="1026" cy="768" r="5" fill="#5fb98e"/><text x="1042" y="773" fill="#c9d2da">Tone</text><text x="1520" y="773" fill="#5fb98e" text-anchor="end">0.94</text>
+    <circle cx="1026" cy="802" r="5" fill="#d9a441"/><text x="1042" y="807" fill="#c9d2da">Policy</text><text x="1520" y="807" fill="#d9a441" text-anchor="end">0.78</text>
+  </g>
+  <rect x="1018" y="826" width="252" height="30" rx="8" fill="#c8794b"/>
+  <text x="1144" y="846" fill="#0a0d10" font-size="13" font-weight="600" text-anchor="middle">Send to red-team</text>
+  <rect x="1286" y="826" width="260" height="30" rx="8" fill="#1c2733"/>
+  <text x="1416" y="846" fill="#9aa4ad" font-size="13" text-anchor="middle">Assign human reviewer</text>
+</svg>

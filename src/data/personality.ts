@@ -20,74 +20,74 @@ export const whyHireMe: WhyHireMe = {
   humble: {
     heading: "Why work with me?",
     intro:
-      "I'm just someone who loves building things and telling stories. If you're looking for someone who cares deeply, thinks before acting, and genuinely believes in growing together, maybe we're a match.",
+      "I'm a Forward Deployed Engineer who genuinely likes sitting with a problem — and the people who have it — until it's shipped. If you want someone who cares deeply, listens first, and grows alongside your team, maybe we're a match.",
     traits: [
       {
-        title: "I'm actually funny",
+        title: "I go to where the problem is",
         description:
-          "Not in a trying-too-hard way. Just... genuinely enjoy making people laugh and don't take myself too seriously.",
+          "I don't build from a distance. I embed, watch the real workflow, and build against the messy reality — that's where forward deployed work earns its keep.",
       },
       {
-        title: "I grow old with orgs",
+        title: "I ship, then I stay",
         description:
-          "I don't bounce around. I want to find a place where we can build something lasting together, where the org becomes the best version of itself and I'm part of that journey.",
+          "Getting a system live is the start, not the finish. I hand over docs, runbooks, and governance so the team can own what I built — and I stick around to make it stick.",
       },
       {
         title: "Humble and hungry",
         description:
-          "I know there's always more to learn. I listen more than I talk, ask questions before concluding, and genuinely celebrate others' wins.",
+          "There's always more to learn. I listen more than I talk, ask questions before concluding, and I'm actively trying to talk to more people to sharpen how I communicate.",
       },
       {
         title: "I love otters 🦦",
         description:
-          "Small things bring me joy. Kindness matters. If I'd stop to pet an otter, I'll definitely stop to help a teammate.",
+          "Small things bring me joy. Kindness matters. If I'd stop to pet an otter, I'll definitely stop to unblock a teammate.",
       },
       {
-        title: "Long-term crypto believer",
+        title: "I care that AI stays accountable",
         description:
-          "I don't chase pumps. I hold. It's not about get-rich schemes—it's about believing in something and staying committed through cycles.",
+          "I'm training toward an AI governance certification because shipping fast and shipping responsibly shouldn't be a trade-off. Evals, oversight, and audit trails come standard.",
       },
       {
         title: "Loyal to a fault",
         description:
-          "I feel genuinely bad canceling free trials. That's just how I'm wired. If I commit to something, I show up.",
+          "If I commit to something, I show up. That reliability extends to clients, teammates, and the systems I put my name on.",
       },
     ],
   },
   hireMeMode: {
     heading: "Why hire me?",
     intro:
-      "I build products that matter, ship fast, and lead with empathy. I'm looking for a company where I can grow roots—somewhere we can build something legendary together.",
+      "I'm a Forward Deployed Engineer: I embed with teams, turn real problems into deployed AI software, and keep it governed. FDE-certified through Educative, training toward an AI governance credential, and always looking for the next hard problem — and the next good conversation.",
     traits: [
       {
-        title: "Builder with storytelling DNA",
+        title: "Prototype-to-production, fast",
         description:
-          "I ship products, not just code. 2M+ views as a webnovel author means I know how to engage, iterate based on feedback, and keep readers (users) coming back.",
+          "I've taken AI prototypes from 'nice demo' to systems a team relies on daily — in weeks, not quarters — by shipping thin working slices and iterating from real usage.",
       },
       {
-        title: "Genuinely funny and human",
+        title: "Deep integration, not workarounds",
         description:
-          "Culture matters. I bring levity without being a distraction, build trust through authenticity, and make hard problems feel solvable.",
+          "I wire into the customer's actual stack: data, auth, APIs, and internal tools. Solutions that survive contact with production, not glue that breaks on Monday.",
       },
       {
-        title: "Company loyalist",
+        title: "Governance built in",
         description:
-          "I'm looking to stay. Not for 2 years—for 10+. The kind of person who invests in org culture, mentors juniors, and genuinely cares about collective wins.",
+          "Evaluations, drift monitoring, human-in-the-loop approvals, and audit logs. I ship AI you can point an auditor at, not a black box you cross your fingers over.",
       },
       {
-        title: "Strategic thinker",
+        title: "Fluent between code and stakeholders",
         description:
-          "GTM analysis, network effects, incentive design. I think systems-first, not task-first. I see how moves ripple.",
+          "The FDE superpower is moving between the terminal and the conversation. I translate ambiguous requirements into architecture and back into plain language.",
       },
       {
-        title: "Long-term conviction over hype",
+        title: "Always improving my communication",
         description:
-          "Like my approach to crypto—I hold through cycles. I evaluate decisions by 5-year outcomes, not quarterly metrics.",
+          "I deliberately reach out and talk to more people because clear communication is half the job. I'd rather over-communicate and align than ship in silence.",
       },
       {
         title: "Reliability incarnate",
         description:
-          "I don't cancel on people. Ever. That loyalty extends to projects, teams, and orgs. When you need someone, I'm there.",
+          "I don't cancel on people. Ever. That loyalty extends to clients, teams, and the systems I deploy. When you need someone in the trenches, I'm there.",
       },
     ],
   },

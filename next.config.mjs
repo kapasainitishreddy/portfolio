@@ -4,6 +4,10 @@ const nextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    // Allow the locally-authored project snapshot SVGs to be served through
+    // next/image. Sandboxed + script-src 'none' keeps it safe for our own assets.
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   // three.js ships ESM; transpile for older bundling edge cases
   transpilePackages: ["three"],

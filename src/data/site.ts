@@ -7,13 +7,18 @@ export const site = {
   name: "Sai Nitish Reddy Kapa",
   shortName: "Sai Nitish",
   initials: "SK",
-  roles: ["Communications & Data Professional", "AI Governance Communicator", "Digital Content Strategist", "Data Analyst"],
-  tagline: "Making complex technology clear, useful, and trustworthy",
+  roles: [
+    "Forward Deployed Engineer",
+    "AI Governance Engineer",
+    "Solutions & Deployment Engineer",
+    "Embedded Technical Partner",
+  ],
+  tagline: "I embed with teams to ship AI systems that actually work in the real world",
   email: "kapasainitishreddy@gmail.com",
-  location: "United States",
+  location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
-    "Sai Nitish Reddy Kapa translates complex technical, research, and operational information into clear digital content, reports, presentations, and data-informed communications.",
+    "Sai Nitish Reddy Kapa is a Forward Deployed Engineer who embeds with teams to design, integrate, and safely deploy AI systems in production — pairing hands-on delivery with responsible AI governance.",
   resumeUrl: "/resume.pdf",
 } as const;
 
@@ -27,80 +32,80 @@ export const navItems = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Capabilities", href: "#skills" },
-  { label: "Selected Work", href: "#projects" },
+  { label: "Case Studies", href: "#projects" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
 export const hero = {
-  headline: "I turn complex AI, research, and data into communication people can use.",
+  headline: "I embed with teams to ship AI systems that work in the real world.",
   supporting: [
-    "I am Sai Nitish Reddy Kapa, a communications and data professional with 3+ years of experience producing reports, presentations, digital content, dashboards, and stakeholder updates.",
-    "My work combines editorial judgment, publication coordination, analytics, visual storytelling, and responsible AI tools to make technical and policy-oriented ideas accurate, accessible, and actionable.",
+    "I'm Sai Nitish Reddy Kapa, a Forward Deployed Engineer. I sit with founders and product teams, learn their domain firsthand, and turn messy real-world requirements into deployed, reliable AI software.",
+    "I'm FDE-certified through Educative and currently completing an AI Governance certification — so the systems I ship don't just work, they stay monitored, explainable, and accountable after launch.",
   ],
-  status: "Open to communications, AI governance, research, and digital publishing opportunities",
+  status: "Open to Forward Deployed Engineer & AI governance roles",
   actions: [
-    { label: "View Selected Work", href: "#projects", kind: "primary" as const },
+    { label: "View FDE Case Studies", href: "#projects", kind: "primary" as const },
     { label: "Read My Experience", href: "#experience", kind: "ghost" as const },
-    { label: "Start a Conversation", href: "#contact", kind: "ghost" as const },
+    { label: "Let's Talk", href: "#contact", kind: "ghost" as const },
   ],
 } as const;
 
 export const about = {
-  heading: "Clear communication is infrastructure for better decisions.",
+  heading: "A Forward Deployed Engineer turns a customer's problem into shipped software.",
   paragraphs: [
-    "Complex research and technology only create impact when people can understand what matters, why it matters, and what to do next. I translate detailed analysis into concise reports, presentations, web content, briefing materials, and stakeholder communications.",
-    "My background spans business and operational analysis, AI content evaluation, market research, publication workflows, visual communication, and performance reporting. I am comfortable coordinating multiple deliverables across remote, cross-functional teams while maintaining accuracy, consistency, and deadlines.",
-    "I am especially interested in responsible AI, AI governance, technology policy, digital publishing, research communications, and mission-driven organizations working to make consequential systems safer and more accountable.",
+    "Forward deployed work means going to where the problem actually lives. I embed with a team, learn their domain and constraints firsthand, prototype against real data, and iterate in tight loops until the system is running in production and creating value.",
+    "My work spans integration engineering, data pipelines, LLM and agent orchestration, internal tooling, and the glue code that makes AI dependable in the messy conditions of a live business. I move between writing code, talking to stakeholders, and debugging in production without losing the thread.",
+    "I pair that delivery focus with responsible AI governance — evaluations, human-in-the-loop review, monitoring, and clear documentation — so the systems I deploy stay explainable, safe, and accountable long after the first launch.",
   ],
   keywords: [
-    { word: "Clarity", note: "Translate technical and policy-oriented material for different audiences." },
-    { word: "Accuracy", note: "Validate claims, edit carefully, and keep evidence distinct from inference." },
-    { word: "Coordination", note: "Manage timelines, reviews, approvals, stakeholders, and publication handoffs." },
-    { word: "Insight", note: "Use analytics and audience signals to improve communication performance." },
+    { word: "Embed", note: "Sit with the customer, learn the domain, build against real workflows." },
+    { word: "Ship", note: "Prototype fast, integrate deeply, get systems running in production." },
+    { word: "Iterate", note: "Tight feedback loops with real users until the system truly works." },
+    { word: "Govern", note: "Evaluations, monitoring, and human oversight so deployed AI stays accountable." },
   ],
 } as const;
 
 export const principles = {
-  heading: "How I approach communications and digital work.",
+  heading: "How I approach forward deployed engineering.",
   items: [
     {
-      title: "Understand before simplifying",
-      body: "Read the underlying research closely so summaries remain accessible without losing accuracy or important nuance.",
+      title: "Go to where the problem is",
+      body: "Embed with the team, watch the real workflow, and build against actual data and constraints instead of a spec written from a distance.",
     },
     {
-      title: "Design for the audience",
-      body: "Adapt structure, tone, format, and level of detail for websites, newsletters, reports, presentations, and social channels.",
+      title: "Ship the thinnest thing that works",
+      body: "Get a working slice into production early, learn from real usage, and expand from evidence rather than assumptions.",
     },
     {
-      title: "Make workflows reliable",
-      body: "Use clear ownership, templates, review checkpoints, content calendars, and version control to keep concurrent deliverables moving.",
+      title: "Integrate deeply, not around",
+      body: "Wire into the customer's real systems — data sources, auth, tools, and workflows — so the solution survives contact with production.",
     },
     {
-      title: "Measure and improve",
-      body: "Use engagement, traffic, workflow, and operational data to identify what works and recommend practical improvements.",
+      title: "Keep a human in the loop",
+      body: "Design approvals, review steps, and fallbacks so AI accelerates people without ever removing accountability.",
     },
     {
-      title: "Use AI responsibly",
-      body: "Apply AI tools to accelerate research and drafting while preserving human review, factual verification, privacy, and accountability.",
+      title: "Govern what you deploy",
+      body: "Add evaluations, monitoring, logging, and documentation so a shipped system stays explainable, safe, and auditable.",
     },
   ],
 } as const;
 
 export const contact = {
-  heading: "Let’s make important work easier to understand.",
+  heading: "Let's talk — I'm making a point of talking to more people.",
   supporting:
-    "I am interested in communications, digital publishing, research, AI governance, technology policy, analytics, and mission-driven work where clarity and coordination matter.",
+    "I'm actively looking for Forward Deployed Engineer and AI governance work, and I'm deliberately reaching out to more people to sharpen my communication skills. If you're building something hard, I'd genuinely love a conversation — even just to compare notes.",
   reasons: [
-    "Communications opportunity",
-    "AI governance or policy collaboration",
-    "Research and digital publishing",
-    "Data and performance reporting",
+    "Forward Deployed Engineer role",
+    "AI governance or responsible-AI collaboration",
+    "Freelance / embedded engineering engagement",
+    "Just want to connect and talk shop",
     "Other",
   ],
 } as const;
 
 export const footer = {
   signature: "Designed and built by Sai Nitish Reddy Kapa",
-  motto: "Complex ideas deserve clear communication.",
+  motto: "Embed. Ship. Govern.",
 } as const;

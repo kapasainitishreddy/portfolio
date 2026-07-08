@@ -23,10 +23,9 @@ export interface BuildingItem {
 }
 
 export const buildingItems: BuildingItem[] = [
-  { name: "Siraba HQ", phase: "Prototype", blurb: "AI company operating system" },
-  { name: "Vakya", phase: "Prototype", blurb: "Real-time language intelligence" },
-  { name: "Receipts", phase: "Testing", blurb: "Local-first personal clarity" },
-  { name: "Keeply", phase: "Prototype", blurb: "Universal capture and organization" },
-  { name: "Un-em", phase: "System Design", blurb: "Natural AI writing assistant" },
-  { name: "VibeDesk", phase: "Research", blurb: "Command center for solo builders" },
+  { name: "GovSeal", phase: "Prototype", blurb: "Deployment governance console for AI" },
+  { name: "TraceGrid", phase: "System Design", blurb: "LLM evaluation & audit platform" },
+  { name: "AI Governance Certification", phase: "Testing", blurb: "Responsible-AI credential in progress" },
+  { name: "Embedded copilot rollouts", phase: "Iteration", blurb: "Shipping AI into live customer workflows" },
+  { name: "Evaluation harness library", phase: "Research", blurb: "Reusable evals for deployed models" },
 ];

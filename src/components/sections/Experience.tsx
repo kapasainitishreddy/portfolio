@@ -14,7 +14,7 @@ export default function Experience() {
     <Section id="experience" label="Experience">
       <Reveal>
         <h2 className="max-w-3xl text-rice" style={{ fontSize: "clamp(1.9rem, 4vw, 3.2rem)" }}>
-          A path across data, AI evaluation, research and operations.
+          A path from data and AI evaluation into forward deployed engineering.
         </h2>
       </Reveal>
 

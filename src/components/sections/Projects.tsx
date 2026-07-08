@@ -5,38 +5,36 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Section } from "@/components/layout/Section";
 import Reveal from "@/components/layout/Reveal";
 import { projects, projectTags, type Project, type ProjectTag } from "@/data/projects";
-import { publicGoodProjects } from "@/data/publicGoodProjects";
 import ProjectCard from "@/components/projects/ProjectCard";
 import ProjectModal from "@/components/projects/ProjectModal";
 
-type Filter = ProjectTag | "All" | "Public Good";
+type Filter = ProjectTag | "All";
 
 export default function Projects() {
-  const [filter, setFilter] = useState<Filter>("Public Good");
+  const [filter, setFilter] = useState<Filter>("All");
   const [selected, setSelected] = useState<Project | null>(null);
 
-  const allProjects = useMemo(() => [...publicGoodProjects, ...projects], []);
+  const allProjects = useMemo(() => projects, []);
 
   const filtered =
-    filter === "Public Good"
-      ? publicGoodProjects
-      : filter === "All"
-        ? allProjects
-        : allProjects.filter((project) => project.tags.includes(filter));
+    filter === "All"
+      ? allProjects
+      : allProjects.filter((project) => project.tags.includes(filter));
 
-  const filters: Filter[] = ["Public Good", "All", ...projectTags];
+  const filters: Filter[] = ["All", ...projectTags];
 
   return (
-    <Section id="projects" label="Public-Good Portfolio">
+    <Section id="projects" label="FDE Case Studies & Work">
       <Reveal>
         <div className="max-w-4xl">
-          <p className="font-mono-label mb-4 text-copper">BUILDING FOR FLOURISHING FUTURES</p>
+          <p className="font-mono-label mb-4 text-copper">EMBED · SHIP · GOVERN</p>
           <h2 className="text-rice" style={{ fontSize: "clamp(1.9rem, 4vw, 3.2rem)" }}>
-            Products that make consequential systems more legible, accountable, and humane.
+            Forward deployed work: real problems turned into shipped, governed software.
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-silver md:text-lg">
-            The first collection contains the ideas most relevant to Surplus: decision infrastructure,
-            institutional memory, public epistemics, privacy, and tools that preserve human agency.
+            Three anonymized case studies from a confidential freelance engagement — embedding with a
+            seed-stage startup as a Forward Deployed Engineer — plus two projects where FDE delivery
+            meets AI governance. Client and customer names are withheld; the outcomes are real.
           </p>
         </div>
       </Reveal>

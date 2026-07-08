@@ -98,7 +98,7 @@ export default function Hero() {
           <div className="surface absolute inset-0 overflow-hidden rounded-2xl">
             <NeuralVisual />
           </div>
-          <span className="font-mono-label absolute bottom-4 left-4 z-10">art · data · systems</span>
+          <span className="font-mono-label absolute bottom-4 left-4 z-10">embed · ship · govern</span>
         </motion.div>
       </div>
 
