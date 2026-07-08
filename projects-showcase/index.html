@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sai Nitish Reddy Kapa — Projects</title>
+<meta name="description" content="A pure project showcase: AI products, governance tooling, hardware, privacy tech, and decentralized systems." />
+<style>
+  :root {
+    --ink: #0a0d10;
+    --charcoal: #12161b;
+    --surface: #14181f;
+    --rice: #f4efe6;
+    --silver: #a9b2ba;
+    --muted: #7f8b95;
+    --copper: #c8794b;
+    --indigo: #5b6ee1;
+    --line: rgba(169, 178, 186, 0.16);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--ink); color: var(--rice); font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { line-height: 1.5; }
+  a { color: inherit; }
+
+  header.hero { padding: 72px 24px 40px; max-width: 1100px; margin: 0 auto; }
+  .kicker { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 14px; }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; margin: 0 0 18px; font-weight: 700; letter-spacing: -0.5px; }
+  .lede { max-width: 640px; color: var(--silver); font-size: 16px; }
+  .meta-links { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; font-size: 13px; }
+  .meta-links a { border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; text-decoration: none; color: var(--rice); transition: border-color .2s, background .2s; }
+  .meta-links a:hover { border-color: var(--copper); background: rgba(200,121,75,0.08); }
+
+  .filters { max-width: 1100px; margin: 0 auto; padding: 0 24px 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid var(--line); background: transparent; color: var(--silver); font-size: 13px; padding: 7px 15px; border-radius: 999px; cursor: pointer; transition: all .2s; }
+  .chip:hover { color: var(--rice); border-color: var(--silver); }
+  .chip.active { background: var(--rice); color: var(--ink); border-color: var(--rice); font-weight: 600; }
+
+  .count { max-width: 1100px; margin: 18px auto 0; padding: 0 24px; color: var(--muted); font-size: 13px; }
+
+  .grid { max-width: 1100px; margin: 0 auto; padding: 20px 24px 100px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform .25s ease, border-color .25s ease; display: flex; flex-direction: column; }
+  .card:hover { transform: translateY(-3px); border-color: rgba(200,121,75,0.4); }
+  .thumb { aspect-ratio: 16/10; position: relative; overflow: hidden; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb .placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 15px; color: rgba(244,239,230,0.55); text-align: center; padding: 12px; }
+  .status-badge { position: absolute; top: 10px; right: 10px; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: rgba(10,13,16,0.72); backdrop-filter: blur(4px); }
+  .status-badge.soon { background: var(--copper); color: var(--ink); }
+  .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+  .cat { font-size: 10px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .name { font-size: 20px; font-weight: 700; margin: 8px 0 8px; letter-spacing: -0.2px; }
+  .summary { color: var(--silver); font-size: 13.5px; flex: 1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .tag { font-size: 10.5px; border: 1px solid var(--line); color: var(--silver); border-radius: 999px; padding: 3px 9px; }
+  .open-cta { margin-top: 16px; font-size: 13px; display: flex; align-items: center; gap: 6px; color: var(--rice); }
+
+  /* modal */
+  .overlay { position: fixed; inset: 0; background: rgba(10,13,16,0.82); backdrop-filter: blur(6px); display: none; align-items: flex-start; justify-content: center; padding: 32px 16px; overflow-y: auto; z-index: 100; }
+  .overlay.open { display: flex; }
+  .modal { background: var(--surface); border-radius: 16px; max-width: 760px; width: 100%; overflow: hidden; margin: 24px 0; border: 1px solid var(--line); }
+  .modal-media { aspect-ratio: 16/9; position: relative; }
+  .modal-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .modal-media .placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 22px; color: rgba(244,239,230,0.5); }
+  .close-btn { position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%; background: rgba(10,13,16,0.7); border: none; color: var(--rice); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-body { padding: 32px 36px 40px; }
+  .modal-cat { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--copper); font-weight: 700; }
+  .modal-name { font-size: 32px; font-weight: 700; margin: 10px 0 12px; letter-spacing: -0.5px; }
+  .modal-summary { color: var(--silver); font-size: 15px; line-height: 1.6; }
+  .modal-note { margin-top: 18px; background: rgba(200,121,75,0.12); border: 1px solid rgba(200,121,75,0.3); border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--rice); }
+  dl.fields { margin-top: 26px; }
+  dl.fields div { margin-bottom: 18px; }
+  dl.fields dt { font-size: 10.5px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+  dl.fields dd { margin: 0; color: var(--silver); font-size: 14.5px; line-height: 1.6; }
+  .feat-title { font-size: 10.5px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 26px 0 10px; }
+  ul.feat { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
+  ul.feat li { font-size: 13.5px; color: var(--silver); padding-left: 14px; position: relative; }
+  ul.feat li::before { content: ""; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--copper); }
+  .tech-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .tech { font-size: 11.5px; background: rgba(169,178,186,0.1); border-radius: 999px; padding: 5px 12px; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 24px 48px; text-align: center; color: var(--muted); font-size: 12.5px; max-width: 1100px; margin: 0 auto; }
+
+  @media (max-width: 640px) {
+    .modal-body { padding: 24px 20px 32px; }
+    ul.feat { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">Project Portfolio</div>
+  <h1>Everything I've built, prototyped, and shipped.</h1>
+  <p class="lede">A pure project showcase — AI products, governance tooling, privacy-first apps, hardware, and decentralized systems. No résumé, no job history. Just the work.</p>
+  <div class="meta-links">
+    <a href="mailto:kapasainitishreddy@gmail.com">Email</a>
+    <a href="https://github.com/kapasainitishreddy" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/kapasainitishreddy" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</header>
+
+<div class="filters" id="filters"></div>
+<div class="count" id="count"></div>
+<div class="grid" id="grid"></div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<footer>Designed and built by Sai Nitish Reddy Kapa · Standalone project archive</footer>
+
+<script>
+const PROJECTS = [
+  {
+    id: "siraba-hq", name: "Siraba HQ", category: "AI Agents and Company Operations", status: "In Development",
+    tags: ["AI", "Product", "Networks"],
+    summary: "An AI-powered company operating system that accepts work, routes it to specialized agents, stores organizational knowledge, manages approvals, and tracks artifacts across product, marketing, engineering, and operations.",
+    problem: "Small teams lose time moving work between tools, people and context. Knowledge is scattered, approvals are informal, and there is no shared memory of why decisions were made.",
+    solution: "A coordinated layer of specialized agents that intake work, route it through the right workflow, draw on shared operational memory, and pause for human approval on anything high-impact, while keeping a full audit trail.",
+    role: "Product design, system architecture, agent orchestration and data modeling.",
+    features: ["Multi-agent orchestration", "Shared operational memory", "Human approval workflows", "Task routing and queues", "GitHub and productivity integrations", "Security and audit trails", "Marketing and GTM agents"],
+    technologies: ["LangGraph", "LiteLLM", "Supabase", "PostgreSQL", "pgvector", "BullMQ", "n8n", "React", "TypeScript"],
+  },
+  {
+    id: "vakya", name: "Vakya", category: "Real-Time Language Intelligence", status: "In Development",
+    tags: ["AI", "Product"],
+    summary: "A real-time translation and accessibility platform for live speech, subtitles, documents, and multilingual communication, with a focus on Indian and global languages.",
+    problem: "Live multilingual communication is still hard. Subtitles lag, translation quality drops on domain language, and accessibility is treated as an afterthought.",
+    solution: "A streaming pipeline that recognizes speech, translates in real time, overlays subtitles and speaks results back, with both local and hosted processing modes for privacy and reach.",
+    role: "Product direction, speech and translation pipeline design, interface work.",
+    features: ["Live speech recognition", "Real-time translation", "Subtitle overlays", "Text-to-speech", "Browser and mobile experiences", "Medical and document understanding", "Local and hosted processing modes", "Translation APIs"],
+    technologies: ["Whisper", "WebSockets", "NLP", "Speech AI", "Flutter", "Next.js", "Python", "Translation Models"],
+  },
+  {
+    id: "keeply", name: "Keeply", category: "Personal Knowledge and Organization", status: "Prototype",
+    tags: ["AI", "Product", "Data"],
+    summary: "A universal place to save links, screenshots, notes, files, ideas, and temporary information without forcing users to decide where everything belongs.",
+    problem: "Saving something quickly usually means choosing a folder, an app or a tag first. That friction means most things never get saved at all.",
+    solution: "A single fast capture surface that accepts anything, then organizes it intelligently in the background so retrieval is easy and filing is never required up front.",
+    role: "Product concept, capture and retrieval model, local-first design.",
+    features: ["Universal capture", "Intelligent categorization", "Search and retrieval", "Cross-device workflows", "Clipboard and desktop integration", "Local-first organization"],
+    technologies: ["TypeScript", "Local-first storage", "Embeddings", "Search", "Desktop integration"],
+  },
+  {
+    id: "un-em", name: "Un-em", category: "AI Writing", status: "Prototype",
+    tags: ["AI", "Product"],
+    summary: "A conversational writing assistant that produces natural, readable responses without em dashes and helps users rewrite content in their preferred voice.",
+    problem: "Generated writing often reads the same way and leans on tics like em dashes. People want help that sounds like them, not like a model.",
+    solution: "A conversational assistant with explicit style controls and a no-em-dash response mode, able to rewrite, generate documents and adapt to a chosen voice.",
+    role: "Product design, prompt and style system, writing tools.",
+    features: ["Conversational AI", "Style controls", "Natural rewriting", "No-em-dash response mode", "Document generation", "Voice, image, slide, spreadsheet, and PDF tools"],
+    technologies: ["Large language models", "Prompt engineering", "Next.js", "TypeScript"],
+  },
+  {
+    id: "smriti-ai", name: "Smriti.ai", category: "Private Memorial Technology", status: "Research and Prototype",
+    tags: ["AI", "Privacy"],
+    summary: "A consent-focused, private memorial conversation experience created from user-provided memories, messages, documents, and voice recordings.",
+    problem: "People want gentle, private ways to revisit memories of those they have lost, but most technology in this space ignores consent, privacy and emotional safety.",
+    solution: "A local-first, consent-driven experience built only from material a person chooses to provide, with clear ethical boundaries and full user control over deletion.",
+    role: "Research, privacy and ethics framework, careful product design.",
+    features: ["On-device or local-first processing", "Explicit consent", "Privacy by design", "Clear emotional and ethical boundaries", "User-controlled deletion", "No hidden model training"],
+    technologies: ["Local-first AI", "On-device processing", "Privacy engineering"],
+    note: "This is a private, consent-focused memory experience. It is not designed to recreate or replace a person, and it is built around explicit consent, emotional safety and full user control.",
+  },
+  {
+    id: "receipts", name: "Receipts", category: "Personal Clarity and Decision Support", status: "MVP",
+    tags: ["Privacy", "Product"],
+    summary: "A local-first personal clarity app that helps people save decisions, write difficult messages, create personal rules, and revisit past reasoning.",
+    problem: "We make the same hard decisions repeatedly and forget why we chose what we did. In tense moments it is hard to write clearly or remember our own rules.",
+    solution: "A private, local-only space to record decisions and the reasoning behind them, generate calm scripts for difficult moments, and revisit personal rules over time.",
+    role: "Product concept, local-first architecture, interaction design.",
+    features: ["Decision receipts", "Panic-script generator", "Saved drafts", "Review reminders", "Personal rules", "Local-only storage", "Export and import"],
+    technologies: ["Local-first storage", "TypeScript", "Offline-first design"],
+  },
+  {
+    id: "pasthour-ai", name: "Pasthour AI", category: "Job Intelligence and Automation", status: "Concept and Research",
+    tags: ["AI", "Data", "Product"],
+    summary: "A job discovery and application workspace focused on recently posted opportunities, resume personalization, application tracking, and human-approved automation.",
+    problem: "The freshest roles get the most attention, but finding them, tailoring a resume and tracking applications is slow and easy to lose track of.",
+    solution: "A workspace that surfaces recently posted jobs, tailors resumes, manages the application pipeline, and keeps a human in the loop before anything is sent.",
+    role: "Product research, automation design, analytics.",
+    features: ["Fresh-job discovery", "Resume tailoring", "Application workflow management", "Human approval before applying", "Job-source integrations", "Progress analytics"],
+    technologies: ["LLMs", "Automation", "Data pipelines", "Next.js"],
+  },
+  {
+    id: "vibedesk", name: "VibeDesk", category: "Founder Productivity", status: "Concept", comingSoon: true,
+    tags: ["Product"],
+    summary: "A command center for solo builders to manage unfinished products, repositories, bugs, costs, API keys, deployment status, and next actions in one place.",
+    problem: "Solo builders juggle many half-finished products across scattered tools, with no single view of cost, status and what to do next.",
+    solution: "One command center that pulls together repositories, bugs, costs, keys and deployment status so the next action is always obvious.",
+    role: "Product concept and information architecture.",
+    features: ["Unified product dashboard", "Repository and bug tracking", "Cost and API key overview", "Deployment status", "Next-action focus"],
+    technologies: ["Next.js", "TypeScript", "Integrations"],
+  },
+  {
+    id: "unsent", name: "Unsent", category: "Private Wellness Technology", status: "Concept", comingSoon: true,
+    tags: ["Privacy", "Product"],
+    summary: "A private, local-first space where users can express messages they do not intend to send, reflect through guided journaling, and release difficult emotions without contacting the other person.",
+    problem: "Sometimes we need to say something we should never actually send. There are few private, safe spaces to write it down and let it go.",
+    solution: "A local-first space for writing unsent messages and guided reflection, designed for release rather than delivery, with everything kept private on the device.",
+    role: "Product concept, privacy-first design.",
+    features: ["Private unsent messages", "Guided journaling", "Reflection prompts", "Local-first storage"],
+    technologies: ["Local-first storage", "TypeScript"],
+    note: "Unsent is a reflective writing space, not a substitute for professional mental-health care. If you are struggling, please reach out to a qualified professional or a local support line.",
+  },
+  {
+    id: "neural-mesh", name: "Neural Mesh", category: "Edge AI Hardware", status: "In Development",
+    tags: ["Hardware", "AI", "Networks"],
+    summary: "A distributed edge compute cluster designed for real-time AI inference at the network edge, with mesh networking and local model orchestration.",
+    problem: "Running AI models on servers introduces latency, costs, and privacy risks. Edge deployment requires expensive custom hardware and complex orchestration.",
+    solution: "Modular edge nodes that communicate via mesh networking, coordinate model deployment, and handle real-time inference with sub-10ms latency, all on consumer hardware.",
+    role: "Hardware architecture, distributed system design, edge ML orchestration.",
+    features: ["Mesh network topology", "Real-time model inference", "Sub-10ms latency", "Distributed load balancing", "Model versioning and rollback", "Hardware-agnostic deployment", "Privacy-first processing"],
+    technologies: ["NVIDIA Jetson", "RaspberryPi 5", "MQTT", "Docker", "ONNX Runtime", "PyTorch", "C++", "Go"],
+  },
+  {
+    id: "spectra-labs", name: "Spectra Labs", category: "Biometric Authentication", status: "Prototype",
+    tags: ["Hardware", "Privacy", "Product"],
+    summary: "A private biometric authentication device using spectral analysis instead of facial recognition, ensuring permanent anonymity and zero data storage.",
+    problem: "Biometric systems leak identity and store sensitive data. Privacy-focused alternatives don't exist at scale.",
+    solution: "A spectral-based authentication system that verifies you without ever capturing or storing your identity, using light spectrum analysis instead of images.",
+    role: "Hardware design, spectral algorithms, privacy framework.",
+    features: ["Spectral biometric authentication", "Zero identity storage", "Sub-50ms verification", "Multi-modal authentication", "Offline-capable", "GDPR and privacy-by-design"],
+    technologies: ["Hyperspectral sensors", "Raspberry Pi Compute Module", "Signal processing", "Edge ML", "Rust"],
+  },
+  {
+    id: "lens-protocol", name: "Lens Protocol Extension", category: "Decentralized Social Layer", status: "Active",
+    tags: ["Web3", "Networks", "Product"],
+    summary: "A protocol extension for Lens that enables graph analytics, network influence scoring, and decentralized reputation without compromising user sovereignty.",
+    problem: "Decentralized social lacks the analytics and reputation layers that make networks valuable. Existing solutions require centralized off-chain storage.",
+    solution: "A smart contract-based reputation and influence system that lives on-chain, uses graph algorithms, and rewards network participants transparently.",
+    role: "Protocol design, smart contract architecture, graph analytics.",
+    features: ["On-chain influence scoring", "Network graph analysis", "Decentralized reputation", "Transparent incentive design", "Cross-protocol composability", "Real-time analytics"],
+    technologies: ["Solidity", "Lens Protocol", "The Graph", "Polygon", "GraphQL", "Python"],
+  },
+  {
+    id: "sentinel-ai", name: "Sentinel AI", category: "Threat Detection and Response", status: "In Development",
+    tags: ["AI", "Networks", "Product"],
+    summary: "An AI-powered security system that detects anomalous network behavior, predicts threats before they occur, and coordinates automated response with human oversight.",
+    problem: "Security threats move faster than human response. Most detection systems react; they don't predict or coordinate defense.",
+    solution: "A predictive threat detection system using graph analysis and behavioral AI that flags anomalies, predicts attack chains, and orchestrates response playbooks.",
+    role: "AI model architecture, threat detection algorithms, incident response design.",
+    features: ["Real-time anomaly detection", "Predictive threat scoring", "Automated response orchestration", "Human-in-the-loop approval", "Network graph visualization", "Incident timeline reconstruction"],
+    technologies: ["TensorFlow", "Network analysis", "Graph databases", "Python", "Go"],
+  },
+  {
+    id: "qubit-sync", name: "QuBit Sync", category: "Quantum-Safe Data Sync", status: "Research",
+    tags: ["Blockchain", "Privacy", "Data"],
+    summary: "A post-quantum cryptography layer for data synchronization across devices and networks, protecting against future quantum decryption.",
+    problem: "Data synced today will be decrypted by quantum computers in 10+ years. Current encryption is quantum-vulnerable.",
+    solution: "A lightweight post-quantum encryption layer using lattice-based cryptography that protects data sync, works offline, and is hardware-agnostic.",
+    role: "Cryptography implementation, protocol design, performance optimization.",
+    features: ["Post-quantum encryption", "Lightweight sync protocol", "Offline-first design", "Hardware-agnostic", "Zero-knowledge proofs", "Key rotation and refresh"],
+    technologies: ["Rust", "Liboqs", "CRYSTALS-Kyber", "libsodium", "WebAssembly"],
+  },
+  {
+    id: "flow-studio", name: "Flow Studio", category: "Visual System Design and Orchestration", status: "Prototype",
+    tags: ["Product", "AI"],
+    summary: "A visual studio for designing and orchestrating complex multi-agent AI workflows without code, with real-time execution debugging and performance profiling.",
+    problem: "AI orchestration requires deep coding skills. Non-technical teams can't visualize or modify agent flows without rewrites.",
+    solution: "A node-based visual editor where you drag agents, connect data flows, set triggers, and see execution in real-time with a powerful debugging console.",
+    role: "UI/UX design, flow execution engine, debugging interface.",
+    features: ["Node-based visual editor", "Real-time execution view", "Agent library", "Data flow visualization", "Trigger and condition builder", "Performance profiler", "One-click deployment"],
+    technologies: ["React", "D3.js", "TypeScript", "LangGraph", "Redis"],
+  },
+  {
+    id: "gtm-nexus", name: "GTM Nexus", category: "Go-To-Market Intelligence", status: "Active Development",
+    tags: ["Product", "Data", "Networks"],
+    summary: "An integrated GTM analysis platform combining market dynamics, reasoning, and inference to predict product-market fit, channel viability, and optimal positioning.",
+    problem: "GTM decisions are made with fragmented data — market trends, competitive moves, user signals scattered across tools. Teams guess instead of deduce.",
+    solution: "A unified platform that ingests market signals, reasons through scenarios, and generates predictive GTM playbooks.",
+    role: "Product strategy, market modeling, reasoning integration.",
+    features: ["Real-time market signal aggregation", "Competitive positioning analysis", "Channel viability scoring", "Product-market fit prediction", "Scenario reasoning engine", "GTM playbook generation", "Cohort analytics", "Network effects modeling"],
+    technologies: ["Perplexity AI", "Graph analysis", "Python", "PostgreSQL", "React"],
+  },
+  {
+    id: "the-seventh-seat", name: "The Seventh Seat", category: "Decision Infrastructure for Public-Interest AI", status: "Founding Concept",
+    tags: ["AI", "Data", "Privacy", "Product"],
+    summary: "A decision-intelligence system that helps institutions represent people affected by consequential choices who cannot meaningfully participate in making them.",
+    problem: "AI products and policies can affect children, future users, vulnerable communities, workers, and indirect stakeholders who are absent from the decision room.",
+    solution: "Maps missing stakeholders, separates evidence from assumptions, identifies consent debt, tests reversibility, and produces safeguards before a decision becomes difficult to change.",
+    role: "Founder. Product thesis, consent-debt framework, stakeholder reasoning workflow, interaction design.",
+    features: ["Missing-stakeholder discovery", "Consent-debt analysis", "Evidence and assumption separation", "Reversibility and rollback review", "Long-term scenario mapping", "Safeguard recommendations", "Challenge and dissent workflow"],
+    technologies: ["Next.js", "TypeScript", "LLM orchestration", "RAG", "Structured evidence graphs", "PostgreSQL"],
+    note: "The system does not claim to impersonate communities or determine the morally correct answer. It surfaces omissions, uncertainty, and contestable assumptions while keeping humans accountable.",
+  },
+  {
+    id: "evidence-escrow", name: "Evidence Escrow", category: "Accountability and Institutional Memory", status: "Research Concept",
+    tags: ["AI", "Data", "Product"],
+    summary: "A tamper-evident record of the predictions, assumptions, launch criteria, and promised safeguards behind consequential AI decisions.",
+    problem: "After a deployment succeeds or fails, institutions unconsciously rewrite what they believed beforehand. Forecasts, warnings, and promises disappear across staff turnover.",
+    solution: "Teams commit decision claims and measurable expectations before launch, later compared with outcomes, preserving dissent and reusable memory.",
+    role: "Product concept, accountability model, decision schema, and experience design.",
+    features: ["Pre-decision claim capture", "Forecast and confidence tracking", "Safeguard commitments", "Outcome reconciliation", "Dissent preservation", "Public or private audit trails"],
+    technologies: ["Next.js", "PostgreSQL", "Cryptographic timestamps", "Data visualization", "LLMs"],
+  },
+  {
+    id: "reversibility-index", name: "The Reversibility Index", category: "Public AI Deployment Observatory", status: "Public Website Concept",
+    tags: ["AI", "Data", "Product"],
+    summary: "A public database showing how easily major AI systems, policies, and deployments can be paused, audited, rolled back, repaired, or compensated for when assumptions fail.",
+    problem: "Public discussion focuses on whether a technology is beneficial or harmful, but less on whether society can recover when the initial judgment is wrong.",
+    solution: "Evaluates deployments across rollback cost, data persistence, dependency, auditability, affected population, compensation pathways, and institutional exit options.",
+    role: "Research framework, scoring methodology, public information design, and product direction.",
+    features: ["Deployment profiles", "Reversibility dimensions", "Evidence-linked scoring", "Comparative visualizations", "Community challenges", "Historical outcome tracking"],
+    technologies: ["Next.js", "Open data", "Data visualization", "Evidence retrieval", "PostgreSQL"],
+    note: "Scores remain decomposable and challengeable. Evidence and uncertainty are displayed rather than a single number presented as objective truth.",
+  },
+  {
+    id: "failed-decisions-library", name: "The Useful Failure Library", category: "Shared Learning Infrastructure", status: "Research Concept",
+    tags: ["Data", "Networks", "Product", "Privacy"],
+    summary: "A privacy-preserving repository for abandoned pilots, negative results, near misses, and operational lessons that public-interest organizations usually lose or hide.",
+    problem: "Organizations repeatedly spend money rediscovering why an approach failed because negative results are scattered, reputationally sensitive, or never published.",
+    solution: "Contributors submit structured failure reports with configurable anonymity; the system extracts reusable lessons and connects similar attempts.",
+    role: "Product concept, privacy model, knowledge architecture, and incentive design.",
+    features: ["Anonymous and attributed submissions", "Structured postmortems", "Near-miss reporting", "Semantic lesson retrieval", "Related-attempt graphs", "Sensitive-detail redaction"],
+    technologies: ["Local redaction", "Embeddings", "Knowledge graphs", "PostgreSQL", "Next.js"],
+  },
+  {
+    id: "still", name: "Still", category: "Private Self-Regulation Technology", status: "Prototype",
+    tags: ["Privacy", "Product"],
+    summary: "A calm, private urge-interruption experience that creates space between an impulse and an action without shame, surveillance, or punitive streak mechanics.",
+    problem: "During intense urges, people have limited attention and may avoid tools that feel judgmental, complicated, or designed around failure and guilt.",
+    solution: "Offers a quiet sequence of intensity check-ins, breathing, attention shifts, riddles, and reset exercises designed to restore agency in the moment.",
+    role: "Founder and product designer. Behavioral flow, privacy approach, visual system, and frontend implementation.",
+    features: ["Urge intensity check-in", "Guided reset space", "Attention-shift exercises", "Riddle room", "Private local progress", "Calm, non-punitive interaction design"],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Local-first storage", "PWA"],
+    note: "Still is a self-regulation aid, not medical treatment or a substitute for qualified professional support.",
+  },
+  {
+    id: "fde-support-copilot", name: "Embedded Support Copilot", category: "Forward Deployed · AI in Production", status: "Shipped",
+    tags: ["AI", "Deployment", "Integration"],
+    summary: "An AI support copilot embedded into a live customer support workflow — from demo to a system the team relied on daily.",
+    problem: "A promising LLM prototype had no connection to the company's real knowledge base, ticketing system, or approval process, and support agents drowned in repetitive tickets.",
+    solution: "A copilot wired into live help-center content and the ticketing system, drafting grounded answers with citations, routing edge cases to a human, and logging every interaction.",
+    role: "Discovery, architecture, integration, RAG pipeline, evaluation harness, and production rollout.",
+    features: ["First-response time cut ~60% on covered ticket types", "~45% of routine tickets resolved with copilot-drafted answers", "Prototype to production in under 4 weeks", "Grounded, cited answers from the live knowledge base", "Human approval before customer-facing sends", "Full interaction logging"],
+    technologies: ["Python", "LLM orchestration", "RAG", "PostgreSQL", "Ticketing API", "Next.js"],
+    note: "Built as part of a confidential freelance engagement. Client and customer names withheld under NDA.",
+  },
+  {
+    id: "fde-data-pipeline", name: "Production Data & Ops Pipeline", category: "Forward Deployed · Data Integration", status: "Shipped",
+    tags: ["Data", "Integration", "Deployment"],
+    summary: "Replaced a fragile spreadsheet reporting ritual with a deployed data pipeline and live operations dashboard.",
+    problem: "A founding team spent hours every week manually pulling numbers from four disconnected tools into a spreadsheet, and the reports were late and untrustworthy.",
+    solution: "An automated pipeline that ingested from live sources, reconciled the data, and surfaced it in a real-time dashboard with alerting, handed over with runbooks.",
+    role: "Requirements discovery, pipeline engineering, dashboard build, and operational handover.",
+    features: ["~20 analyst-hours/week of manual reporting eliminated", "Reporting latency dropped from weekly to near real-time", "99.5% pipeline uptime across the engagement", "Automated ingestion and reconciliation across four sources", "Live operations dashboard with alerting", "Runbooks for team self-service ownership"],
+    technologies: ["Python", "SQL", "PostgreSQL", "Supabase", "Power BI", "Scheduled jobs"],
+    note: "Built as part of a confidential freelance engagement. Client and customer names withheld under NDA.",
+  },
+  {
+    id: "fde-onboarding-agent", name: "Customer Onboarding Agent", category: "Forward Deployed · Agent Automation", status: "Shipped",
+    tags: ["AI", "Deployment", "Product"],
+    summary: "A human-in-the-loop onboarding agent that guided each new customer through setup and unblocked the founding team.",
+    problem: "Onboarding new customers was entirely manual — back-and-forth emails, missed steps, and a founder personally chasing every account.",
+    solution: "An agent that guided customers step by step, validated inputs, integrated with provisioning APIs, and escalated anything ambiguous to a human with full context.",
+    role: "Workflow design, agent orchestration, API integration, and human-approval guardrails.",
+    features: ["Onboarding time cut from ~3 weeks to ~4 days", "Founder freed from ~90% of manual onboarding steps", "Zero irreversible actions without human approval", "Guided, validated step-by-step customer flow", "Deep integration with provisioning APIs", "Human escalation with full context"],
+    technologies: ["LLM agents", "Python", "REST APIs", "Next.js", "Webhooks"],
+    note: "Built as part of a confidential freelance engagement. Client and customer names withheld under NDA.",
+  },
+  {
+    id: "govseal", name: "GovSeal — Deployment Governance Console", category: "AI Governance Platform", status: "In Development",
+    tags: ["Governance", "AI", "Platform"],
+    image: "assets/govseal.svg",
+    summary: "A governance console that sits on top of deployed AI systems — tracking evaluations, drift, human approvals, and a tamper-evident audit log.",
+    problem: "Forward deployed AI gets to production fast, but governance usually lags behind: no one can easily answer whether a live model still passes its evals or who approved the last change.",
+    solution: "Wraps a deployed system with continuous evaluation runs, drift and quality monitoring, a human-approval workflow for changes, and an immutable audit trail.",
+    role: "Founder & engineer — governance model, evaluation harness, monitoring pipeline, approval workflow, and console UI.",
+    features: ["Continuous evaluation runs against a versioned test suite", "Live drift and quality monitoring with alerting", "Human-approval workflow for prompt and model changes", "Tamper-evident audit log of every decision and change", "Per-model risk scoring", "Exportable compliance and incident reports"],
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "LLM evaluation", "Monitoring", "Audit logging"],
+    note: "GovSeal is a governance and observability layer. It surfaces evidence, drift, and unresolved approvals — it keeps humans accountable rather than replacing their judgment.",
+  },
+  {
+    id: "tracegrid", name: "TraceGrid — LLM Evaluation & Audit Platform", category: "AI Governance Platform", status: "Prototype",
+    tags: ["Governance", "AI", "Data"],
+    image: "assets/tracegrid.svg",
+    summary: "An evaluation and audit workbench that scores every LLM response for accuracy, safety, bias, and policy compliance, tracing each answer back to its inputs.",
+    problem: "When a deployed AI system gives a bad answer, teams usually can't reconstruct why — which prompt version, which retrieved context, which model.",
+    solution: "Captures the full trace of each response, runs it through configurable evaluators, and grids results so patterns and regressions are obvious.",
+    role: "Founder & engineer — trace capture, evaluator framework, scoring grid, red-team workflow, and reporting.",
+    features: ["Full trace capture: input, prompt version, context, model, output", "Configurable evaluators for factuality, safety, bias, and policy", "Regression grid to catch quality drops release-over-release", "Red-team queue seeded from failing cases", "Human review and sign-off workflow", "Shareable evaluation and compliance reports"],
+    technologies: ["Python", "Next.js", "TypeScript", "LLM-as-judge", "Vector search", "PostgreSQL"],
+    note: "TraceGrid is designed to make AI behavior legible and contestable — evaluator scores stay decomposable and reviewable rather than presented as a single opaque verdict.",
+  },
+];
+
+const ALL_TAGS = Array.from(new Set(PROJECTS.flatMap(p => p.tags))).sort();
+let activeFilter = "All";
+
+const filtersEl = document.getElementById("filters");
+const gridEl = document.getElementById("grid");
+const countEl = document.getElementById("count");
+const overlay = document.getElementById("overlay");
+const modal = document.getElementById("modal");
+
+function renderFilters() {
+  const chips = ["All", ...ALL_TAGS];
+  filtersEl.innerHTML = chips.map(c =>
+    `<button class="chip${c === activeFilter ? " active" : ""}" data-tag="${c}">${c}</button>`
+  ).join("");
+  filtersEl.querySelectorAll(".chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      activeFilter = btn.dataset.tag;
+      renderFilters();
+      renderGrid();
+    });
+  });
+}
+
+function renderGrid() {
+  const list = activeFilter === "All" ? PROJECTS : PROJECTS.filter(p => p.tags.includes(activeFilter));
+  countEl.textContent = `${list.length} project${list.length === 1 ? "" : "s"}`;
+  gridEl.innerHTML = list.map(p => `
+    <article class="card" data-id="${p.id}">
+      <div class="thumb">
+        ${p.image ? `<img src="${p.image}" alt="${p.name} preview" loading="lazy" />` : `<div class="placeholder">${p.name}</div>`}
+        <span class="status-badge${p.comingSoon ? " soon" : ""}">${p.comingSoon ? "Coming Soon" : p.status}</span>
+      </div>
+      <div class="card-body">
+        <div class="cat">${p.category}</div>
+        <div class="name">${p.name}</div>
+        <div class="summary">${p.summary}</div>
+        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <div class="open-cta">View case study →</div>
+      </div>
+    </article>
+  `).join("");
+  gridEl.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("click", () => openModal(card.dataset.id));
+  });
+}
+
+function openModal(id) {
+  const p = PROJECTS.find(x => x.id === id);
+  if (!p) return;
+  modal.innerHTML = `
+    <div class="modal-media">
+      ${p.image ? `<img src="${p.image}" alt="${p.name} preview" />` : `<div class="placeholder">${p.name}</div>`}
+      <button class="close-btn" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat">${p.category}</div>
+      <h2 class="modal-name">${p.name}</h2>
+      <p class="modal-summary">${p.summary}</p>
+      ${p.note ? `<div class="modal-note">${p.note}</div>` : ""}
+      <dl class="fields">
+        <div><dt>The problem</dt><dd>${p.problem}</dd></div>
+        <div><dt>The solution</dt><dd>${p.solution}</dd></div>
+        <div><dt>My role</dt><dd>${p.role}</dd></div>
+      </dl>
+      <div class="feat-title">Key capabilities</div>
+      <ul class="feat">${p.features.map(f => `<li>${f}</li>`).join("")}</ul>
+      <div class="feat-title">Technologies</div>
+      <div class="tech-wrap">${p.technologies.map(t => `<span class="tech">${t}</span>`).join("")}</div>
+    </div>
+  `;
+  modal.querySelector(".close-btn").addEventListener("click", closeModal);
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  overlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>

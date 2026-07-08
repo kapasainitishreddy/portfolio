@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Inter','Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0d10"/>
+      <stop offset="1" stop-color="#0f141a"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5b6ee1"/>
+      <stop offset="1" stop-color="#d08a5a"/>
+    </linearGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5b6ee1" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#5b6ee1" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- top bar -->
+  <rect x="0" y="0" width="1600" height="72" fill="#10151b"/>
+  <circle cx="40" cy="36" r="9" fill="#d08a5a"/>
+  <path d="M36 36 l3 3 l6 -7" stroke="#0a0d10" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="64" y="42" fill="#f4efe6" font-size="22" font-weight="600">GovSeal</text>
+  <text x="168" y="42" fill="#7f8b95" font-size="15">Deployment Governance Console</text>
+  <rect x="1180" y="20" width="230" height="32" rx="16" fill="#161c23"/>
+  <circle cx="1202" cy="36" r="5" fill="#5fb98e"/>
+  <text x="1216" y="41" fill="#9aa4ad" font-size="13">All systems monitored</text>
+  <circle cx="1470" cy="36" r="18" fill="#1c242c"/>
+  <text x="1470" y="41" fill="#c9d2da" font-size="14" text-anchor="middle" font-weight="600">SK</text>
+
+  <!-- sidebar -->
+  <rect x="0" y="72" width="188" height="828" fill="#0c1116"/>
+  <g font-size="14" fill="#8b96a0">
+    <rect x="16" y="104" width="156" height="34" rx="8" fill="#171f27"/>
+    <rect x="24" y="116" width="12" height="10" rx="2" fill="#d08a5a"/>
+    <text x="48" y="126" fill="#f4efe6">Overview</text>
+    <rect x="24" y="164" width="12" height="10" rx="2" fill="#5b6ee1"/>
+    <text x="48" y="174">Models</text>
+    <rect x="24" y="204" width="12" height="10" rx="2" fill="#5b6ee1"/>
+    <text x="48" y="214">Evaluations</text>
+    <rect x="24" y="244" width="12" height="10" rx="2" fill="#5b6ee1"/>
+    <text x="48" y="254">Drift</text>
+    <rect x="24" y="284" width="12" height="10" rx="2" fill="#5b6ee1"/>
+    <text x="48" y="294">Approvals</text>
+    <rect x="24" y="324" width="12" height="10" rx="2" fill="#5b6ee1"/>
+    <text x="48" y="334">Audit log</text>
+  </g>
+
+  <!-- stat tiles -->
+  <g>
+    <rect x="216" y="104" width="288" height="118" rx="14" fill="#12181f"/>
+    <text x="240" y="140" fill="#7f8b95" font-size="13">MODELS MONITORED</text>
+    <text x="240" y="188" fill="#f4efe6" font-size="42" font-weight="700">7</text>
+    <text x="330" y="188" fill="#5fb98e" font-size="14">all live</text>
+
+    <rect x="524" y="104" width="288" height="118" rx="14" fill="#12181f"/>
+    <text x="548" y="140" fill="#7f8b95" font-size="13">EVALS PASSING</text>
+    <text x="548" y="188" fill="#5fb98e" font-size="42" font-weight="700">96.4%</text>
+    <text x="700" y="188" fill="#5fb98e" font-size="14">▲ 1.2</text>
+
+    <rect x="832" y="104" width="288" height="118" rx="14" fill="#12181f"/>
+    <text x="856" y="140" fill="#7f8b95" font-size="13">DRIFT ALERTS</text>
+    <text x="856" y="188" fill="#d9a441" font-size="42" font-weight="700">2</text>
+    <text x="924" y="188" fill="#d9a441" font-size="14">investigating</text>
+
+    <rect x="1140" y="104" width="288" height="118" rx="14" fill="#12181f"/>
+    <text x="1164" y="140" fill="#7f8b95" font-size="13">PENDING APPROVALS</text>
+    <text x="1164" y="188" fill="#d08a5a" font-size="42" font-weight="700">3</text>
+    <text x="1250" y="188" fill="#9aa4ad" font-size="14">awaiting review</text>
+  </g>
+
+  <!-- chart panel -->
+  <rect x="216" y="246" width="700" height="330" rx="14" fill="#12181f"/>
+  <text x="240" y="286" fill="#f4efe6" font-size="18" font-weight="600">Evaluation pass rate</text>
+  <text x="240" y="308" fill="#7f8b95" font-size="13">last 30 days · continuous eval runs</text>
+  <!-- gridlines -->
+  <g stroke="#1e262f" stroke-width="1">
+    <line x1="240" y1="360" x2="892" y2="360"/>
+    <line x1="240" y1="420" x2="892" y2="420"/>
+    <line x1="240" y1="480" x2="892" y2="480"/>
+    <line x1="240" y1="540" x2="892" y2="540"/>
+  </g>
+  <path d="M240 500 L305 470 L370 486 L435 440 L500 452 L565 410 L630 430 L695 388 L760 402 L825 372 L892 360 L892 540 L240 540 Z" fill="url(#area)"/>
+  <path d="M240 500 L305 470 L370 486 L435 440 L500 452 L565 410 L630 430 L695 388 L760 402 L825 372 L892 360" fill="none" stroke="url(#line)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="892" cy="360" r="5.5" fill="#d08a5a"/>
+
+  <!-- audit log panel -->
+  <rect x="940" y="246" width="488" height="330" rx="14" fill="#12181f"/>
+  <text x="964" y="286" fill="#f4efe6" font-size="18" font-weight="600">Audit log</text>
+  <text x="964" y="308" fill="#7f8b95" font-size="13">tamper-evident · immutable</text>
+  <g font-size="13">
+    <circle cx="972" cy="344" r="4" fill="#5b6ee1"/>
+    <text x="988" y="349" fill="#c9d2da">Prompt v14 approved by reviewer</text>
+    <text x="1360" y="349" fill="#6b757e">2m</text>
+    <circle cx="972" cy="384" r="4" fill="#5fb98e"/>
+    <text x="988" y="389" fill="#c9d2da">Eval suite passed · 214 cases</text>
+    <text x="1360" y="389" fill="#6b757e">18m</text>
+    <circle cx="972" cy="424" r="4" fill="#d9a441"/>
+    <text x="988" y="429" fill="#c9d2da">Drift alert: latency distribution</text>
+    <text x="1360" y="429" fill="#6b757e">1h</text>
+    <circle cx="972" cy="464" r="4" fill="#5b6ee1"/>
+    <text x="988" y="469" fill="#c9d2da">Model rollback requested</text>
+    <text x="1360" y="469" fill="#6b757e">3h</text>
+    <circle cx="972" cy="504" r="4" fill="#5fb98e"/>
+    <text x="988" y="509" fill="#c9d2da">Compliance report exported</text>
+    <text x="1360" y="509" fill="#6b757e">5h</text>
+    <circle cx="972" cy="544" r="4" fill="#d08a5a"/>
+    <text x="988" y="549" fill="#c9d2da">Human sign-off on release 2.3</text>
+    <text x="1360" y="549" fill="#6b757e">6h</text>
+  </g>
+
+  <!-- model status table -->
+  <rect x="216" y="600" width="1212" height="264" rx="14" fill="#12181f"/>
+  <text x="240" y="640" fill="#f4efe6" font-size="18" font-weight="600">Deployed models</text>
+  <g font-size="12" fill="#6b757e">
+    <text x="240" y="676">MODEL</text>
+    <text x="620" y="676">STATUS</text>
+    <text x="860" y="676">EVAL SCORE</text>
+    <text x="1120" y="676">RISK</text>
+    <text x="1310" y="676">LAST RUN</text>
+  </g>
+  <line x1="240" y1="690" x2="1404" y2="690" stroke="#1e262f"/>
+  <g font-size="14" fill="#c9d2da">
+    <text x="240" y="724">support-copilot-prod</text>
+    <rect x="620" y="710" width="86" height="22" rx="11" fill="#173226"/><text x="636" y="725" fill="#5fb98e" font-size="12">healthy</text>
+    <text x="860" y="724">0.97</text>
+    <rect x="1120" y="712" width="60" height="16" rx="8" fill="#173226"/><text x="1150" y="724" fill="#5fb98e" font-size="11" text-anchor="middle">low</text>
+    <text x="1310" y="724" fill="#8b96a0">2m ago</text>
+
+    <text x="240" y="766">onboarding-agent-prod</text>
+    <rect x="620" y="752" width="86" height="22" rx="11" fill="#173226"/><text x="636" y="767" fill="#5fb98e" font-size="12">healthy</text>
+    <text x="860" y="766">0.95</text>
+    <rect x="1120" y="754" width="60" height="16" rx="8" fill="#173226"/><text x="1150" y="766" fill="#5fb98e" font-size="11" text-anchor="middle">low</text>
+    <text x="1310" y="766" fill="#8b96a0">11m ago</text>
+
+    <text x="240" y="808">summarizer-v3</text>
+    <rect x="620" y="794" width="96" height="22" rx="11" fill="#332a14"/><text x="636" y="809" fill="#d9a441" font-size="12">drift alert</text>
+    <text x="860" y="808">0.91</text>
+    <rect x="1120" y="796" width="70" height="16" rx="8" fill="#332a14"/><text x="1155" y="808" fill="#d9a441" font-size="11" text-anchor="middle">medium</text>
+    <text x="1310" y="808" fill="#8b96a0">1h ago</text>
+
+    <text x="240" y="850">classifier-beta</text>
+    <rect x="620" y="836" width="98" height="22" rx="11" fill="#1c2733"/><text x="636" y="851" fill="#5b6ee1" font-size="12">in review</text>
+    <text x="860" y="850">0.93</text>
+    <rect x="1120" y="838" width="60" height="16" rx="8" fill="#173226"/><text x="1150" y="850" fill="#5fb98e" font-size="11" text-anchor="middle">low</text>
+    <text x="1310" y="850" fill="#8b96a0">20m ago</text>
+  </g>
+</svg>
