@@ -7,6 +7,7 @@ import type { Project } from "@/data/projects";
 import ProjectPlaceholder from "./ProjectPlaceholder";
 import { CloseIcon } from "@/components/layout/icons";
 import { useInk } from "@/components/ink/InkProvider";
+import { withBasePath } from "@/lib/basePath";
 
 export default function ProjectModal({
   project,
@@ -66,7 +67,7 @@ export default function ProjectModal({
             {/* header media */}
             <div className="relative aspect-[16/9] w-full">
               {project.image ? (
-                <Image src={project.image} alt={`${project.name} preview`} fill className="object-cover" />
+                <Image src={withBasePath(project.image)} alt={`${project.name} preview`} fill className="object-cover" />
               ) : (
                 <ProjectPlaceholder pattern={project.inkPattern} name={project.name} />
               )}

@@ -1,9 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { contact } from "@/data/site";
+import { contact, site } from "@/data/site";
 
 type Status = "idle" | "submitting" | "success" | "error";
+
+// The GitHub Pages build is fully static and has no /api/contact route to
+// post to, so it falls back to opening the visitor's email client instead.
+const IS_STATIC_EXPORT = process.env.NEXT_PUBLIC_STATIC_EXPORT === "true";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -34,6 +38,17 @@ export default function ContactForm() {
       elapsedMs: Date.now() - startedAt.current,
     };
 
+    if (IS_STATIC_EXPORT) {
+      const subject = encodeURIComponent(`Portfolio contact: ${payload.reason || "message"}`);
+      const body = encodeURIComponent(
+        `Name: ${payload.name}\nEmail: ${payload.email}\nOrganization: ${payload.organization || "—"}\nReason: ${payload.reason}\n\n${payload.message}`
+      );
+      window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+      setStatus("success");
+      form.reset();
+      return;
+    }
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -59,9 +74,13 @@ export default function ContactForm() {
         role="status"
         aria-live="polite"
       >
-        <span className="font-serif text-2xl text-rice">Message received.</span>
+        <span className="font-serif text-2xl text-rice">
+          {IS_STATIC_EXPORT ? "Opening your email client…" : "Message received."}
+        </span>
         <p className="text-silver">
-          Thank you for reaching out. I read every message and will reply to you by email soon.
+          {IS_STATIC_EXPORT
+            ? "Your message was pre-filled in a new email — just hit send. If nothing opened, email me directly."
+            : "Thank you for reaching out. I read every message and will reply to you by email soon."}
         </p>
         <button
           type="button"

@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { Project } from "@/data/projects";
 import ProjectPlaceholder from "./ProjectPlaceholder";
 import { ArrowIcon } from "@/components/layout/icons";
+import { withBasePath } from "@/lib/basePath";
 
 export default function ProjectCard({
   project,
@@ -31,7 +32,7 @@ export default function ProjectCard({
         <div className="relative aspect-[16/10] w-full overflow-hidden">
           {project.image ? (
             <Image
-              src={project.image}
+              src={withBasePath(project.image)}
               alt={`${project.name} preview`}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"

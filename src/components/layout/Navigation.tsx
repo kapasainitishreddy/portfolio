@@ -8,6 +8,7 @@ import InkControl from "@/components/ink/InkControl";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
 import ModeToggle from "@/components/theme/ModeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
+import { withBasePath } from "@/lib/basePath";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -63,7 +64,7 @@ export default function Navigation() {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <a
-            href={site.resumeUrl}
+            href={withBasePath(site.resumeUrl)}
             className="hidden items-center gap-2 rounded-full border px-4 py-2 text-sm text-rice transition-colors hover:bg-[color-mix(in_srgb,var(--color-silver)_10%,transparent)] md:flex"
             style={{ borderColor: "color-mix(in srgb, var(--color-silver) 24%, transparent)" }}
           >
@@ -127,7 +128,7 @@ export default function Navigation() {
               ))}
             </ul>
             <div className="flex items-center gap-6">
-              <a href={site.resumeUrl} className="link-quiet flex items-center gap-2 text-silver">
+              <a href={withBasePath(site.resumeUrl)} className="link-quiet flex items-center gap-2 text-silver">
                 <FileIcon width={16} height={16} /> Résumé
               </a>
               <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-silver">
