@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Inter','Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0d10"/><stop offset="1" stop-color="#0f141a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg6)"/>
+
+  <rect x="0" y="0" width="1600" height="72" fill="#10151b"/>
+  <rect x="30" y="26" width="20" height="20" rx="4" fill="none" stroke="#d95926" stroke-width="2.4"/>
+  <circle cx="40" cy="36" r="3" fill="#d95926"/>
+  <text x="66" y="42" fill="#f4efe6" font-size="22" font-weight="600">MCP Bridge</text>
+  <text x="212" y="42" fill="#7f8b95" font-size="15">Enterprise Tool Connector for AI Agents</text>
+  <rect x="1350" y="20" width="220" height="32" rx="16" fill="#161c23"/>
+  <circle cx="1372" cy="36" r="5" fill="#5fb98e"/>
+  <text x="1386" y="41" fill="#9aa4ad" font-size="13">6 tools connected</text>
+
+  <!-- architecture diagram -->
+  <rect x="30" y="100" width="1540" height="330" rx="14" fill="#12181f"/>
+  <text x="54" y="140" fill="#f4efe6" font-size="17" font-weight="600">One governed interface, many agents</text>
+
+  <!-- agents left -->
+  <g font-size="12" fill="#c9d2da" text-anchor="middle">
+    <rect x="70" y="200" width="140" height="46" rx="10" fill="#1c2733" stroke="#5b6ee1" stroke-width="1.6"/>
+    <text x="140" y="228">Claude (chat)</text>
+    <rect x="70" y="266" width="140" height="46" rx="10" fill="#1c2733" stroke="#5b6ee1" stroke-width="1.6"/>
+    <text x="140" y="294">LangGraph agent</text>
+    <rect x="70" y="332" width="140" height="46" rx="10" fill="#1c2733" stroke="#5b6ee1" stroke-width="1.6"/>
+    <text x="140" y="360">IDE assistant</text>
+  </g>
+
+  <!-- bridge center -->
+  <rect x="600" y="220" width="400" height="130" rx="16" fill="#1a1207" stroke="#d95926" stroke-width="2"/>
+  <text x="800" y="264" fill="#f4efe6" font-size="15" font-weight="700" text-anchor="middle">MCP Bridge</text>
+  <text x="800" y="286" fill="#d9a441" font-size="12" text-anchor="middle">auth · permissions · rate limits · logging</text>
+  <text x="800" y="322" fill="#8b96a0" font-size="11" text-anchor="middle">one consistent protocol surface</text>
+
+  <!-- tools right -->
+  <g font-size="12" fill="#c9d2da">
+    <rect x="1250" y="150" width="180" height="40" rx="10" fill="#1c2733" stroke="#199e70" stroke-width="1.6"/>
+    <text x="1340" y="175" text-anchor="middle">Ticketing system</text>
+    <rect x="1250" y="200" width="180" height="40" rx="10" fill="#1c2733" stroke="#199e70" stroke-width="1.6"/>
+    <text x="1340" y="225" text-anchor="middle">CRM</text>
+    <rect x="1250" y="250" width="180" height="40" rx="10" fill="#1c2733" stroke="#199e70" stroke-width="1.6"/>
+    <text x="1340" y="275" text-anchor="middle">Internal REST APIs</text>
+    <rect x="1250" y="300" width="180" height="40" rx="10" fill="#1c2733" stroke="#199e70" stroke-width="1.6"/>
+    <text x="1340" y="325" text-anchor="middle">Data warehouse</text>
+    <rect x="1250" y="350" width="180" height="40" rx="10" fill="#1c2733" stroke="#199e70" stroke-width="1.6"/>
+    <text x="1340" y="375" text-anchor="middle">Deployment console</text>
+  </g>
+
+  <g stroke="#3a434c" stroke-width="1.6" fill="none">
+    <line x1="210" y1="223" x2="600" y2="255"/>
+    <line x1="210" y1="289" x2="600" y2="285"/>
+    <line x1="210" y1="355" x2="600" y2="315"/>
+    <line x1="1000" y1="255" x2="1250" y2="170"/>
+    <line x1="1000" y1="270" x2="1250" y2="220"/>
+    <line x1="1000" y1="285" x2="1250" y2="270"/>
+    <line x1="1000" y1="300" x2="1250" y2="320"/>
+    <line x1="1000" y1="315" x2="1250" y2="370"/>
+  </g>
+
+  <!-- permission table -->
+  <rect x="30" y="448" width="756" height="392" rx="14" fill="#12181f"/>
+  <text x="54" y="488" fill="#f4efe6" font-size="17" font-weight="600">Per-agent permission scopes</text>
+  <g font-size="12.5" fill="#c9d2da">
+    <text x="54" y="524" fill="#6b757e">AGENT</text><text x="260" y="524" fill="#6b757e">TOOL</text><text x="460" y="524" fill="#6b757e">SCOPE</text><text x="640" y="524" fill="#6b757e">CALLS/DAY</text>
+    <line x1="54" y1="538" x2="756" y2="538" stroke="#1e262f"/>
+    <text x="54" y="572">Claude (chat)</text><text x="260" y="572">Ticketing</text><text x="460" y="572">read + comment</text><text x="640" y="572">214</text>
+    <text x="54" y="608">LangGraph agent</text><text x="260" y="608">CRM</text><text x="460" y="608">read-only</text><text x="640" y="608">86</text>
+    <text x="54" y="644">LangGraph agent</text><text x="260" y="644">Data warehouse</text><text x="460" y="644">read-only, row-limited</text><text x="640" y="644">340</text>
+    <text x="54" y="680">IDE assistant</text><text x="260" y="680">Internal REST APIs</text><text x="460" y="680">read + write (staging only)</text><text x="640" y="680">52</text>
+    <text x="54" y="716">Claude (chat)</text><text x="260" y="716">Deployment console</text><text x="460" y="716">read-only</text><text x="640" y="716">19</text>
+  </g>
+
+  <!-- call log -->
+  <rect x="814" y="448" width="756" height="392" rx="14" fill="#12181f"/>
+  <text x="838" y="488" fill="#f4efe6" font-size="17" font-weight="600">Live call log</text>
+  <g font-size="12.5" fill="#c9d2da">
+    <circle cx="846" cy="522" r="4" fill="#5fb98e"/><text x="860" y="527">LangGraph agent → warehouse.query() · 200 OK</text><text x="1500" y="527" fill="#6b757e" text-anchor="end">now</text>
+    <circle cx="846" cy="554" r="4" fill="#5fb98e"/><text x="860" y="559">Claude (chat) → ticketing.comment() · 200 OK</text><text x="1500" y="559" fill="#6b757e" text-anchor="end">4s</text>
+    <circle cx="846" cy="586" r="4" fill="#d9a441"/><text x="860" y="591">IDE assistant → api.write() · rate-limited, queued</text><text x="1500" y="591" fill="#6b757e" text-anchor="end">11s</text>
+    <circle cx="846" cy="618" r="4" fill="#5fb98e"/><text x="860" y="623">LangGraph agent → crm.read() · 200 OK</text><text x="1500" y="623" fill="#6b757e" text-anchor="end">22s</text>
+    <circle cx="846" cy="650" r="4" fill="#e66767"/><text x="860" y="655">Claude (chat) → crm.write() · denied, out of scope</text><text x="1500" y="655" fill="#6b757e" text-anchor="end">1m</text>
+    <circle cx="846" cy="682" r="4" fill="#5fb98e"/><text x="860" y="687">LangGraph agent → deployment.status() · 200 OK</text><text x="1500" y="687" fill="#6b757e" text-anchor="end">2m</text>
+  </g>
+</svg>
