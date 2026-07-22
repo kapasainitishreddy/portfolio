@@ -33,5 +33,5 @@ interactive if the file is missing or cannot load. Editable demo lyrics live at
 
 ## Before launch
 
-Replace the six general GitHub profile links with each project's exact repository
+Replace the seven general GitHub profile links with each project's exact repository
 or live URL. The contact email is `kapasainitishreddy@gmail.com`.
