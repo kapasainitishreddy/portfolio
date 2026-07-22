@@ -18,16 +18,18 @@ Open `http://localhost:4173`.
 - Responsive desktop/mobile layout
 - Typewriter movement with reduced-motion fallback
 - Real project names and honest product descriptions
-- Functional custom music player with a synthesized instrumental fallback
+- Functional custom music player with an original 34-second spoken-word demo
+- Browser-synthesized instrumental fallback if the audio file is unavailable
 - Synchronized lyrics and full lyrics dialog
 - Resume, email, and GitHub calls to action
 - Design reference mockups in `design/`
 
-## Add the final AI song
+## Replace the demo with the final AI song
 
-Place the finished track at `assets/please-hire-me.mp3`. The HTML audio element
-is already wired to that path. The browser synthesizer keeps the prototype
-interactive until the final mastered track is added.
+Overwrite `assets/please-hire-me.mp3` with the finished mastered track. The player
+reads its real duration automatically. The browser synthesizer keeps the player
+interactive if the file is missing or cannot load. Editable demo lyrics live at
+`assets/lyrics.txt`.
 
 ## Before launch
 
