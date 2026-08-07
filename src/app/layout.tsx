@@ -29,7 +29,6 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-// Brush calligraphy display face for the Shodō theme (East-Asian brush style).
 const maShanZheng = Ma_Shan_Zheng({
   subsets: ["latin"],
   weight: ["400"],
@@ -37,7 +36,6 @@ const maShanZheng = Ma_Shan_Zheng({
   display: "swap",
 });
 
-// Sharp Japanese mincho serif for the Bushidō (samurai) theme.
 const shippori = Shippori_Mincho({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
@@ -113,7 +111,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${newsreader.variable} ${inter.variable} ${jetbrains.variable} ${maShanZheng.variable} ${shippori.variable}`}
     >
       <head>
-        {/* set the saved theme + mode before paint to avoid a flash of the default */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('snrk_theme');if(t==='ink'||t==='calligraphy'||t==='samurai'){document.documentElement.setAttribute('data-theme',t);}var m=localStorage.getItem('snrk_mode');document.documentElement.setAttribute('data-mode',(m==='light'||m==='dark')?m:'dark');}catch(e){}})();`,
@@ -134,6 +131,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </InkProvider>
           </ThemeProvider>
         </ModeProvider>
+        <div id="syrava-assistant-host" aria-hidden="false" />
+        <script type="module" src="https://syrava.com/assistant/v1/widget.js" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var host=document.getElementById('syrava-assistant-host');if(!host)return;var el=document.createElement('syrava-assistant');el.setAttribute('site-config','/assistant/site.json');host.appendChild(el);}());`,
+          }}
+        />
       </body>
     </html>
   );
