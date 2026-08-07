@@ -1,0 +1,82 @@
+{
+  "siteId": "portfolio",
+  "entries": [
+    {
+      "id": "profile",
+      "title": "Sai Nitish Reddy Kapa",
+      "text": "Sai Nitish Reddy Kapa presents himself on this portfolio as a communications and data professional, AI governance communicator, digital content strategist, and data analyst. His tagline is: Making complex technology clear, useful, and trustworthy.",
+      "keywords": ["Sai Nitish", "Nitish", "communications", "data", "AI governance", "digital content", "data analyst"],
+      "source": {"label": "Portfolio home", "href": "/#home"}
+    },
+    {
+      "id": "focus",
+      "title": "Professional focus",
+      "text": "The portfolio says Nitish has 3+ years of experience producing reports, presentations, digital content, dashboards, and stakeholder updates, combining editorial judgment, publication coordination, analytics, visual storytelling, and responsible AI tools.",
+      "keywords": ["experience", "reports", "presentations", "dashboards", "stakeholders", "analytics", "editorial", "responsible AI"],
+      "source": {"label": "About Nitish", "href": "/#about"}
+    },
+    {
+      "id": "interests",
+      "title": "Areas of interest",
+      "text": "The portfolio highlights responsible AI, AI governance, technology policy, digital publishing, research communications, analytics, and mission-driven organizations working to make consequential systems safer and more accountable.",
+      "keywords": ["responsible AI", "AI governance", "technology policy", "digital publishing", "research communications", "analytics"],
+      "source": {"label": "Portfolio about", "href": "/#about"}
+    },
+    {
+      "id": "approach",
+      "title": "Working principles",
+      "text": "Nitish's portfolio describes five working principles: understand before simplifying, design for the audience, make workflows reliable, measure and improve, and use AI responsibly with human review, factual verification, privacy, and accountability.",
+      "keywords": ["principles", "audience", "workflow", "measure", "AI responsibly", "verification", "privacy"],
+      "source": {"label": "Portfolio principles", "href": "/#about"}
+    },
+    {
+      "id": "siraba",
+      "title": "Siraba HQ",
+      "text": "Siraba HQ is a featured in-development AI-powered company operating system for accepting work, routing it to specialized agents, storing organizational knowledge, managing approvals, and tracking artifacts across product, marketing, engineering, and operations. Nitish's role is listed as product design, system architecture, agent orchestration, and data modeling.",
+      "keywords": ["Siraba", "AI agents", "company operating system", "agent orchestration", "system architecture"],
+      "source": {"label": "Selected work", "href": "/#projects"}
+    },
+    {
+      "id": "vakya",
+      "title": "Vakya",
+      "text": "Vakya is a featured in-development real-time language intelligence and accessibility platform for live speech, subtitles, documents, and multilingual communication. The portfolio lists live speech recognition, real-time translation, subtitle overlays, text-to-speech, browser and mobile experiences, and local or hosted processing modes.",
+      "keywords": ["Vakya", "translation", "speech", "subtitles", "accessibility", "multilingual", "text to speech"],
+      "source": {"label": "Selected work", "href": "/#projects"}
+    },
+    {
+      "id": "keeply-project",
+      "title": "Keeply project",
+      "text": "The portfolio currently lists Keeply as a prototype personal knowledge and organization project: a universal place to capture links, screenshots, notes, files, ideas, and temporary information, with intelligent background organization and retrieval.",
+      "keywords": ["Keeply", "knowledge", "organization", "capture", "search", "local-first"],
+      "source": {"label": "Selected work", "href": "/#projects"}
+    },
+    {
+      "id": "un-em",
+      "title": "Un-em",
+      "text": "Un-em is a featured prototype AI writing assistant designed for natural readable responses, explicit style controls, natural rewriting, a no-em-dash response mode, document generation, and adaptation to a chosen voice.",
+      "keywords": ["Un-em", "writing", "AI writing", "rewrite", "style", "no em dash"],
+      "source": {"label": "Selected work", "href": "/#projects"}
+    },
+    {
+      "id": "smriti",
+      "title": "Smriti.ai",
+      "text": "Smriti.ai is a featured research and prototype project described as a consent-focused private memorial conversation experience built from user-provided memories, messages, documents, and voice recordings, with local-first processing, explicit consent, privacy by design, user-controlled deletion, and clear emotional and ethical boundaries.",
+      "keywords": ["Smriti", "privacy", "consent", "memorial", "local-first", "ethical"],
+      "source": {"label": "Selected work", "href": "/#projects"}
+    },
+    {
+      "id": "receipts",
+      "title": "Receipts",
+      "text": "Receipts is a featured MVP for local-first personal clarity and decision support. It helps users record decisions and reasoning, create calm scripts for difficult moments, save drafts, set review reminders and personal rules, and export or import their data.",
+      "keywords": ["Receipts", "decisions", "local-first", "personal clarity", "scripts", "reminders"],
+      "source": {"label": "Selected work", "href": "/#projects"}
+    },
+    {
+      "id": "contact",
+      "title": "Contact",
+      "text": "The portfolio lists kapasainitishreddy@gmail.com as Nitish's contact email and links to his GitHub profile at github.com/kapasainitishreddy and LinkedIn profile at linkedin.com/in/kapasainitishreddy.",
+      "keywords": ["contact", "email", "GitHub", "LinkedIn", "reach", "hire"],
+      "source": {"label": "Contact Nitish", "href": "/#contact"}
+    }
+  ]
+}
