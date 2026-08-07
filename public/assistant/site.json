@@ -1,0 +1,27 @@
+{
+  "siteId": "portfolio",
+  "displayName": "Sai Nitish Reddy Kapa Portfolio",
+  "assistantName": "Ask Nitish",
+  "launcherLabel": "Ask Nitish",
+  "description": "Website-specific guide to Sai Nitish Reddy Kapa's portfolio, selected work, capabilities, experience, and contact information.",
+  "welcome": "Ask me about Nitish's work, capabilities, selected projects, interests, or how to contact him.",
+  "inputPlaceholder": "Ask about Nitish's portfolio",
+  "knowledgeUrl": "/assistant/knowledge.json",
+  "unknownAnswer": "This portfolio does not provide that information.",
+  "maxContextEntries": 5,
+  "theme": {"accent": "#e7e1d4", "surface": "dark"},
+  "suggestions": [
+    "What kind of work does Nitish do?",
+    "What AI projects are featured?",
+    "What are his strongest capabilities?",
+    "How can I contact him?"
+  ],
+  "ai": {"chrome": true, "puter": true, "deterministicFallback": true},
+  "voice": {
+    "input": true,
+    "standardTts": true,
+    "standard": {"lang": "en-US", "rate": 1, "pitch": 1},
+    "creatorVoice": {"enabled": false, "label": "Hear Nitish explain this", "disclosure": "AI-generated voice of Nitish", "moduleUrl": ""}
+  },
+  "excludePaths": ["/privacy"]
+}
