@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vantage AI — Personal Portfolio & Achievement Dashboard</title>
+  <meta name="description" content="A personal portfolio and achievement dashboard built with HTML, CSS, and vanilla JavaScript." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23c6ff3d'/><text x='32' y='42' font-size='34' text-anchor='middle' font-family='monospace' font-weight='700' fill='%23050816'>V</text></svg>" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">V</span>
+        <span>VANTAGE&nbsp;AI</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pages/portfolio.html">Portfolio</a></li>
+        <li><a href="pages/skills.html">Skills</a></li>
+        <li><a href="pages/timeline.html">Timeline</a></li>
+        <li><a href="pages/blog.html">Blog</a></li>
+        <li><a href="pages/contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <span class="theme-label">Light mode</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-orb" aria-hidden="true"></div>
+      <span class="eyebrow">Personal Portfolio · Achievement Dashboard</span>
+      <h1>Build once.<br />Measure <span class="accent">everything.</span></h1>
+      <p class="lead">Vantage AI is a six-page personal portfolio and achievement dashboard — dark navy and electric lime, custom cursor, light/dark mode, 3D cards, scroll animations, radar charts, and animated stats. Built with HTML, CSS, and vanilla JavaScript. No external images.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="pages/portfolio.html">View portfolio →</a>
+        <a class="btn btn-ghost" href="pages/contact.html">Start a conversation</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="stats-heading">
+      <div class="section-head">
+        <span class="eyebrow">By the numbers</span>
+        <h2 id="stats-heading">Achievements at a glance</h2>
+      </div>
+      <div class="grid grid-4 reveal">
+        <div class="stat tilt">
+          <div class="stat-value" data-target="42" data-decimals="0">0</div>
+          <div class="stat-label">Shipped Projects</div>
+        </div>
+        <div class="stat tilt">
+          <div class="stat-value" data-target="17" data-decimals="0">0</div>
+          <div class="stat-label">Open-source Repos</div>
+        </div>
+        <div class="stat tilt">
+          <div class="stat-value" data-target="6.8" data-decimals="1">0</div>
+          <div class="stat-label">Years Building</div>
+        </div>
+        <div class="stat tilt">
+          <div class="stat-value" data-target="1200" data-decimals="0">0</div>
+          <div class="stat-label">Commits / Quarter</div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="feat-heading">
+      <div class="section-head">
+        <span class="eyebrow">What's inside</span>
+        <h2 id="feat-heading">Six pages, one cohesive system</h2>
+        <p class="lead">Every page shares the same design tokens, custom cursor, theme toggle, scroll reveal, and 3D card behavior. Open any page — the look and feel stay consistent.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <a class="card tilt" href="pages/portfolio.html">
+          <span class="card-meta">01 / Portfolio</span>
+          <h3 class="card-title">Project gallery</h3>
+          <p class="card-body">3D hover effects, tag chips, project case studies with measurable outcomes.</p>
+          <div class="card-tags"><span class="tag">3D Tilt</span><span class="tag">Case studies</span></div>
+        </a>
+        <a class="card tilt" href="pages/skills.html">
+          <span class="card-meta">02 / Skills</span>
+          <h3 class="card-title">Radar chart</h3>
+          <p class="card-body">Six-axis skill radar with per-vertex hover highlighting. Front-end vertex stays visually distinct on hover.</p>
+          <div class="card-tags"><span class="tag">SVG</span><span class="tag">Hover fix</span></div>
+        </a>
+        <a class="card tilt" href="pages/timeline.html">
+          <span class="card-meta">03 / Timeline</span>
+          <h3 class="card-title">Career arc</h3>
+          <p class="card-body">Progressive reveal timeline from first commit to current work, animated as you scroll.</p>
+          <div class="card-tags"><span class="tag">Scroll</span><span class="tag">Reveal</span></div>
+        </a>
+        <a class="card tilt" href="pages/blog.html">
+          <span class="card-meta">04 / Blog</span>
+          <h3 class="card-title">Writing</h3>
+          <p class="card-body">Blog cards with hover lift and animated cover art — pure CSS and SVG, zero external imagery.</p>
+          <div class="card-tags"><span class="tag">Cards</span><span class="tag">Hover</span></div>
+        </a>
+        <a class="card tilt" href="pages/contact.html">
+          <span class="card-meta">05 / Contact</span>
+          <h3 class="card-title">Start a conversation</h3>
+          <p class="card-body">Functional contact form with client-side validation and an animated submit confirmation.</p>
+          <div class="card-tags"><span class="tag">Form</span><span class="tag">Validation</span></div>
+        </a>
+        <div class="card tilt">
+          <span class="card-meta">06 / System</span>
+          <h3 class="card-title">Design tokens</h3>
+          <p class="card-body">Dark navy + electric lime with full light-mode parity. Custom cursor, scroll reveal, stats counter — one CSS file.</p>
+          <div class="card-tags"><span class="tag">Tokens</span><span class="tag">Themes</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Vantage AI · Built with HTML, CSS, and vanilla JavaScript.</span>
+      <span><a href="#">Back to top ↑</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
