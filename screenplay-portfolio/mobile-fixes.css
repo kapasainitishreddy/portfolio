@@ -1,0 +1,109 @@
+.rose {
+  --accent: #c97883;
+}
+
+@media (max-width: 650px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .site-header {
+    position: relative;
+  }
+
+  .hero,
+  html[data-theme="theater"] .hero {
+    min-height: auto;
+  }
+
+  .hero-content,
+  html[data-theme="theater"] .hero-content {
+    width: 100%;
+    min-width: 0;
+    min-height: 680px;
+    padding: 72px 22px 130px;
+  }
+
+  .hero h1 {
+    max-width: 100%;
+    font-size: clamp(38px, 12vw, 48px);
+    overflow-wrap: anywhere;
+  }
+
+  .availability {
+    max-width: 100%;
+    line-height: 1.55;
+  }
+
+  .music-section,
+  html[data-theme="theater"] .music-section {
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    min-width: 0;
+    margin: -72px 12px 0;
+    padding: 20px 16px;
+    gap: 18px;
+    overflow: hidden;
+  }
+
+  .player-copy,
+  .player-controls,
+  .progress-row,
+  .waveform {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .player-copy {
+    padding: 0;
+  }
+
+  .player-copy h2 {
+    font-size: 23px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .player-copy h2 span {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+  }
+
+  .lyric {
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  .waveform {
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  .waveform i {
+    flex: 1 1 1px;
+    min-width: 1px;
+  }
+
+  .progress-row {
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+    gap: 7px;
+  }
+
+  .player-controls {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .work-section {
+    padding-top: 92px;
+  }
+
+  .section-heading h2 {
+    overflow-wrap: anywhere;
+  }
+}
