@@ -17,20 +17,13 @@ export default function ContactForm() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-
-    // honeypot: bots fill hidden fields; humans don't
-    if ((data.get("company_website") as string)?.length) {
-      setStatus("success"); // silently accept, drop
-      form.reset();
-      return;
-    }
-
     const payload = {
       name: String(data.get("name") ?? ""),
       email: String(data.get("email") ?? ""),
       organization: String(data.get("organization") ?? ""),
       reason: String(data.get("reason") ?? ""),
       message: String(data.get("message") ?? ""),
+      companyWebsite: String(data.get("company_website") ?? ""),
       elapsedMs: Date.now() - startedAt.current,
     };
 
@@ -46,6 +39,7 @@ export default function ContactForm() {
       }
       setStatus("success");
       form.reset();
+      startedAt.current = Date.now();
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -59,13 +53,16 @@ export default function ContactForm() {
         role="status"
         aria-live="polite"
       >
-        <span className="font-serif text-2xl text-rice">Message received.</span>
+        <span className="font-serif text-2xl text-rice">Message delivered.</span>
         <p className="text-silver">
-          Thank you for reaching out. I read every message and will reply to you by email soon.
+          Thank you for reaching out. Your message was accepted by the configured email provider.
         </p>
         <button
           type="button"
-          onClick={() => setStatus("idle")}
+          onClick={() => {
+            setStatus("idle");
+            startedAt.current = Date.now();
+          }}
           className="link-quiet mt-2 text-sm text-silver"
         >
           Send another message
@@ -85,13 +82,13 @@ export default function ContactForm() {
           <label htmlFor="name" className="font-mono-label mb-2 block">
             Name
           </label>
-          <input id="name" name="name" type="text" required autoComplete="name" className={fieldClass} style={fieldStyle} />
+          <input id="name" name="name" type="text" required maxLength={120} autoComplete="name" className={fieldClass} style={fieldStyle} />
         </div>
         <div>
           <label htmlFor="email" className="font-mono-label mb-2 block">
             Email
           </label>
-          <input id="email" name="email" type="email" required autoComplete="email" className={fieldClass} style={fieldStyle} />
+          <input id="email" name="email" type="email" required maxLength={254} autoComplete="email" className={fieldClass} style={fieldStyle} />
         </div>
       </div>
 
@@ -100,7 +97,7 @@ export default function ContactForm() {
           <label htmlFor="organization" className="font-mono-label mb-2 block">
             Organization <span style={{ textTransform: "none" }}>(optional)</span>
           </label>
-          <input id="organization" name="organization" type="text" autoComplete="organization" className={fieldClass} style={fieldStyle} />
+          <input id="organization" name="organization" type="text" maxLength={160} autoComplete="organization" className={fieldClass} style={fieldStyle} />
         </div>
         <div>
           <label htmlFor="reason" className="font-mono-label mb-2 block">
@@ -123,10 +120,9 @@ export default function ContactForm() {
         <label htmlFor="message" className="font-mono-label mb-2 block">
           Message
         </label>
-        <textarea id="message" name="message" required rows={5} className={fieldClass} style={fieldStyle} />
+        <textarea id="message" name="message" required maxLength={5000} rows={5} className={fieldClass} style={fieldStyle} />
       </div>
 
-      {/* honeypot, visually hidden from humans */}
       <div aria-hidden className="absolute h-0 w-0 overflow-hidden opacity-0" style={{ position: "absolute", left: "-9999px" }}>
         <label htmlFor="company_website">Leave this field empty</label>
         <input id="company_website" name="company_website" type="text" tabIndex={-1} autoComplete="off" />

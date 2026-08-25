@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Newsreader, Inter, JetBrains_Mono, Ma_Shan_Zheng, Shippori_Mincho } from "next/font/google";
 import "./globals.css";
 import { site, socials } from "@/data/site";
@@ -58,12 +59,13 @@ export const metadata: Metadata = {
   description: site.description,
   keywords: [
     "Sai Nitish Reddy Kapa",
-    "AI product builder",
-    "data scientist",
-    "blockchain",
-    "network analysis",
-    "AI agents",
-    "machine learning",
+    "communications professional",
+    "AI governance communication",
+    "research communications",
+    "digital publishing",
+    "data analysis",
+    "data visualization",
+    "responsible AI",
     "portfolio",
   ],
   authors: [{ name: site.name }],
@@ -96,11 +98,12 @@ const jsonLd = {
   description: site.description,
   sameAs: [socials.github, socials.linkedin],
   knowsAbout: [
-    "Artificial Intelligence",
-    "Data Science",
-    "Blockchain",
-    "Network Analysis",
-    "Product Development",
+    "Research Communications",
+    "AI Governance",
+    "Responsible Artificial Intelligence",
+    "Digital Publishing",
+    "Data Analysis",
+    "Data Visualization",
   ],
 };
 
@@ -120,7 +123,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         <ModeProvider>
           <ThemeProvider>
@@ -132,7 +135,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ThemeProvider>
         </ModeProvider>
         <div id="syrava-assistant-host" aria-hidden="false" />
-        <script type="module" src="https://syrava.com/assistant/v1/widget.js" />
+        <Script
+          id="syrava-assistant-widget"
+          type="module"
+          src="https://syrava.com/assistant/v1/widget.js"
+          strategy="afterInteractive"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){var host=document.getElementById('syrava-assistant-host');if(!host)return;var el=document.createElement('syrava-assistant');el.setAttribute('site-config','/assistant/site.json');host.appendChild(el);}());`,

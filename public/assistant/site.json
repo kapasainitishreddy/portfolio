@@ -16,9 +16,9 @@
     "What are his strongest capabilities?",
     "How can I contact him?"
   ],
-  "ai": {"chrome": true, "puter": true, "deterministicFallback": true},
+  "ai": {"chrome": false, "puter": false, "deterministicFallback": true},
   "voice": {
-    "input": true,
+    "input": false,
     "standardTts": true,
     "standard": {"lang": "en-US", "rate": 1, "pitch": 1},
     "creatorVoice": {"enabled": false, "label": "Hear Nitish explain this", "disclosure": "AI-generated voice of Nitish", "moduleUrl": ""}

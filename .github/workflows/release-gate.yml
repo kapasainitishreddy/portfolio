@@ -1,0 +1,60 @@
+name: Portfolio release gate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - website/portfolio-release-hardening-final
+      - claude/sharp-tesla-f8epam
+
+permissions:
+  contents: read
+
+jobs:
+  release-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install exact lockfile
+        id: install
+        run: npm ci
+
+      - name: Focused regression tests
+        if: always() && steps.install.outcome == 'success'
+        run: npm test
+
+      - name: Lint
+        if: always() && steps.install.outcome == 'success'
+        run: npm run lint
+
+      - name: Typecheck
+        if: always() && steps.install.outcome == 'success'
+        run: npm run typecheck
+
+      - name: Production build
+        if: always() && steps.install.outcome == 'success'
+        run: npm run build
+
+      - name: Dependency vulnerability audit
+        if: always() && steps.install.outcome == 'success'
+        run: npm audit --audit-level=high
+
+      - name: Next.js security baseline
+        if: always() && steps.install.outcome == 'success'
+        run: npm run check:release-deps
