@@ -2,22 +2,28 @@ import { readFileSync } from 'node:fs';
 
 const lock = JSON.parse(readFileSync(new URL('../package-lock.json', import.meta.url), 'utf8'));
 const installedNext = lock.packages?.['node_modules/next']?.version;
-const minimumNext = '15.5.23';
+
+// Next.js announced an August 26, 2026 security release for both the 15.5 and
+// 16.3 lines that includes a critical fix. 15.5.23 predates that release, so a
+// production candidate must be newer than this baseline. Keep this value
+// deliberately fail-closed until the lockfile has been regenerated on the
+// post-release patched maintenance build and upstream guidance has been checked.
+const preAugustSecurityBaseline = '15.5.23';
 
 function parts(version) {
   return String(version || '').split('.').map((value) => Number.parseInt(value, 10));
 }
 
-function atLeast(actual, minimum) {
+function compare(actual, baseline) {
   const a = parts(actual);
-  const m = parts(minimum);
-  for (let index = 0; index < Math.max(a.length, m.length); index += 1) {
+  const b = parts(baseline);
+  for (let index = 0; index < Math.max(a.length, b.length); index += 1) {
     const left = Number.isFinite(a[index]) ? a[index] : 0;
-    const right = Number.isFinite(m[index]) ? m[index] : 0;
-    if (left > right) return true;
-    if (left < right) return false;
+    const right = Number.isFinite(b[index]) ? b[index] : 0;
+    if (left > right) return 1;
+    if (left < right) return -1;
   }
-  return true;
+  return 0;
 }
 
 if (!installedNext) {
@@ -25,10 +31,19 @@ if (!installedNext) {
   process.exit(1);
 }
 
-if (!atLeast(installedNext, minimumNext)) {
-  console.error(`Release dependency gate: Next.js ${installedNext} is below the current 15.5 maintenance floor ${minimumNext}. Regenerate the lockfile with a patched maintenance release before deployment.`);
+if (compare(installedNext, preAugustSecurityBaseline) <= 0) {
+  console.error(
+    `Release dependency gate: Next.js ${installedNext} is not eligible for production promotion. ` +
+      `The announced August 26, 2026 critical security release affects the maintained 15.5/16.3 lines, ` +
+      `so the release lock must be regenerated on a version newer than ${preAugustSecurityBaseline} ` +
+      `and checked against the current Next.js security advisory before deployment.`,
+  );
   process.exit(1);
 }
 
-console.log(`Release dependency gate: Next.js ${installedNext} meets the recorded maintenance floor ${minimumNext}.`);
-console.log('Before production promotion, re-check the current Next.js security release page because upstream security floors can change after this repository check was written.');
+console.log(
+  `Release dependency gate: Next.js ${installedNext} is newer than the pre-August-security baseline ${preAugustSecurityBaseline}.`,
+);
+console.log(
+  'Before production promotion, confirm that this exact version is the patched version named by the current Next.js August 2026 security release.',
+);
