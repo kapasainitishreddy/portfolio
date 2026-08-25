@@ -1,95 +1,137 @@
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
-import { site } from "@/data/site";
+import { contact, site } from "@/data/site";
+import {
+  consumeContactRateLimit,
+  isTrustedRequestOrigin,
+  readLimitedJson,
+  validateContactPayload,
+  type ContactRateBucket,
+} from "@/lib/contact-security.mjs";
 
 export const runtime = "nodejs";
 
-interface ContactPayload {
-  name?: string;
-  email?: string;
-  organization?: string;
-  reason?: string;
-  message?: string;
-  elapsedMs?: number;
+const globalRateLimitState = globalThis as typeof globalThis & {
+  __portfolioContactRateLimits?: Map<string, ContactRateBucket>;
+};
+const contactRateLimits =
+  globalRateLimitState.__portfolioContactRateLimits ?? new Map<string, ContactRateBucket>();
+globalRateLimitState.__portfolioContactRateLimits = contactRateLimits;
+
+function response(body: Record<string, unknown>, status = 200, headers: HeadersInit = {}) {
+  return NextResponse.json(body, {
+    status,
+    headers: {
+      "Cache-Control": "no-store",
+      ...headers,
+    },
+  });
 }
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function clientKey(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for")?.split(",", 1)[0]?.trim();
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  const userAgent = request.headers.get("user-agent")?.slice(0, 160) ?? "unknown-agent";
+  return `${forwarded || realIp || "unknown-ip"}|${userAgent}`;
+}
+
+function requestFingerprint(value: string) {
+  return createHash("sha256").update(value).digest("hex").slice(0, 12);
+}
 
 export async function POST(request: Request) {
-  let body: ContactPayload;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  const requestId = requestFingerprint(clientKey(request));
+
+  if (!isTrustedRequestOrigin(request)) {
+    console.warn("portfolio_contact_security", { event: "cross_site_rejected", requestId });
+    return response({ error: "Invalid request origin." }, 403);
   }
 
-  const name = body.name?.trim() ?? "";
-  const email = body.email?.trim() ?? "";
-  const message = body.message?.trim() ?? "";
-  const organization = body.organization?.trim() ?? "";
-  const reason = body.reason?.trim() ?? "";
+  const rate = consumeContactRateLimit(contactRateLimits, clientKey(request));
+  if (!rate.allowed) {
+    console.warn("portfolio_contact_security", { event: "rate_limited", requestId });
+    return response(
+      { error: "Too many contact attempts. Please try again later." },
+      429,
+      { "Retry-After": String(rate.retryAfterSeconds) },
+    );
+  }
 
-  // basic validation
-  if (!name || !email || !message || !reason) {
-    return NextResponse.json({ error: "Please complete all required fields." }, { status: 400 });
+  const parsed = await readLimitedJson(request);
+  if (!parsed.ok) return response({ error: parsed.error }, parsed.status);
+
+  const companyWebsite = String(parsed.value.companyWebsite ?? "").trim();
+  if (companyWebsite) {
+    console.info("portfolio_contact_security", { event: "honeypot_dropped", requestId });
+    return response({ ok: true });
   }
-  if (!EMAIL_RE.test(email)) {
-    return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
-  }
-  if (message.length > 5000) {
-    return NextResponse.json({ error: "Message is too long." }, { status: 400 });
-  }
-  // timing-based spam check: real users take more than ~1.5s
-  if (typeof body.elapsedMs === "number" && body.elapsedMs < 1500) {
-    return NextResponse.json({ ok: true }); // silently drop likely bot
+
+  const validated = validateContactPayload(parsed.value, contact.reasons);
+  if (!validated.ok) return response({ error: validated.error }, validated.status);
+
+  const { name, email, message, organization, reason, elapsedMs } = validated.value;
+
+  // A real form interaction takes time. Silently accept and drop implausibly fast submissions.
+  if (typeof elapsedMs === "number" && elapsedMs < 1500) {
+    console.info("portfolio_contact_security", { event: "timing_dropped", requestId });
+    return response({ ok: true });
   }
 
   const toEmail = process.env.CONTACT_TO_EMAIL || site.email;
   const fromEmail = process.env.CONTACT_FROM_EMAIL;
   const resendKey = process.env.RESEND_API_KEY;
 
-  // If Resend is configured, deliver by email. Otherwise log on the server.
-  if (resendKey && fromEmail) {
-    try {
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: fromEmail,
-          to: [toEmail],
-          reply_to: email,
-          subject: `Portfolio contact: ${reason} · ${name}`,
-          text: [
-            `Name: ${name}`,
-            `Email: ${email}`,
-            `Organization: ${organization || "n/a"}`,
-            `Reason: ${reason}`,
-            "",
-            message,
-          ].join("\n"),
-        }),
-      });
-      if (!res.ok) {
-        const detail = await res.text();
-        console.error("Resend error:", detail);
-        return NextResponse.json({ error: "Could not send message right now." }, { status: 502 });
-      }
-    } catch (err) {
-      console.error("Contact delivery failed:", err);
-      return NextResponse.json({ error: "Could not send message right now." }, { status: 502 });
-    }
-  } else {
-    // No email provider configured: log so the submission is not lost in dev.
-    console.info("Contact submission (no email provider configured):", {
-      name,
-      email,
-      organization,
-      reason,
-      message,
-    });
+  // Fail closed in production instead of claiming a message was delivered when no
+  // delivery provider is configured. Do not log visitor message contents.
+  if (!resendKey || !fromEmail) {
+    console.error("portfolio_contact_delivery", { event: "provider_unconfigured", requestId });
+    return response(
+      { error: `Contact delivery is temporarily unavailable. Please email ${site.email} directly.` },
+      503,
+    );
   }
 
-  return NextResponse.json({ ok: true });
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [toEmail],
+        reply_to: email,
+        subject: `Portfolio contact: ${reason} · ${name}`,
+        text: [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Organization: ${organization || "n/a"}`,
+          `Reason: ${reason}`,
+          "",
+          message,
+        ].join("\n"),
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+
+    if (!res.ok) {
+      console.error("portfolio_contact_delivery", {
+        event: "provider_rejected",
+        requestId,
+        status: res.status,
+      });
+      return response({ error: "Could not send message right now. Please try again later." }, 502);
+    }
+  } catch (error) {
+    console.error("portfolio_contact_delivery", {
+      event: "provider_failed",
+      requestId,
+      error: error instanceof Error ? error.name : "unknown_error",
+    });
+    return response({ error: "Could not send message right now. Please try again later." }, 502);
+  }
+
+  console.info("portfolio_contact_delivery", { event: "delivered", requestId });
+  return response({ ok: true });
 }
