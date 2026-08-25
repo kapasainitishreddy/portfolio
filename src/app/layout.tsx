@@ -58,12 +58,13 @@ export const metadata: Metadata = {
   description: site.description,
   keywords: [
     "Sai Nitish Reddy Kapa",
-    "AI product builder",
-    "data scientist",
-    "blockchain",
-    "network analysis",
-    "AI agents",
-    "machine learning",
+    "communications professional",
+    "AI governance communication",
+    "research communications",
+    "digital publishing",
+    "data analysis",
+    "data visualization",
+    "responsible AI",
     "portfolio",
   ],
   authors: [{ name: site.name }],
@@ -96,11 +97,12 @@ const jsonLd = {
   description: site.description,
   sameAs: [socials.github, socials.linkedin],
   knowsAbout: [
-    "Artificial Intelligence",
-    "Data Science",
-    "Blockchain",
-    "Network Analysis",
-    "Product Development",
+    "Research Communications",
+    "AI Governance",
+    "Responsible Artificial Intelligence",
+    "Digital Publishing",
+    "Data Analysis",
+    "Data Visualization",
   ],
 };
 
@@ -120,7 +122,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         <ModeProvider>
           <ThemeProvider>
