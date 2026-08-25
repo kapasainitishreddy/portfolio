@@ -26,23 +26,26 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install patched Next.js Active LTS
-        run: npm install next@16.3.3 eslint-config-next@16.3.3 --save-exact
+      - name: Pin safe PostCSS override for Next.js 15
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          pkg.overrides = {
+            ...(pkg.overrides || {}),
+            next: {
+              ...(pkg.overrides?.next || {}),
+              postcss: '8.5.26',
+            },
+          };
+          fs.writeFileSync('package.json', `${JSON.stringify(pkg, null, 2)}\n`);
+          NODE
+
+      - name: Install patched Next.js Maintenance LTS
+        run: npm install next@15.5.24 --save-exact
 
       - name: Apply available non-breaking npm audit fixes
         run: npm audit fix || true
-
-      - name: Migrate ESLint flat config for Next.js 16
-        run: |
-          cat > eslint.config.mjs <<'EOF'
-          import { defineConfig, globalIgnores } from "eslint/config";
-          import nextVitals from "eslint-config-next/core-web-vitals";
-
-          export default defineConfig([
-            ...nextVitals,
-            globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
-          ]);
-          EOF
 
       - name: Test
         run: npm test
@@ -64,12 +67,13 @@ jobs:
 
       - name: Commit verified dependency refresh
         run: |
-          if git diff --quiet -- package.json package-lock.json eslint.config.mjs; then
+          if git diff --quiet -- package.json package-lock.json; then
             echo "No dependency changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json eslint.config.mjs
+          git add package.json package-lock.json
           git commit -m "security: refresh patched portfolio dependencies"
+          git pull --rebase origin website/portfolio-release-hardening-final
           git push origin HEAD:website/portfolio-release-hardening-final
