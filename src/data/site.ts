@@ -17,7 +17,6 @@ export const site = {
 
 export const socials = {
   github: "https://github.com/kapasainitishreddy",
-  linkedin: "https://www.linkedin.com/in/kapasainitishreddy",
   email: `mailto:${site.email}`,
 } as const;
 
