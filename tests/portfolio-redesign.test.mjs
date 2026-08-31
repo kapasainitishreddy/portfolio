@@ -7,6 +7,7 @@ const root = join(process.cwd());
 const featuredPath = join(root, "src/data/featuredPortfolio.ts");
 const sitePath = join(root, "src/data/site.ts");
 const pagePath = join(root, "src/app/page.tsx");
+const layoutPath = join(root, "src/app/layout.tsx");
 
 const featuredNames = ["Vakya", "Circuit", "AppGraft", "Edge", "Unsaid"];
 
@@ -31,4 +32,15 @@ test("home page includes a dedicated writing section", () => {
   const source = readFileSync(pagePath, "utf8");
   assert.match(source, /import Writing from [\"']@\/components\/sections\/Writing[\"']/);
   assert.match(source, /<Writing\s*\/>/);
+});
+
+test("layout loads the Syrava assistant without a synchronous external script", () => {
+  assert.equal(existsSync(layoutPath), true, "layout.tsx should exist");
+  const source = readFileSync(layoutPath, "utf8");
+  assert.match(source, /from [\"']next\/script[\"']/, "layout should use next/script");
+  assert.doesNotMatch(
+    source,
+    /<script\s+type=[\"']module[\"']\s+src=/,
+    "bare synchronous module script should be removed",
+  );
 });
