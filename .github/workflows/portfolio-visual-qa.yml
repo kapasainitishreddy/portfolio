@@ -58,12 +58,12 @@ jobs:
           const { chromium } = require('playwright');
           (async () => {
             const browser = await chromium.launch({ headless: true });
-            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+            const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1 });
             await page.goto('http://127.0.0.1:3000/', { waitUntil: 'networkidle' });
-            await page.screenshot({ path: 'qa/portfolio-desktop.jpg', fullPage: true, type: 'jpeg', quality: 58 });
+            await page.screenshot({ path: 'qa/portfolio-desktop.jpg', fullPage: false, type: 'jpeg', quality: 34 });
             await page.setViewportSize({ width: 390, height: 844 });
             await page.goto('http://127.0.0.1:3000/', { waitUntil: 'networkidle' });
-            await page.screenshot({ path: 'qa/portfolio-mobile.jpg', fullPage: true, type: 'jpeg', quality: 58 });
+            await page.screenshot({ path: 'qa/portfolio-mobile.jpg', fullPage: false, type: 'jpeg', quality: 34 });
             await browser.close();
           })().catch((error) => {
             console.error(error);
@@ -81,5 +81,5 @@ jobs:
             echo "No screenshot changes"
             exit 0
           fi
-          git commit -m "ci: capture portfolio visual QA [skip ci]"
+          git commit -m "ci: capture compact portfolio visual QA [skip ci]"
           git push origin HEAD:${{ github.head_ref }}
