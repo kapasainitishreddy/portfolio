@@ -13,6 +13,7 @@ const portfolioCssPath = join(root, "src/app/portfolio.css");
 const inkVisibilityCssPath = join(root, "src/app/ink-visibility.css");
 const navigationPath = join(root, "src/components/layout/Navigation.tsx");
 const footerPath = join(root, "src/components/layout/Footer.tsx");
+const assistantKnowledgePath = join(root, "public/assistant/knowledge.json");
 
 const featuredNames = ["Vakya", "Circuit", "AppGraft", "Edge", "Unsaid"];
 
@@ -64,7 +65,7 @@ test("Suminagashi background is painted above the page base and below portfolio 
 });
 
 test("public portfolio contains no LinkedIn link or metadata", () => {
-  for (const path of [sitePath, layoutPath, navigationPath, footerPath]) {
+  for (const path of [sitePath, layoutPath, navigationPath, footerPath, assistantKnowledgePath]) {
     const source = readFileSync(path, "utf8");
     assert.doesNotMatch(source, /linkedin/i, `${path} should not expose LinkedIn`);
   }
