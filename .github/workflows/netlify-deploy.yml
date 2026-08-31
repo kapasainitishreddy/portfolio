@@ -1,0 +1,32 @@
+name: Deploy Portfolio to Netlify
+
+on:
+  push:
+    branches:
+      - claude/sharp-tesla-f8epam
+    paths:
+      - .github/workflows/netlify-deploy.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Deploy to Netlify
+        run: >-
+          npx -y @netlify/mcp@latest
+          --site-id e43aacbe-0d4a-4196-9692-2c4a08e6c651
+          --proxy-path "https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..5K6PFSBTcqoYvcn4.PUckDAUTMk_2ko3Y0mJBvywwJC9BCZ3iLhKePFKvz_QuGEj30f8mBEW41r91bB9lxSW2F1XCgZaI06688f07clkWqRflIsSvoQo1Z_rPsQLofxadxrcYeCBYEujeDeN5sUmsuEcDnCwdSx_ftOj2ZK9p_V2H7K0-bWUWqKFCHVUkxCDNWR9JFOrSsjaE_kzQk58UgfX6oCMiclHzRbeYYDNBNfKld1DAan4Fnsrs6Su1Cbn7gdsANJQtpRBWaABNdCuDUF2XNgljMQZ3NWFeeZ0_fKtQDOnP6tDXqyJvknfGkTQ-aBqIhiVTz4UPWb2NWRsQKxuwU185G0xdMI_ZvY3BONuwbbL1uOn7OyJWgCrIqHo4FTSUpsqDKY494oPFlldHiF69.SMUc_3iuIE-zqW5kIH5Hsw"
