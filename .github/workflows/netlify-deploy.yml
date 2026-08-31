@@ -26,16 +26,26 @@ jobs:
           cache: npm
 
       - name: Deploy to Netlify
-        run: >-
-          npx -y @netlify/mcp@latest
-          --site-id e43aacbe-0d4a-4196-9692-2c4a08e6c651
-          --proxy-path "https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..5K6PFSBTcqoYvcn4.PUckDAUTMk_2ko3Y0mJBvywwJC9BCZ3iLhKePFKvz_QuGEj30f8mBEW41r91bB9lxSW2F1XCgZaI06688f07clkWqRflIsSvoQo1Z_rPsQLofxadxrcYeCBYEujeDeN5sUmsuEcDnCwdSx_ftOj2ZK9p_V2H7K0-bWUWqKFCHVUkxCDNWR9JFOrSsjaE_kzQk58UgfX6oCMiclHzRbeYYDNBNfKld1DAan4Fnsrs6Su1Cbn7gdsANJQtpRBWaABNdCuDUF2XNgljMQZ3NWFeeZ0_fKtQDOnP6tDXqyJvknfGkTQ-aBqIhiVTz4UPWb2NWRsQKxuwU185G0xdMI_ZvY3BONuwbbL1uOn7OyJWgCrIqHo4FTSUpsqDKY494oPFlldHiF69.SMUc_3iuIE-zqW5kIH5Hsw"
-
-      - name: Record success
+        id: deploy
+        continue-on-error: true
+        shell: bash
         run: |
-          printf 'Netlify deploy succeeded for %s\n' "$GITHUB_SHA" > netlify-deploy-success.txt
+          set -o pipefail
+          npx -y @netlify/mcp@latest \
+            --site-id e43aacbe-0d4a-4196-9692-2c4a08e6c651 \
+            --proxy-path "https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..5K6PFSBTcqoYvcn4.PUckDAUTMk_2ko3Y0mJBvywwJC9BCZ3iLhKePFKvz_QuGEj30f8mBEW41r91bB9lxSW2F1XCgZaI06688f07clkWqRflIsSvoQo1Z_rPsQLofxadxrcYeCBYEujeDeN5sUmsuEcDnCwdSx_ftOj2ZK9p_V2H7K0-bWUWqKFCHVUkxCDNWR9JFOrSsjaE_kzQk58UgfX6oCMiclHzRbeYYDNBNfKld1DAan4Fnsrs6Su1Cbn7gdsANJQtpRBWaABNdCuDUF2XNgljMQZ3NWFeeZ0_fKtQDOnP6tDXqyJvknfGkTQ-aBqIhiVTz4UPWb2NWRsQKxuwU185G0xdMI_ZvY3BONuwbbL1uOn7OyJWgCrIqHo4FTSUpsqDKY494oPFlldHiF69.SMUc_3iuIE-zqW5kIH5Hsw" \
+            2>&1 | tee netlify-deploy-output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> netlify-deploy-output.txt
+
+      - name: Commit deploy diagnostics
+        if: always()
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add netlify-deploy-success.txt
-          git commit -m "ci: record Netlify deploy success [skip ci]"
-          git push
+          git add netlify-deploy-output.txt
+          git commit -m "ci: capture Netlify deploy diagnostics [skip ci]" || true
+          git push || true
+
+      - name: Fail if deploy failed
+        if: steps.deploy.outcome == 'failure'
+        run: exit 1
