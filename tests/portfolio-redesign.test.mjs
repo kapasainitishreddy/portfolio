@@ -10,6 +10,7 @@ const pagePath = join(root, "src/app/page.tsx");
 const layoutPath = join(root, "src/app/layout.tsx");
 const globalsPath = join(root, "src/app/globals.css");
 const portfolioCssPath = join(root, "src/app/portfolio.css");
+const inkVisibilityCssPath = join(root, "src/app/ink-visibility.css");
 const navigationPath = join(root, "src/components/layout/Navigation.tsx");
 const footerPath = join(root, "src/components/layout/Footer.tsx");
 
@@ -50,14 +51,16 @@ test("layout loads the Syrava assistant without a synchronous external script", 
 });
 
 test("Suminagashi background is painted above the page base and below portfolio content", () => {
-  const globals = readFileSync(globalsPath, "utf8");
-  const portfolio = readFileSync(portfolioCssPath, "utf8");
+  const css = [globalsPath, portfolioCssPath, inkVisibilityCssPath]
+    .filter(existsSync)
+    .map((path) => readFileSync(path, "utf8"))
+    .join("\n");
 
-  assert.match(globals, /html\s*\{[^}]*background-color:\s*var\(--color-ink\)/s);
-  assert.match(globals, /body\s*\{[^}]*background-color:\s*transparent/s);
-  assert.match(globals, /\.ink-bg\s*\{[^}]*z-index:\s*0/s);
-  assert.match(portfolio, /\.portfolio-page\s*\{[^}]*z-index:\s*1/s);
-  assert.match(portfolio, /\.portfolio-hero\s*\{[^}]*background:\s*color-mix\(in srgb, var\(--color-ink\) 5[0-9]%, transparent\)/s);
+  assert.match(css, /html\s*\{[^}]*background-color:\s*var\(--color-ink\)/s);
+  assert.match(css, /body\s*\{[^}]*background-color:\s*transparent/s);
+  assert.match(css, /\.ink-bg\s*\{[^}]*z-index:\s*0/s);
+  assert.match(css, /\.portfolio-page\s*\{[^}]*z-index:\s*1/s);
+  assert.match(css, /\.portfolio-hero\s*\{[^}]*background:\s*color-mix\(in srgb, var\(--color-ink\) 5[0-9]%, transparent\)/s);
 });
 
 test("public portfolio contains no LinkedIn link or metadata", () => {
