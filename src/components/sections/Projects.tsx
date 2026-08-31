@@ -1,96 +1,72 @@
-"use client";
-
-import { useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Section } from "@/components/layout/Section";
 import Reveal from "@/components/layout/Reveal";
-import { projects, projectTags, type Project, type ProjectTag } from "@/data/projects";
-import { publicGoodProjects } from "@/data/publicGoodProjects";
-import ProjectCard from "@/components/projects/ProjectCard";
-import ProjectModal from "@/components/projects/ProjectModal";
-
-type Filter = ProjectTag | "All" | "Public Good";
+import { featuredPortfolio } from "@/data/featuredPortfolio";
+import { ArrowIcon } from "@/components/layout/icons";
 
 export default function Projects() {
-  const [filter, setFilter] = useState<Filter>("Public Good");
-  const [selected, setSelected] = useState<Project | null>(null);
-
-  const allProjects = useMemo(() => [...publicGoodProjects, ...projects], []);
-
-  const filtered =
-    filter === "Public Good"
-      ? publicGoodProjects
-      : filter === "All"
-        ? allProjects
-        : allProjects.filter((project) => project.tags.includes(filter));
-
-  const filters: Filter[] = ["Public Good", "All", ...projectTags];
-
   return (
-    <Section id="projects" label="Public-Good Portfolio">
+    <Section id="projects" label="Featured Work" className="portfolio-projects-section">
       <Reveal>
-        <div className="max-w-4xl">
-          <p className="font-mono-label mb-4 text-copper">BUILDING FOR FLOURISHING FUTURES</p>
-          <h2 className="text-rice" style={{ fontSize: "clamp(1.9rem, 4vw, 3.2rem)" }}>
-            Products that make consequential systems more legible, accountable, and humane.
-          </h2>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-silver md:text-lg">
-            The first collection contains the ideas most relevant to Surplus: decision infrastructure,
-            institutional memory, public epistemics, privacy, and tools that preserve human agency.
-          </p>
+        <div className="portfolio-section-heading">
+          <div>
+            <h2 className="text-rice">Products I’m building and testing.</h2>
+            <p className="text-silver">
+              Five projects that best represent how I think about AI, product design, developer tooling,
+              privacy, and useful software.
+            </p>
+          </div>
+          <span className="portfolio-section-note">Proof over promises.</span>
         </div>
       </Reveal>
 
-      <Reveal delay={0.05}>
-        <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter projects">
-          {filters.map((item) => {
-            const active = filter === item;
-            return (
-              <button
-                key={item}
-                type="button"
-                onClick={() => setFilter(item)}
-                aria-pressed={active}
-                className={`rounded-full px-4 py-2 text-sm transition-all duration-300 ${
-                  active
-                    ? "text-ink shadow-[0_0_30px_color-mix(in_srgb,var(--color-copper)_25%,transparent)]"
-                    : "text-silver hover:-translate-y-0.5 hover:text-rice"
-                }`}
-                style={
-                  active
-                    ? { background: "var(--color-soft)" }
-                    : { border: "1px solid color-mix(in srgb, var(--color-silver) 22%, transparent)" }
-                }
-              >
-                {item}
-              </button>
-            );
-          })}
-        </div>
-      </Reveal>
+      <div className="featured-product-grid">
+        {featuredPortfolio.map((project, index) => (
+          <Reveal key={project.id} delay={index * 0.04}>
+            <details className="featured-product-card" data-product={project.id}>
+              <summary>
+                <div className="featured-product-card__visual" aria-hidden="true">
+                  <div className="featured-product-card__device">
+                    <span className="featured-product-card__device-mark">{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{project.name}</strong>
+                    <small>{project.status}</small>
+                  </div>
+                </div>
 
-      <motion.div layout className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((project, index) => (
-            <motion.div
-              key={project.id}
-              layout
-              initial={{ opacity: 0, y: 22, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.98 }}
-              transition={{ duration: 0.45, delay: Math.min(index * 0.04, 0.2) }}
-            >
-              <ProjectCard project={project} onOpen={setSelected} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
+                <div className="featured-product-card__copy">
+                  <div className="featured-product-card__meta">
+                    <span>{project.category}</span>
+                    <span>{project.status}</span>
+                  </div>
+                  <h3>{project.name}</h3>
+                  <p>{project.summary}</p>
+                  <span className="featured-product-card__open">View project details</span>
+                </div>
+              </summary>
 
-      {filtered.length === 0 && (
-        <p className="mt-10 text-center text-silver">No projects in this category yet.</p>
-      )}
+              <div className="featured-product-card__details">
+                <p className="font-mono-label">Evidence in the current build</p>
+                <ul>
+                  {project.proof.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
 
-      <ProjectModal project={selected} onClose={() => setSelected(null)} />
+                <div className="featured-product-card__stack" aria-label={`${project.name} technology stack`}>
+                  {project.stack.map((technology) => (
+                    <span key={technology}>{technology}</span>
+                  ))}
+                </div>
+
+                {project.liveHref && (
+                  <a href={project.liveHref} target="_blank" rel="noopener noreferrer" className="portfolio-inline-link">
+                    Open live product <ArrowIcon width={14} height={14} aria-hidden="true" />
+                  </a>
+                )}
+              </div>
+            </details>
+          </Reveal>
+        ))}
+      </div>
     </Section>
   );
 }

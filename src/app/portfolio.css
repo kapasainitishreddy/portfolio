@@ -1,0 +1,796 @@
+/* Portfolio redesign: Suminagashi dark product surface + Shodō editorial paper. */
+
+.portfolio-page {
+  position: relative;
+}
+
+.portfolio-hero-shell {
+  min-height: 100svh;
+  padding-bottom: clamp(2.25rem, 5vw, 4rem);
+}
+
+.portfolio-hero {
+  display: grid;
+  min-height: min(720px, 72svh);
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-silver) 18%, transparent);
+  background: color-mix(in srgb, var(--color-ink) 84%, transparent);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.16);
+}
+
+.portfolio-hero__copy {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2.25rem, 6vw, 6.5rem);
+}
+
+.portfolio-hero__title {
+  max-width: 780px;
+  font-size: clamp(3rem, 6.4vw, 6.3rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.portfolio-hero__support {
+  max-width: 690px;
+  margin-top: 1.75rem;
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.72;
+}
+
+.portfolio-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.portfolio-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--color-silver) 28%, transparent);
+  padding: 0.78rem 1.15rem;
+  color: var(--color-rice);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.portfolio-button:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--color-rice) 50%, transparent);
+}
+
+.portfolio-button--primary {
+  border-color: var(--color-soft);
+  background: var(--color-soft);
+  color: #11100e;
+}
+
+.portfolio-hero__visual {
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 66% 32%, color-mix(in srgb, var(--color-copper) 16%, transparent), transparent 32%),
+    linear-gradient(145deg, color-mix(in srgb, var(--color-charcoal) 72%, transparent), transparent 65%);
+}
+
+.portfolio-hero__visual::before,
+.portfolio-hero__visual::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.portfolio-hero__visual::before {
+  inset: -12%;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse at 24% 80%, transparent 0 36%, color-mix(in srgb, var(--color-silver) 13%, transparent) 38% 39%, transparent 42%),
+    radial-gradient(ellipse at 54% 58%, transparent 0 30%, color-mix(in srgb, var(--color-copper) 18%, transparent) 32% 33%, transparent 36%),
+    radial-gradient(ellipse at 86% 85%, transparent 0 45%, color-mix(in srgb, var(--color-silver) 11%, transparent) 47% 48%, transparent 52%);
+  filter: blur(1px);
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.portfolio-hero__visual::after {
+  inset: 0;
+  z-index: 4;
+  background: linear-gradient(90deg, var(--color-ink), transparent 18%, transparent 70%, color-mix(in srgb, var(--color-ink) 55%, transparent));
+  opacity: 0.7;
+}
+
+.portfolio-hero__sun {
+  position: absolute;
+  top: 10%;
+  right: 12%;
+  z-index: -1;
+  width: clamp(170px, 24vw, 340px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 42% 36%, rgba(255, 110, 78, 0.62), transparent 28%),
+    #a51d18;
+  box-shadow: 0 0 70px rgba(165, 29, 24, 0.2);
+  opacity: 0.9;
+}
+
+.portfolio-hero__swirl {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid color-mix(in srgb, var(--color-rice) 18%, transparent);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.portfolio-hero__swirl--one {
+  left: 6%;
+  bottom: -18%;
+  width: 76%;
+  aspect-ratio: 1.7;
+  transform: rotate(-16deg);
+  box-shadow:
+    inset 0 0 0 24px color-mix(in srgb, var(--color-silver) 3%, transparent),
+    inset 0 0 0 58px color-mix(in srgb, var(--color-rice) 2%, transparent);
+}
+
+.portfolio-hero__swirl--two {
+  right: -18%;
+  bottom: 10%;
+  width: 74%;
+  aspect-ratio: 1.55;
+  transform: rotate(17deg);
+}
+
+.portfolio-hero__horizon {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  z-index: 3;
+  width: 72%;
+  height: 31%;
+  clip-path: polygon(0 82%, 16% 58%, 30% 67%, 47% 33%, 62% 60%, 76% 38%, 100% 75%, 100% 100%, 0 100%);
+  background: color-mix(in srgb, var(--color-rice) 16%, var(--color-ink));
+  opacity: 0.55;
+}
+
+.portfolio-hero__kanji {
+  position: absolute;
+  top: 14%;
+  left: 10%;
+  z-index: 5;
+  writing-mode: vertical-rl;
+  color: var(--color-rice);
+  font-family: var(--font-brush);
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  letter-spacing: 0.08em;
+  opacity: 0.82;
+}
+
+.portfolio-hero__theme-copy {
+  position: absolute;
+  right: clamp(1rem, 3vw, 2.4rem);
+  bottom: clamp(1rem, 3vw, 2.4rem);
+  z-index: 6;
+  display: grid;
+  gap: 0.35rem;
+  color: color-mix(in srgb, var(--color-rice) 76%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.portfolio-identities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid color-mix(in srgb, var(--color-silver) 18%, transparent);
+  border-top: 0;
+  background: color-mix(in srgb, var(--color-charcoal) 68%, transparent);
+}
+
+.portfolio-identity {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  min-height: 138px;
+  align-items: center;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-right: 1px solid color-mix(in srgb, var(--color-silver) 14%, transparent);
+}
+
+.portfolio-identity:last-child {
+  border-right: 0;
+}
+
+.portfolio-identity__number {
+  color: var(--color-copper);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.portfolio-identity h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  color: var(--color-rice);
+}
+
+.portfolio-identity p {
+  max-width: 30ch;
+  margin-top: 0.35rem;
+  color: var(--color-silver);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.portfolio-projects-section {
+  max-width: 1500px !important;
+  padding-top: clamp(4.5rem, 9vw, 8rem) !important;
+  padding-bottom: clamp(4.5rem, 9vw, 8rem) !important;
+}
+
+.portfolio-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.portfolio-section-heading h2 {
+  max-width: 820px;
+  font-size: clamp(2.2rem, 4.5vw, 4.4rem);
+  letter-spacing: -0.025em;
+}
+
+.portfolio-section-heading p {
+  max-width: 650px;
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.portfolio-section-note {
+  white-space: nowrap;
+  color: var(--color-copper);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.featured-product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(210px, 1fr));
+  gap: 0;
+  margin-top: 2.4rem;
+  overflow-x: auto;
+  border: 1px solid color-mix(in srgb, var(--color-silver) 18%, transparent);
+  scroll-snap-type: x proximity;
+}
+
+.featured-product-grid > * {
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.featured-product-card {
+  height: 100%;
+  min-height: 100%;
+  border-right: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent);
+  background: color-mix(in srgb, var(--color-charcoal) 62%, transparent);
+}
+
+.featured-product-grid > *:last-child .featured-product-card {
+  border-right: 0;
+}
+
+.featured-product-card summary {
+  display: block;
+  cursor: pointer;
+  list-style: none;
+}
+
+.featured-product-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.featured-product-card__visual {
+  display: grid;
+  min-height: 210px;
+  place-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-silver) 14%, transparent);
+  background:
+    radial-gradient(circle at 50% 32%, color-mix(in srgb, var(--feature-accent, var(--color-copper)) 30%, transparent), transparent 42%),
+    linear-gradient(145deg, color-mix(in srgb, var(--color-charcoal) 88%, transparent), color-mix(in srgb, var(--color-ink) 82%, transparent));
+}
+
+.featured-product-card[data-product="vakya"] { --feature-accent: #5d6fe8; }
+.featured-product-card[data-product="circuit"] { --feature-accent: #46a4c7; }
+.featured-product-card[data-product="appgraft"] { --feature-accent: #ad7955; }
+.featured-product-card[data-product="edge"] { --feature-accent: #4e8fa7; }
+.featured-product-card[data-product="unsaid"] { --feature-accent: #9d4c43; }
+
+.featured-product-card__device {
+  position: relative;
+  display: flex;
+  width: min(64%, 150px);
+  aspect-ratio: 0.58;
+  flex-direction: column;
+  justify-content: end;
+  border: 1px solid color-mix(in srgb, var(--color-rice) 22%, transparent);
+  border-radius: 24px;
+  padding: 1rem 0.85rem;
+  background:
+    radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--feature-accent) 38%, transparent), transparent 38%),
+    #0b0d10;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.22);
+  color: #f5f0e8;
+}
+
+.featured-product-card__device::before {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 34%;
+  height: 7px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #14171c;
+  content: "";
+}
+
+.featured-product-card__device-mark {
+  position: absolute;
+  top: 1rem;
+  left: 0.85rem;
+  color: color-mix(in srgb, var(--feature-accent) 80%, white);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+}
+
+.featured-product-card__device strong {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.featured-product-card__device small {
+  margin-top: 0.25rem;
+  color: #9ba0aa;
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+.featured-product-card__copy {
+  padding: 1.25rem;
+}
+
+.featured-product-card__meta {
+  display: flex;
+  min-height: 2rem;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.6rem;
+  color: var(--color-silver);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.featured-product-card__meta span:last-child {
+  color: var(--feature-accent);
+  text-align: right;
+}
+
+.featured-product-card h3 {
+  margin-top: 0.8rem;
+  color: var(--color-rice);
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+}
+
+.featured-product-card__copy p {
+  min-height: 8.7rem;
+  margin-top: 0.75rem;
+  color: var(--color-silver);
+  font-size: 0.84rem;
+  line-height: 1.62;
+}
+
+.featured-product-card__open {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--color-rice);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.featured-product-card__open::after {
+  content: " +";
+  color: var(--feature-accent);
+}
+
+.featured-product-card[open] .featured-product-card__open::after {
+  content: " −";
+}
+
+.featured-product-card__details {
+  padding: 0 1.25rem 1.4rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-silver) 12%, transparent);
+}
+
+.featured-product-card__details > p {
+  padding-top: 1rem;
+}
+
+.featured-product-card__details ul {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  color: var(--color-silver);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.featured-product-card__details li {
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+.featured-product-card__details li::before {
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--feature-accent);
+  content: "";
+}
+
+.featured-product-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 1rem;
+}
+
+.featured-product-card__stack span {
+  border: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent);
+  padding: 0.24rem 0.42rem;
+  color: var(--color-silver);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+}
+
+.portfolio-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.1rem;
+  color: var(--color-rice);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.portfolio-inline-link:hover {
+  color: var(--color-copper);
+}
+
+.portfolio-writing {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  margin-bottom: clamp(3rem, 6vw, 6rem);
+  border: 1px solid color-mix(in srgb, var(--color-silver) 18%, transparent);
+  background: color-mix(in srgb, var(--color-charcoal) 66%, transparent);
+}
+
+.portfolio-writing__lead,
+.portfolio-writing__manuscript {
+  min-height: 430px;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.portfolio-writing__lead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent);
+}
+
+.portfolio-writing__lead h2 {
+  max-width: 650px;
+  margin-top: 0.85rem;
+  color: var(--color-rice);
+  font-size: clamp(2.2rem, 4.5vw, 4.7rem);
+  letter-spacing: -0.025em;
+}
+
+.portfolio-writing__lead > p:not(.font-mono-label) {
+  max-width: 620px;
+  margin-top: 1.15rem;
+  color: var(--color-silver);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.portfolio-writing__manuscript {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--color-copper) 18%, transparent), transparent 22%),
+    linear-gradient(145deg, color-mix(in srgb, var(--color-ink) 78%, transparent), color-mix(in srgb, var(--color-charcoal) 90%, transparent));
+}
+
+.portfolio-writing__manuscript blockquote {
+  position: relative;
+  z-index: 2;
+  max-width: 820px;
+  margin-top: 1rem;
+  color: var(--color-rice);
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3.8vw, 3.8rem);
+  font-style: italic;
+  line-height: 1.12;
+}
+
+.portfolio-writing__seal {
+  position: absolute;
+  right: clamp(1.2rem, 4vw, 3.5rem);
+  bottom: clamp(1rem, 4vw, 3rem);
+  color: color-mix(in srgb, var(--color-copper) 76%, transparent);
+  font-family: var(--font-brush);
+  font-size: clamp(7rem, 15vw, 13rem);
+  line-height: 1;
+  opacity: 0.2;
+}
+
+.portfolio-writing__themes {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.6rem;
+}
+
+.portfolio-writing__themes span {
+  border: 1px solid color-mix(in srgb, var(--color-silver) 18%, transparent);
+  padding: 0.35rem 0.55rem;
+  color: var(--color-silver);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+}
+
+/* Keep Shodō readable and editorial. Brush type is used as an accent, not for every heading. */
+[data-theme="calligraphy"] .portfolio-page h1,
+[data-theme="calligraphy"] .portfolio-page h2,
+[data-theme="calligraphy"] .portfolio-page h3,
+[data-theme="calligraphy"] .portfolio-page h4,
+[data-theme="calligraphy"] .portfolio-page .font-serif {
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+[data-theme="calligraphy"][data-mode="light"] .portfolio-hero,
+[data-theme="calligraphy"][data-mode="light"] .portfolio-identities,
+[data-theme="calligraphy"][data-mode="light"] .featured-product-card {
+  background:
+    radial-gradient(circle at 25% 20%, rgba(115, 86, 52, 0.045), transparent 28%),
+    color-mix(in srgb, var(--color-ink) 96%, white);
+}
+
+[data-theme="calligraphy"][data-mode="light"] .portfolio-hero__visual {
+  background:
+    radial-gradient(circle at 72% 28%, rgba(152, 42, 30, 0.11), transparent 25%),
+    linear-gradient(145deg, rgba(64, 50, 34, 0.05), rgba(255, 255, 255, 0.18));
+}
+
+[data-theme="calligraphy"][data-mode="light"] .portfolio-hero__visual::after {
+  background: linear-gradient(90deg, var(--color-ink), transparent 22%, transparent 72%, color-mix(in srgb, var(--color-ink) 70%, transparent));
+  opacity: 0.5;
+}
+
+[data-theme="calligraphy"][data-mode="light"] .portfolio-hero__sun {
+  background: #a12b23;
+  opacity: 0.72;
+  box-shadow: none;
+}
+
+[data-theme="calligraphy"][data-mode="light"] .portfolio-hero__kanji {
+  color: #211b15;
+}
+
+[data-theme="calligraphy"][data-mode="light"] .portfolio-hero__theme-copy {
+  color: #4e463d;
+}
+
+[data-theme="calligraphy"][data-mode="light"] .featured-product-card__visual {
+  background:
+    radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--feature-accent) 13%, transparent), transparent 42%),
+    linear-gradient(155deg, rgba(74, 63, 50, 0.08), rgba(255, 255, 255, 0.08));
+}
+
+[data-theme="calligraphy"][data-mode="light"] .featured-product-card__device {
+  border-color: rgba(50, 42, 34, 0.25);
+  background: #171512;
+}
+
+/* The writing band intentionally inverts in paper mode, matching the editorial concept. */
+[data-theme="calligraphy"][data-mode="light"] .portfolio-writing {
+  background: #12110f;
+  --color-rice: #f1eadf;
+  --color-silver: #aaa298;
+  --color-ink: #12110f;
+}
+
+[data-theme="samurai"] .portfolio-hero__sun {
+  background: #b11210;
+  box-shadow: 0 0 90px rgba(177, 18, 16, 0.22);
+}
+
+[data-theme="samurai"] .featured-product-card__open::after,
+[data-theme="samurai"] .portfolio-section-note {
+  color: #d84a37;
+}
+
+#about,
+#principles,
+#contact {
+  padding-top: clamp(4rem, 8vw, 7rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+#about h2,
+#principles h2,
+#contact h2 {
+  letter-spacing: -0.025em;
+}
+
+#principles > div:last-child {
+  border-radius: 0 !important;
+}
+
+@media (max-width: 1100px) {
+  .portfolio-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-hero__visual {
+    min-height: 390px;
+    border-top: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent);
+  }
+
+  .portfolio-identities {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-identity {
+    min-height: 112px;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-silver) 14%, transparent);
+  }
+
+  .portfolio-identity:last-child {
+    border-bottom: 0;
+  }
+
+  .featured-product-grid {
+    grid-template-columns: repeat(5, minmax(250px, 280px));
+  }
+}
+
+@media (max-width: 760px) {
+  .portfolio-hero-shell {
+    padding-inline: 0.85rem;
+    padding-top: 6.3rem;
+  }
+
+  .portfolio-hero {
+    min-height: auto;
+  }
+
+  .portfolio-hero__copy {
+    padding: 2.15rem 1.35rem 2rem;
+  }
+
+  .portfolio-hero__title {
+    font-size: clamp(2.6rem, 13vw, 4.25rem);
+  }
+
+  .portfolio-hero__support {
+    font-size: 0.95rem;
+  }
+
+  .portfolio-hero__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .portfolio-button {
+    width: 100%;
+  }
+
+  .portfolio-button:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .portfolio-hero__visual {
+    min-height: 320px;
+  }
+
+  .portfolio-hero__kanji {
+    font-size: 4rem;
+  }
+
+  .portfolio-identities {
+    margin-inline: 0;
+  }
+
+  .portfolio-identity {
+    padding: 1.15rem 1.25rem;
+  }
+
+  .portfolio-section-heading {
+    display: block;
+  }
+
+  .portfolio-section-note {
+    display: inline-block;
+    margin-top: 1.25rem;
+  }
+
+  .featured-product-grid {
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+    border-right: 0;
+    border-left: 0;
+    grid-template-columns: repeat(5, minmax(78vw, 310px));
+  }
+
+  .featured-product-card {
+    border: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent);
+    border-right: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent) !important;
+  }
+
+  .portfolio-writing {
+    grid-template-columns: 1fr;
+    margin-inline: 0.85rem;
+  }
+
+  .portfolio-writing__lead,
+  .portfolio-writing__manuscript {
+    min-height: 350px;
+    padding: 2rem 1.35rem;
+  }
+
+  .portfolio-writing__lead {
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-button,
+  .featured-product-card summary {
+    transition: none;
+  }
+}

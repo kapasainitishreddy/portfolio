@@ -4,26 +4,35 @@ import { principles } from "@/data/site";
 
 export default function Principles() {
   return (
-    <Section id="principles" label="Principles & Approach">
+    <Section id="principles" label="Build Philosophy" className="portfolio-principles-section">
       <Reveal>
-        <h2 className="max-w-3xl text-rice" style={{ fontSize: "clamp(1.9rem, 4vw, 3.2rem)" }}>
+        <h2 className="max-w-4xl text-rice" style={{ fontSize: "clamp(2.1rem, 4.5vw, 4.4rem)" }}>
           {principles.heading}
         </h2>
       </Reveal>
 
-      <div className="mt-14 grid gap-px overflow-hidden rounded-2xl md:grid-cols-2" style={{ background: "color-mix(in srgb, var(--color-silver) 14%, transparent)" }}>
-        {principles.items.map((item, i) => (
-          <Reveal key={item.title} delay={i * 0.04}>
-            <div
-              className="h-full p-8 md:p-10"
-              style={{ background: "color-mix(in srgb, var(--color-charcoal) 60%, transparent)" }}
+      <div
+        className="mt-12 grid gap-px overflow-hidden border md:grid-cols-2 xl:grid-cols-4"
+        style={{
+          borderColor: "color-mix(in srgb, var(--color-silver) 18%, transparent)",
+          background: "color-mix(in srgb, var(--color-silver) 15%, transparent)",
+        }}
+      >
+        {principles.items.map((item, index) => (
+          <Reveal key={item.title} delay={index * 0.04}>
+            <article
+              className="h-full min-h-60 p-7 md:p-8"
+              style={{ background: "color-mix(in srgb, var(--color-charcoal) 72%, transparent)" }}
             >
-              <span className="font-serif text-3xl" style={{ color: "var(--color-copper)" }}>
-                {String(i + 1).padStart(2, "0")}
+              <span
+                className="font-mono text-xs tracking-[0.18em]"
+                style={{ color: "var(--color-copper)" }}
+              >
+                {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-4 font-serif text-2xl text-rice">{item.title}</h3>
-              <p className="mt-3 leading-relaxed text-silver">{item.body}</p>
-            </div>
+              <h3 className="mt-10 font-serif text-2xl text-rice">{item.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-silver md:text-base">{item.body}</p>
+            </article>
           </Reveal>
         ))}
       </div>
