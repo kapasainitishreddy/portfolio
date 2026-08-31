@@ -4,6 +4,7 @@ import { Newsreader, Inter, JetBrains_Mono, Ma_Shan_Zheng, Shippori_Mincho } fro
 import "./globals.css";
 import "./portfolio.css";
 import "./mobile-polish.css";
+import "./ink-visibility.css";
 import { site, socials } from "@/data/site";
 import { InkProvider } from "@/components/ink/InkProvider";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -97,7 +98,7 @@ const jsonLd = {
   email: `mailto:${site.email}`,
   url: site.url,
   description: site.description,
-  sameAs: [socials.github, socials.linkedin],
+  sameAs: [socials.github],
   knowsAbout: [
     "Artificial Intelligence",
     "Data Science",

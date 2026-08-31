@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { navItems, site, socials } from "@/data/site";
-import { GitHubIcon, LinkedInIcon, FileIcon, MenuIcon, CloseIcon } from "./icons";
+import { GitHubIcon, FileIcon, MenuIcon, CloseIcon } from "./icons";
 import InkControl from "@/components/ink/InkControl";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
 import ModeToggle from "@/components/theme/ModeToggle";
@@ -21,7 +21,6 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // lock body scroll while the mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -50,7 +49,6 @@ export default function Navigation() {
           </span>
         </a>
 
-        {/* desktop links */}
         <ul className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => (
             <li key={item.href}>
@@ -79,15 +77,6 @@ export default function Navigation() {
           >
             <GitHubIcon />
           </a>
-          <a
-            href={socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="hidden h-9 w-9 items-center justify-center rounded-full text-silver transition-colors hover:text-rice sm:flex"
-          >
-            <LinkedInIcon />
-          </a>
           <ThemeSwitcher />
           <ModeToggle />
           {theme === "ink" && <InkControl />}
@@ -103,7 +92,6 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -132,9 +120,6 @@ export default function Navigation() {
               </a>
               <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-silver">
                 <GitHubIcon width={22} height={22} />
-              </a>
-              <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-silver">
-                <LinkedInIcon width={22} height={22} />
               </a>
             </div>
           </motion.div>
