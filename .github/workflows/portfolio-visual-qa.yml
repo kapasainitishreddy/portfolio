@@ -83,8 +83,9 @@ jobs:
           python <<'PY'
           from PIL import Image
           import base64
+          import textwrap
 
-          for stem, width in (("portfolio-desktop", 560), ("portfolio-mobile", 320)):
+          for stem, width in (("portfolio-desktop", 240), ("portfolio-mobile", 180)):
               source = f"qa/{stem}.jpg"
               preview = f"qa/{stem}-preview.jpg"
               encoded = f"qa/{stem}-preview.b64"
@@ -92,9 +93,12 @@ jobs:
               ratio = width / image.width
               height = max(1, round(image.height * ratio))
               image = image.resize((width, height), Image.Resampling.LANCZOS)
-              image.save(preview, "JPEG", quality=18, optimize=True, progressive=True)
-              with open(preview, "rb") as src, open(encoded, "w", encoding="ascii") as dst:
-                  dst.write(base64.b64encode(src.read()).decode("ascii"))
+              image.save(preview, "JPEG", quality=8, optimize=True, progressive=True)
+              with open(preview, "rb") as src:
+                  payload = base64.b64encode(src.read()).decode("ascii")
+              with open(encoded, "w", encoding="ascii") as dst:
+                  dst.write(textwrap.fill(payload, width=60))
+                  dst.write("\n")
           PY
 
       - name: Commit QA screenshots to PR branch
@@ -107,5 +111,5 @@ jobs:
             echo "No screenshot changes"
             exit 0
           fi
-          git commit -m "ci: export portfolio visual QA previews [skip ci]"
+          git commit -m "ci: export inspectable portfolio QA previews [skip ci]"
           git push origin HEAD:${{ github.head_ref }}
