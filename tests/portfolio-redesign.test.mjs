@@ -64,6 +64,14 @@ test("Suminagashi background is painted above the page base and below portfolio 
   assert.match(css, /\.portfolio-hero\s*\{[^}]*background:\s*color-mix\(in srgb, var\(--color-ink\) 5[0-9]%, transparent\)/s);
 });
 
+test("ink mode has visible marbling before any pointer interaction", () => {
+  const css = readFileSync(inkVisibilityCssPath, "utf8");
+  assert.match(css, /\[data-theme=[\"']ink[\"']\]\s+\.ink-bg::after\s*\{/s);
+  assert.match(css, /animation:\s*sumi-drift\s+/s);
+  assert.match(css, /@keyframes\s+sumi-drift/s);
+  assert.match(css, /mix-blend-mode:\s*(screen|lighten|soft-light)/s);
+});
+
 test("public portfolio contains no LinkedIn link or metadata", () => {
   for (const path of [sitePath, layoutPath, navigationPath, footerPath, assistantKnowledgePath]) {
     const source = readFileSync(path, "utf8");
