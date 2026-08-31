@@ -1,0 +1,137 @@
+/*
+ * Suminagashi visibility layer.
+ *
+ * The WebGL shader already provides pointer wakes, ripples, scroll activity,
+ * performance-tier fallbacks, and reduced-motion behavior. The live issue was
+ * compositing: the fixed canvas sat behind an opaque body and then behind
+ * heavily opaque portfolio surfaces.
+ *
+ * Fluid responsiveness was tuned with PavelDoGreat/WebGL-Fluid-Simulation
+ * (MIT) as a mobile-first interaction reference. No simulation code is copied.
+ */
+
+html {
+  background-color: var(--color-ink);
+}
+
+body {
+  background-color: transparent;
+}
+
+/* Keep the visual world inside the root stacking context instead of behind it. */
+.ink-bg {
+  z-index: 0;
+  opacity: 1;
+}
+
+/* All readable content stays above the fixed visual layer. */
+.portfolio-page {
+  position: relative;
+  z-index: 1;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * Ink mode should feel like ink, not a black page with a hidden shader.
+ * Shodō and Bushidō keep their existing veil treatment.
+ */
+[data-theme="ink"] .ink-bg__veil {
+  background:
+    radial-gradient(
+      125% 120% at 50% 18%,
+      transparent 48%,
+      rgba(var(--color-veil), 0.08) 72%,
+      rgba(var(--color-veil), 0.20) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(var(--color-veil), 0.10),
+      rgba(var(--color-veil), 0.04) 38%,
+      rgba(var(--color-veil), 0.15) 72%,
+      rgba(var(--color-veil), 0.22)
+    );
+}
+
+/* The hero becomes a glass/ink sheet instead of an opaque slab. */
+[data-theme="ink"] .portfolio-hero {
+  background: color-mix(in srgb, var(--color-ink) 55%, transparent);
+  backdrop-filter: blur(3px) saturate(112%);
+  -webkit-backdrop-filter: blur(3px) saturate(112%);
+}
+
+[data-theme="ink"] .portfolio-identities {
+  background: color-mix(in srgb, var(--color-charcoal) 42%, transparent);
+  backdrop-filter: blur(6px) saturate(112%);
+  -webkit-backdrop-filter: blur(6px) saturate(112%);
+}
+
+[data-theme="ink"] .featured-product-card {
+  background: color-mix(in srgb, var(--color-charcoal) 46%, transparent);
+  backdrop-filter: blur(7px) saturate(112%);
+  -webkit-backdrop-filter: blur(7px) saturate(112%);
+}
+
+[data-theme="ink"] .featured-product-card__copy,
+[data-theme="ink"] .featured-product-card__details {
+  background: color-mix(in srgb, var(--color-ink) 24%, transparent);
+}
+
+[data-theme="ink"] .surface {
+  background: color-mix(in srgb, var(--color-charcoal) 44%, transparent);
+  backdrop-filter: blur(8px) saturate(118%);
+  -webkit-backdrop-filter: blur(8px) saturate(118%);
+}
+
+[data-theme="ink"] .portfolio-writing,
+[data-theme="ink"] .portfolio-writing__lead,
+[data-theme="ink"] .portfolio-writing__manuscript {
+  background-color: color-mix(in srgb, var(--color-ink) 40%, transparent);
+  backdrop-filter: blur(7px) saturate(110%);
+  -webkit-backdrop-filter: blur(7px) saturate(110%);
+}
+
+/* Make the CSS fallback visibly marbled too, including reduced-motion devices. */
+[data-theme="ink"] .ink-static__ring {
+  border-color: color-mix(in srgb, var(--color-silver) 48%, transparent);
+  filter: blur(0.2px);
+}
+
+[data-theme="ink"] .ink-static__ring--1 {
+  box-shadow:
+    0 0 0 10vmax color-mix(in srgb, var(--color-indigo) 18%, transparent) inset,
+    0 0 70px color-mix(in srgb, var(--color-indigo) 22%, transparent);
+}
+
+[data-theme="ink"] .ink-static__ring--2 {
+  box-shadow:
+    0 0 0 8vmax color-mix(in srgb, var(--color-charcoal) 46%, transparent) inset,
+    0 0 60px color-mix(in srgb, var(--color-silver) 12%, transparent);
+}
+
+[data-theme="ink"] .ink-static__ring--3 {
+  box-shadow:
+    0 0 0 5vmax color-mix(in srgb, var(--color-silver) 13%, transparent) inset,
+    0 0 45px color-mix(in srgb, var(--color-copper) 12%, transparent);
+}
+
+[data-theme="ink"] .ink-static__vignette {
+  background: radial-gradient(
+    120% 120% at 50% 40%,
+    transparent 56%,
+    rgba(var(--color-veil), 0.32) 100%
+  );
+}
+
+@media (max-width: 760px) {
+  [data-theme="ink"] .portfolio-hero {
+    background: color-mix(in srgb, var(--color-ink) 52%, transparent);
+  }
+
+  [data-theme="ink"] .featured-product-card {
+    background: color-mix(in srgb, var(--color-charcoal) 42%, transparent);
+  }
+}
