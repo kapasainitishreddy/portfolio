@@ -1,19 +1,17 @@
 /**
- * Central site configuration.
- * Edit names, links, navigation and hero copy here. Nothing else needs to change.
+ * Central portfolio copy and navigation.
  */
-
 export const site = {
   name: "Sai Nitish Reddy Kapa",
   shortName: "Sai Nitish",
-  initials: "SK",
-  roles: ["Communications & Data Professional", "AI Governance Communicator", "Digital Content Strategist", "Data Analyst"],
-  tagline: "Making complex technology clear, useful, and trustworthy",
+  initials: "SN",
+  roles: ["AI Builder", "Product Founder", "Thriller Writer"],
+  tagline: "Ideas move like ink. Systems give them form. Stories give them soul.",
   email: "kapasainitishreddy@gmail.com",
   location: "United States",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
-    "Sai Nitish Reddy Kapa translates complex technical, research, and operational information into clear digital content, reports, presentations, and data-informed communications.",
+    "Sai Nitish Reddy builds AI products, intelligent systems, developer tools, mobile experiences, and psychological thrillers.",
   resumeUrl: "/resume.pdf",
 } as const;
 
@@ -24,83 +22,91 @@ export const socials = {
 } as const;
 
 export const navItems = [
-  { label: "Home", href: "#home" },
+  { label: "Work", href: "#projects" },
+  { label: "Writing", href: "#writing" },
   { label: "About", href: "#about" },
-  { label: "Capabilities", href: "#skills" },
-  { label: "Selected Work", href: "#projects" },
-  { label: "Experience", href: "#experience" },
+  { label: "Philosophy", href: "#principles" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
 export const hero = {
-  headline: "I turn complex AI, research, and data into communication people can use.",
+  headline: "I build AI products, intelligent systems, and story-driven experiences.",
   supporting: [
-    "I am Sai Nitish Reddy Kapa, a communications and data professional with 3+ years of experience producing reports, presentations, digital content, dashboards, and stakeholder updates.",
-    "My work combines editorial judgment, publication coordination, analytics, visual storytelling, and responsible AI tools to make technical and policy-oriented ideas accurate, accessible, and actionable.",
+    "I am a builder, product founder, and thriller writer. I turn complex ideas into useful software, from language intelligence and developer infrastructure to private consumer products and stories about what people do under pressure.",
   ],
-  status: "Open to communications, AI governance, research, and digital publishing opportunities",
+  status: "Building across AI, developer tools, mobile products, and stories",
+  identities: [
+    {
+      title: "AI Builder",
+      body: "Building intelligent systems, applied AI products, and agentic tools.",
+    },
+    {
+      title: "Product Founder",
+      body: "Turning ideas into focused products that solve real problems.",
+    },
+    {
+      title: "Thriller Writer",
+      body: "Exploring tension, motive, consequence, and the darker sides of human nature.",
+    },
+  ],
   actions: [
-    { label: "View Selected Work", href: "#projects", kind: "primary" as const },
-    { label: "Read My Experience", href: "#experience", kind: "ghost" as const },
-    { label: "Start a Conversation", href: "#contact", kind: "ghost" as const },
+    { label: "Explore Products", href: "#projects", kind: "primary" as const },
+    { label: "Read Writing", href: "#writing", kind: "ghost" as const },
+    { label: "View GitHub", href: socials.github, kind: "ghost" as const, external: true },
   ],
 } as const;
 
 export const about = {
-  heading: "Clear communication is infrastructure for better decisions.",
+  heading: "Builder. Writer. Thinker.",
   paragraphs: [
-    "Complex research and technology only create impact when people can understand what matters, why it matters, and what to do next. I translate detailed analysis into concise reports, presentations, web content, briefing materials, and stakeholder communications.",
-    "My background spans business and operational analysis, AI content evaluation, market research, publication workflows, visual communication, and performance reporting. I am comfortable coordinating multiple deliverables across remote, cross-functional teams while maintaining accuracy, consistency, and deadlines.",
-    "I am especially interested in responsible AI, AI governance, technology policy, digital publishing, research communications, and mission-driven organizations working to make consequential systems safer and more accountable.",
+    "I like building at the point where technology, product design, and human behavior meet. Some ideas become AI tools. Some become mobile products. Some become stories.",
+    "My product work usually starts with a messy workflow or an annoying decision. I try to reduce it to one clear loop, make the system inspectable, and keep the interface simple enough that the user does not need a manual.",
+    "Writing thrillers exercises a different part of the same instinct. I care about motive, pressure, hidden information, and what people choose when there is no comfortable option. That attention to human behavior also shapes the software I build.",
   ],
   keywords: [
-    { word: "Clarity", note: "Translate technical and policy-oriented material for different audiences." },
-    { word: "Accuracy", note: "Validate claims, edit carefully, and keep evidence distinct from inference." },
-    { word: "Coordination", note: "Manage timelines, reviews, approvals, stakeholders, and publication handoffs." },
-    { word: "Insight", note: "Use analytics and audience signals to improve communication performance." },
+    { word: "Intelligence", note: "Applied AI that supports a real workflow." },
+    { word: "Products", note: "Small loops, clear value, and usable interfaces." },
+    { word: "Systems", note: "Architecture that can be inspected, tested, and changed." },
+    { word: "Stories", note: "Tension, motive, consequence, and human behavior." },
   ],
 } as const;
 
 export const principles = {
-  heading: "How I approach communications and digital work.",
+  heading: "Build with clarity. Write with truth.",
   items: [
     {
-      title: "Understand before simplifying",
-      body: "Read the underlying research closely so summaries remain accessible without losing accuracy or important nuance.",
+      title: "Build with clarity",
+      body: "Strip away noise, solve the real problem, and make the next action obvious.",
     },
     {
-      title: "Design for the audience",
-      body: "Adapt structure, tone, format, and level of detail for websites, newsletters, reports, presentations, and social channels.",
+      title: "Make it real",
+      body: "Prefer working flows, tests, demos, and evidence over impressive sounding promises.",
     },
     {
-      title: "Make workflows reliable",
-      body: "Use clear ownership, templates, review checkpoints, content calendars, and version control to keep concurrent deliverables moving.",
+      title: "Design for emotion",
+      body: "People remember how a product or a story made them feel. Clarity and atmosphere both matter.",
     },
     {
-      title: "Measure and improve",
-      body: "Use engagement, traffic, workflow, and operational data to identify what works and recommend practical improvements.",
-    },
-    {
-      title: "Use AI responsibly",
-      body: "Apply AI tools to accelerate research and drafting while preserving human review, factual verification, privacy, and accountability.",
+      title: "Think long term",
+      body: "Build foundations that can evolve instead of piling features onto weak structure.",
     },
   ],
 } as const;
 
 export const contact = {
-  heading: "Let’s make important work easier to understand.",
+  heading: "Let’s build something meaningful.",
   supporting:
-    "I am interested in communications, digital publishing, research, AI governance, technology policy, analytics, and mission-driven work where clarity and coordination matter.",
+    "If it is a product, a system, a story, or an unusual problem worth exploring, I am open to a conversation.",
   reasons: [
-    "Communications opportunity",
-    "AI governance or policy collaboration",
-    "Research and digital publishing",
-    "Data and performance reporting",
+    "AI or product opportunity",
+    "Forward deployed or solutions work",
+    "Developer tools or mobile products",
+    "Writing or story collaboration",
     "Other",
   ],
 } as const;
 
 export const footer = {
   signature: "Designed and built by Sai Nitish Reddy Kapa",
-  motto: "Complex ideas deserve clear communication.",
+  motto: "Ideas move like ink. Systems give them form. Stories give them soul.",
 } as const;
