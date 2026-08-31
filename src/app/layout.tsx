@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Newsreader, Inter, JetBrains_Mono, Ma_Shan_Zheng, Shippori_Mincho } from "next/font/google";
 import "./globals.css";
 import "./portfolio.css";
@@ -133,12 +134,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ThemeProvider>
         </ModeProvider>
         <div id="syrava-assistant-host" aria-hidden="false" />
-        <script type="module" src="https://syrava.com/assistant/v1/widget.js" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var host=document.getElementById('syrava-assistant-host');if(!host)return;var el=document.createElement('syrava-assistant');el.setAttribute('site-config','/assistant/site.json');host.appendChild(el);}());`,
-          }}
+        <Script
+          type="module"
+          src="https://syrava.com/assistant/v1/widget.js"
+          strategy="afterInteractive"
         />
+        <Script id="syrava-assistant-init" strategy="afterInteractive">
+          {`(function(){var host=document.getElementById('syrava-assistant-host');if(!host)return;var el=document.createElement('syrava-assistant');el.setAttribute('site-config','/assistant/site.json');host.appendChild(el);}());`}
+        </Script>
       </body>
     </html>
   );
