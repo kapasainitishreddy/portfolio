@@ -52,10 +52,11 @@ export default function Hero() {
           <figure className="surface overflow-hidden rounded-3xl">
             <div className="relative aspect-square w-full overflow-hidden">
               <Image
-                src={withBasePath("/profile.jpg")}
+                src={withBasePath("/profile.webp")}
                 alt="Sai Nitish Reddy Kapa smiling outdoors at sunset"
                 fill
                 priority
+                unoptimized
                 sizes="(max-width: 1024px) 100vw, 38vw"
                 className="object-cover"
               />
@@ -65,9 +66,9 @@ export default function Hero() {
                 aria-hidden="true"
               />
             </div>
-            <figcaption className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
+            <figcaption className="grid gap-1 px-5 py-4 text-sm sm:grid-cols-[auto_1fr] sm:items-center sm:gap-4">
               <span className="font-medium text-rice">Sai Nitish Reddy Kapa</span>
-              <span className="text-silver">Forward deployed AI, data, and integrations</span>
+              <span className="text-silver sm:text-right">Forward deployed AI, data, and integrations</span>
             </figcaption>
           </figure>
 
