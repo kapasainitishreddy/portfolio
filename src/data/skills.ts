@@ -1,5 +1,7 @@
+export type SkillGroupId = string;
+
 export interface SkillGroup {
-  id: string;
+  id: SkillGroupId;
   label: string;
   blurb: string;
   outcome: string;
