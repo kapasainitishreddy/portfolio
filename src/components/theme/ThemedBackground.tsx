@@ -2,27 +2,17 @@
 
 import dynamic from "next/dynamic";
 import { useTheme } from "./ThemeProvider";
-import InkBackground from "@/components/ink/InkBackground";
 
-// calligraphy + samurai canvases load only when their theme is active
-const CalligraphyBackground = dynamic(() => import("@/components/calligraphy/CalligraphyBackground"), {
-  ssr: false,
-});
-const SamuraiBackground = dynamic(() => import("@/components/samurai/SamuraiBackground"), {
-  ssr: false,
-});
+const SuminagashiBackground = dynamic(() => import("@/components/suminagashi/SuminagashiBackground"), { ssr: false });
+const CalligraphyBackground = dynamic(() => import("@/components/calligraphy/CalligraphyBackground"), { ssr: false });
+const SamuraiBackground = dynamic(() => import("@/components/samurai/SamuraiBackground"), { ssr: false });
 
 export default function ThemedBackground() {
   const { theme } = useTheme();
-
-  if (theme === "ink") {
-    return <InkBackground />;
-  }
-
   return (
-    <div className="ink-bg" aria-hidden role="presentation">
-      {theme === "calligraphy" ? <CalligraphyBackground /> : <SamuraiBackground />}
-      <div className="ink-bg__veil" />
+    <div className={`theme-bg theme-bg--${theme}`} aria-hidden role="presentation">
+      {theme === "ink" ? <SuminagashiBackground /> : theme === "calligraphy" ? <CalligraphyBackground /> : <SamuraiBackground />}
+      <div className={`theme-veil theme-veil--${theme}`} />
     </div>
   );
 }

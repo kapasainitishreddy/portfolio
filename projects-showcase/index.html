@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sai Nitish Reddy Kapa — Projects</title>
+<meta name="description" content="A pure project showcase: AI products, governance tooling, hardware, privacy tech, and decentralized systems." />
+<style>
+  :root {
+    --ink: #0a0d10;
+    --charcoal: #12161b;
+    --surface: #14181f;
+    --rice: #f4efe6;
+    --silver: #a9b2ba;
+    --muted: #7f8b95;
+    --copper: #c8794b;
+    --indigo: #5b6ee1;
+    --line: rgba(169, 178, 186, 0.16);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--ink); color: var(--rice); font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { line-height: 1.5; }
+  a { color: inherit; }
+
+  header.hero { padding: 72px 24px 40px; max-width: 1100px; margin: 0 auto; }
+  .kicker { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 14px; }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; margin: 0 0 18px; font-weight: 700; letter-spacing: -0.5px; }
+  .lede { max-width: 640px; color: var(--silver); font-size: 16px; }
+  .meta-links { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; font-size: 13px; }
+  .meta-links a { border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; text-decoration: none; color: var(--rice); transition: border-color .2s, background .2s; }
+  .meta-links a:hover { border-color: var(--copper); background: rgba(200,121,75,0.08); }
+
+  .filters { max-width: 1100px; margin: 0 auto; padding: 0 24px 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid var(--line); background: transparent; color: var(--silver); font-size: 13px; padding: 7px 15px; border-radius: 999px; cursor: pointer; transition: all .2s; }
+  .chip:hover { color: var(--rice); border-color: var(--silver); }
+  .chip.active { background: var(--rice); color: var(--ink); border-color: var(--rice); font-weight: 600; }
+
+  .count { max-width: 1100px; margin: 18px auto 0; padding: 0 24px; color: var(--muted); font-size: 13px; }
+
+  .grid { max-width: 1100px; margin: 0 auto; padding: 20px 24px 100px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform .25s ease, border-color .25s ease; display: flex; flex-direction: column; }
+  .card:hover { transform: translateY(-3px); border-color: rgba(200,121,75,0.4); }
+  .thumb { aspect-ratio: 16/10; position: relative; overflow: hidden; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb .placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 15px; color: rgba(244,239,230,0.55); text-align: center; padding: 12px; }
+  .status-badge { position: absolute; top: 10px; right: 10px; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: rgba(10,13,16,0.72); backdrop-filter: blur(4px); }
+  .status-badge.soon { background: var(--copper); color: var(--ink); }
+  .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+  .cat { font-size: 10px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .name { font-size: 20px; font-weight: 700; margin: 8px 0 8px; letter-spacing: -0.2px; }
+  .summary { color: var(--silver); font-size: 13.5px; flex: 1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .tag { font-size: 10.5px; border: 1px solid var(--line); color: var(--silver); border-radius: 999px; padding: 3px 9px; }
+  .open-cta { margin-top: 16px; font-size: 13px; display: flex; align-items: center; gap: 6px; color: var(--rice); }
+
+  /* modal */
+  .overlay { position: fixed; inset: 0; background: rgba(10,13,16,0.82); backdrop-filter: blur(6px); display: none; align-items: flex-start; justify-content: center; padding: 32px 16px; overflow-y: auto; z-index: 100; }
+  .overlay.open { display: flex; }
+  .modal { background: var(--surface); border-radius: 16px; max-width: 760px; width: 100%; overflow: hidden; margin: 24px 0; border: 1px solid var(--line); }
+  .modal-media { aspect-ratio: 16/9; position: relative; }
+  .modal-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .modal-media .placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 22px; color: rgba(244,239,230,0.5); }
+  .close-btn { position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%; background: rgba(10,13,16,0.7); border: none; color: var(--rice); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-body { padding: 32px 36px 40px; }
+  .modal-cat { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--copper); font-weight: 700; }
+  .modal-name { font-size: 32px; font-weight: 700; margin: 10px 0 12px; letter-spacing: -0.5px; }
+  .modal-summary { color: var(--silver); font-size: 15px; line-height: 1.6; }
+  .modal-note { margin-top: 18px; background: rgba(200,121,75,0.12); border: 1px solid rgba(200,121,75,0.3); border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--rice); }
+  dl.fields { margin-top: 26px; }
+  dl.fields div { margin-bottom: 18px; }
+  dl.fields dt { font-size: 10.5px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+  dl.fields dd { margin: 0; color: var(--silver); font-size: 14.5px; line-height: 1.6; }
+  .feat-title { font-size: 10.5px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 26px 0 10px; }
+  ul.feat { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
+  ul.feat li { font-size: 13.5px; color: var(--silver); padding-left: 14px; position: relative; }
+  ul.feat li::before { content: ""; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--copper); }
+  .tech-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .tech { font-size: 11.5px; background: rgba(169,178,186,0.1); border-radius: 999px; padding: 5px 12px; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 24px 48px; text-align: center; color: var(--muted); font-size: 12.5px; max-width: 1100px; margin: 0 auto; }
+
+  @media (max-width: 640px) {
+    .modal-body { padding: 24px 20px 32px; }
+    ul.feat { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">Project Portfolio</div>
+  <h1>AI agents, governance infrastructure, and forward-deployed systems.</h1>
+  <p class="lede">Nine projects — agent orchestration, RAG, text-to-SQL, MCP integration, and AI governance tooling, plus three shipped forward-deployed engagements. No résumé, no job history. Just the work.</p>
+  <div class="meta-links">
+    <a href="mailto:kapasainitishreddy@gmail.com">Email</a>
+    <a href="https://github.com/kapasainitishreddy" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/kapasainitishreddy" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</header>
+
+<div class="filters" id="filters"></div>
+<div class="count" id="count"></div>
+<div class="grid" id="grid"></div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<footer>Designed and built by Sai Nitish Reddy Kapa · Standalone project archive</footer>
+
+<script>
+const PROJECTS = [
+  {
+    id: "risk-ledger", name: "RiskLedger — AI Use Case Registry & Risk Tiering", category: "AI Governance · Pre-Deployment", status: "In Development",
+    tags: ["Governance", "AI", "Platform"],
+    image: "assets/risk-ledger.svg",
+    summary: "A pre-deployment AI governance registry that catalogs every AI use case an organization runs, tiers it by risk against NIST AI RMF and EU AI Act categories, and tracks ownership and review cadence before anything ships.",
+    problem: "Organizations deploying AI often have no single inventory of what's in production, who owns it, what data it touches, or how risky it is — so governance reviews happen reactively, after an incident, instead of before launch.",
+    solution: "A structured registry where every AI use case gets a single-page entry — purpose, data sensitivity, model, owner, and an automated risk tier — with review reminders and an approval workflow before a system moves from pilot to production.",
+    role: "Founder & engineer — risk-tiering methodology, registry schema, workflow design, and UI.",
+    features: ["Risk tiering aligned to NIST AI RMF and EU AI Act categories", "Single-page use-case entries (purpose, data, owner, model, status)", "Pre-production review and approval workflow", "Automated review-cadence reminders by risk tier", "Cross-team ownership and accountability tracking", "Exportable registry for audits and board reporting"],
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Risk-scoring rules engine", "NIST AI RMF mapping"],
+  },
+  {
+    id: "research-swarm", name: "Research Swarm — Multi-Agent Enterprise Research System", category: "Multi-Agent Systems", status: "Prototype",
+    tags: ["AI", "Integration", "Platform"],
+    image: "assets/research-swarm.svg",
+    summary: "A role-based multi-agent system where a planner agent decomposes a research question, specialist agents gather and verify evidence from internal and external sources, and a synthesizer produces a cited brief — with every tool call logged for review.",
+    problem: "Answering a nontrivial research question well requires searching multiple sources, cross-checking claims, and synthesizing — work that's slow for a single generalist agent to do reliably and impossible to audit as one opaque call.",
+    solution: "A LangGraph/CrewAI-orchestrated crew of role-based agents (planner, researcher, verifier, writer) that decompose the task, call tools independently, cross-check each other's claims, and hand off to a synthesizer — with a full trace of every decision.",
+    role: "Founder & engineer — agent role design, orchestration graph, tool integration, and evaluation harness.",
+    features: ["Planner / researcher / verifier / writer role-based agent crew", "Tool use: web search, internal doc retrieval, calculator/code execution", "Cross-agent fact verification before synthesis", "Full trace of every tool call and agent decision", "Configurable stopping conditions and budget limits", "Exportable, cited research briefs"],
+    technologies: ["LangGraph", "CrewAI", "Python", "OpenAI / Anthropic APIs", "Vector search", "FastAPI"],
+  },
+  {
+    id: "querypilot", name: "QueryPilot — Text-to-SQL Data Analyst Agent", category: "Data + AI Agent", status: "Prototype",
+    tags: ["AI", "Data", "Product"],
+    image: "assets/querypilot.svg",
+    summary: "A conversational analyst agent that turns plain-English business questions into validated SQL, runs it safely against a real schema, and returns a chart-ready answer with the query shown for review.",
+    problem: "Business teams wait on analysts for routine questions that are simple in principle but require SQL and schema knowledge — creating a backlog for questions that don't need a human in the loop every time.",
+    solution: "An agent that grounds itself in the real database schema, drafts SQL, validates it against a read-only sandbox before execution, and returns both the answer and the exact query run, so every result is checkable rather than trusted blindly.",
+    role: "Founder & engineer — schema grounding, SQL generation and validation pipeline, safety sandboxing, and UI.",
+    features: ["Schema-grounded SQL generation from plain-English questions", "Read-only sandbox validation before any query runs", "Query shown alongside every answer for auditability", "Automatic chart selection for numeric results", "Guardrails against destructive or out-of-scope queries", "Query history and reusable saved questions"],
+    technologies: ["Python", "LangChain", "SQL", "PostgreSQL", "FastAPI", "Evaluation harness"],
+  },
+  {
+    id: "mcp-bridge", name: "MCP Bridge — Enterprise Tool Connector for AI Agents", category: "Agent Infrastructure", status: "In Development",
+    tags: ["AI", "Integration", "Platform"],
+    image: "assets/mcp-bridge.svg",
+    summary: "A Model Context Protocol server that exposes an organization's internal tools (ticketing, CRM, internal APIs) to any MCP-compatible AI agent through one governed, permissioned interface — instead of a bespoke integration per agent.",
+    problem: "Every new AI agent a team adopts needs its own custom integration to internal tools, each with its own auth, rate limits, and blast radius — multiplying integration work and making it hard to audit what agents can actually touch.",
+    solution: "A single MCP server that wraps internal tools behind one consistent, permissioned interface, so any MCP-compatible agent gets the same governed access — with every call logged and scoped per agent.",
+    role: "Founder & engineer — MCP server design, tool adapters, permission model, and audit logging.",
+    features: ["MCP-compliant server exposing internal tools to any compatible agent", "Per-agent, per-tool permission scoping", "Centralized rate limiting and quota enforcement", "Full call logging for audit and debugging", "Adapter pattern for adding new internal tools quickly", "Works with Claude, custom LangGraph agents, and IDE assistants"],
+    technologies: ["TypeScript", "Model Context Protocol (MCP)", "Node.js", "PostgreSQL", "OAuth"],
+  },
+  {
+    id: "govseal", name: "GovSeal — Deployment Governance Console", category: "AI Governance · Post-Deployment", status: "In Development",
+    tags: ["Governance", "AI", "Platform"],
+    image: "assets/govseal.svg",
+    summary: "A governance console that sits on top of deployed AI systems — tracking evaluations, drift, human approvals, and a tamper-evident audit log.",
+    problem: "Forward deployed AI gets to production fast, but governance usually lags behind: no one can easily answer whether a live model still passes its evals or who approved the last change.",
+    solution: "Wraps a deployed system with continuous evaluation runs, drift and quality monitoring, a human-approval workflow for changes, and an immutable audit trail.",
+    role: "Founder & engineer — governance model, evaluation harness, monitoring pipeline, approval workflow, and console UI.",
+    features: ["Continuous evaluation runs against a versioned test suite", "Live drift and quality monitoring with alerting", "Human-approval workflow for prompt and model changes", "Tamper-evident audit log of every decision and change", "Per-model risk scoring", "Exportable compliance and incident reports"],
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "LLM evaluation", "Monitoring", "Audit logging"],
+    note: "GovSeal is a governance and observability layer. It surfaces evidence, drift, and unresolved approvals — it keeps humans accountable rather than replacing their judgment.",
+  },
+  {
+    id: "tracegrid", name: "TraceGrid — LLM Evaluation & Audit Platform", category: "AI Governance · Evaluation", status: "Prototype",
+    tags: ["Governance", "AI", "Data"],
+    image: "assets/tracegrid.svg",
+    summary: "An evaluation and audit workbench that scores every LLM response for accuracy, safety, bias, and policy compliance, tracing each answer back to its inputs.",
+    problem: "When a deployed AI system gives a bad answer, teams usually can't reconstruct why — which prompt version, which retrieved context, which model.",
+    solution: "Captures the full trace of each response, runs it through configurable evaluators, and grids results so patterns and regressions are obvious.",
+    role: "Founder & engineer — trace capture, evaluator framework, scoring grid, red-team workflow, and reporting.",
+    features: ["Full trace capture: input, prompt version, context, model, output", "Configurable evaluators for factuality, safety, bias, and policy", "Regression grid to catch quality drops release-over-release", "Red-team queue seeded from failing cases", "Human review and sign-off workflow", "Shareable evaluation and compliance reports"],
+    technologies: ["Python", "Next.js", "TypeScript", "LLM-as-judge", "Vector search", "PostgreSQL"],
+    note: "TraceGrid is designed to make AI behavior legible and contestable — evaluator scores stay decomposable and reviewable rather than presented as a single opaque verdict.",
+  },
+  {
+    id: "fde-support-copilot", name: "Embedded Support Copilot", category: "Forward Deployed · AI in Production", status: "Shipped",
+    tags: ["AI", "Deployment", "Integration"],
+    summary: "An AI support copilot embedded into a live customer support workflow — from demo to a system the team relied on daily.",
+    problem: "A promising LLM prototype had no connection to the company's real knowledge base, ticketing system, or approval process, and support agents drowned in repetitive tickets.",
+    solution: "A copilot wired into live help-center content and the ticketing system, drafting grounded answers with citations, routing edge cases to a human, and logging every interaction.",
+    role: "Discovery, architecture, integration, RAG pipeline, evaluation harness, and production rollout.",
+    features: ["First-response time cut ~60% on covered ticket types", "~45% of routine tickets resolved with copilot-drafted answers", "Prototype to production in under 4 weeks", "Grounded, cited answers from the live knowledge base", "Human approval before customer-facing sends", "Full interaction logging"],
+    technologies: ["Python", "LLM orchestration", "RAG", "PostgreSQL", "Ticketing API", "Next.js"],
+    note: "Built as part of a confidential freelance engagement. Client and customer names withheld under NDA.",
+  },
+  {
+    id: "fde-data-pipeline", name: "Production Data & Ops Pipeline", category: "Forward Deployed · Data Integration", status: "Shipped",
+    tags: ["Data", "Integration", "Deployment"],
+    summary: "Replaced a fragile spreadsheet reporting ritual with a deployed data pipeline and live operations dashboard.",
+    problem: "A founding team spent hours every week manually pulling numbers from four disconnected tools into a spreadsheet, and the reports were late and untrustworthy.",
+    solution: "An automated pipeline that ingested from live sources, reconciled the data, and surfaced it in a real-time dashboard with alerting, handed over with runbooks.",
+    role: "Requirements discovery, pipeline engineering, dashboard build, and operational handover.",
+    features: ["~20 analyst-hours/week of manual reporting eliminated", "Reporting latency dropped from weekly to near real-time", "99.5% pipeline uptime across the engagement", "Automated ingestion and reconciliation across four sources", "Live operations dashboard with alerting", "Runbooks for team self-service ownership"],
+    technologies: ["Python", "SQL", "PostgreSQL", "Supabase", "Power BI", "Scheduled jobs"],
+    note: "Built as part of a confidential freelance engagement. Client and customer names withheld under NDA.",
+  },
+  {
+    id: "fde-onboarding-agent", name: "Customer Onboarding Agent", category: "Forward Deployed · Agent Automation", status: "Shipped",
+    tags: ["AI", "Deployment", "Product"],
+    summary: "A human-in-the-loop onboarding agent that guided each new customer through setup and unblocked the founding team.",
+    problem: "Onboarding new customers was entirely manual — back-and-forth emails, missed steps, and a founder personally chasing every account.",
+    solution: "An agent that guided customers step by step, validated inputs, integrated with provisioning APIs, and escalated anything ambiguous to a human with full context.",
+    role: "Workflow design, agent orchestration, API integration, and human-approval guardrails.",
+    features: ["Onboarding time cut from ~3 weeks to ~4 days", "Founder freed from ~90% of manual onboarding steps", "Zero irreversible actions without human approval", "Guided, validated step-by-step customer flow", "Deep integration with provisioning APIs", "Human escalation with full context"],
+    technologies: ["LLM agents", "Python", "REST APIs", "Next.js", "Webhooks"],
+    note: "Built as part of a confidential freelance engagement. Client and customer names withheld under NDA.",
+  },
+];
+
+const ALL_TAGS = Array.from(new Set(PROJECTS.flatMap(p => p.tags))).sort();
+let activeFilter = "All";
+
+const filtersEl = document.getElementById("filters");
+const gridEl = document.getElementById("grid");
+const countEl = document.getElementById("count");
+const overlay = document.getElementById("overlay");
+const modal = document.getElementById("modal");
+
+function renderFilters() {
+  const chips = ["All", ...ALL_TAGS];
+  filtersEl.innerHTML = chips.map(c =>
+    `<button class="chip${c === activeFilter ? " active" : ""}" data-tag="${c}">${c}</button>`
+  ).join("");
+  filtersEl.querySelectorAll(".chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      activeFilter = btn.dataset.tag;
+      renderFilters();
+      renderGrid();
+    });
+  });
+}
+
+function renderGrid() {
+  const list = activeFilter === "All" ? PROJECTS : PROJECTS.filter(p => p.tags.includes(activeFilter));
+  countEl.textContent = `${list.length} project${list.length === 1 ? "" : "s"}`;
+  gridEl.innerHTML = list.map(p => `
+    <article class="card" data-id="${p.id}">
+      <div class="thumb">
+        ${p.image ? `<img src="${p.image}" alt="${p.name} preview" loading="lazy" />` : `<div class="placeholder">${p.name}</div>`}
+        <span class="status-badge${p.comingSoon ? " soon" : ""}">${p.comingSoon ? "Coming Soon" : p.status}</span>
+      </div>
+      <div class="card-body">
+        <div class="cat">${p.category}</div>
+        <div class="name">${p.name}</div>
+        <div class="summary">${p.summary}</div>
+        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <div class="open-cta">View case study →</div>
+      </div>
+    </article>
+  `).join("");
+  gridEl.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("click", () => openModal(card.dataset.id));
+  });
+}
+
+function openModal(id) {
+  const p = PROJECTS.find(x => x.id === id);
+  if (!p) return;
+  modal.innerHTML = `
+    <div class="modal-media">
+      ${p.image ? `<img src="${p.image}" alt="${p.name} preview" />` : `<div class="placeholder">${p.name}</div>`}
+      <button class="close-btn" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat">${p.category}</div>
+      <h2 class="modal-name">${p.name}</h2>
+      <p class="modal-summary">${p.summary}</p>
+      ${p.note ? `<div class="modal-note">${p.note}</div>` : ""}
+      <dl class="fields">
+        <div><dt>The problem</dt><dd>${p.problem}</dd></div>
+        <div><dt>The solution</dt><dd>${p.solution}</dd></div>
+        <div><dt>My role</dt><dd>${p.role}</dd></div>
+      </dl>
+      <div class="feat-title">Key capabilities</div>
+      <ul class="feat">${p.features.map(f => `<li>${f}</li>`).join("")}</ul>
+      <div class="feat-title">Technologies</div>
+      <div class="tech-wrap">${p.technologies.map(t => `<span class="tech">${t}</span>`).join("")}</div>
+    </div>
+  `;
+  modal.querySelector(".close-btn").addEventListener("click", closeModal);
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  overlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>

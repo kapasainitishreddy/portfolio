@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="'Inter','Segoe UI',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0d10"/><stop offset="1" stop-color="#0f141a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg5)"/>
+
+  <rect x="0" y="0" width="1600" height="72" fill="#10151b"/>
+  <rect x="30" y="24" width="24" height="24" rx="6" fill="#199e70"/>
+  <text x="40" y="41" fill="#0a0d10" font-size="14" font-weight="700" text-anchor="middle">Q</text>
+  <text x="68" y="42" fill="#f4efe6" font-size="22" font-weight="600">QueryPilot</text>
+  <text x="200" y="42" fill="#7f8b95" font-size="15">Text-to-SQL Data Analyst Agent</text>
+
+  <!-- chat / query panel -->
+  <rect x="30" y="100" width="700" height="740" rx="14" fill="#12181f"/>
+  <text x="54" y="140" fill="#f4efe6" font-size="17" font-weight="600">Ask a question</text>
+
+  <rect x="54" y="164" width="652" height="56" rx="10" fill="#1c2733"/>
+  <text x="72" y="198" fill="#c9d2da" font-size="14">"Which regions had revenue growth over 15% last quarter?"</text>
+
+  <text x="54" y="252" fill="#7f8b95" font-size="12">GENERATED SQL</text>
+  <rect x="54" y="264" width="652" height="150" rx="10" fill="#0d1218"/>
+  <g font-family="monospace" font-size="12.5" fill="#c9d2da">
+    <text x="70" y="292" fill="#9085e9">SELECT</text>
+    <text x="150" y="292">region, </text>
+    <text x="70" y="312">  (curr.revenue - prev.revenue) / prev.revenue AS growth</text>
+    <text x="70" y="332" fill="#9085e9">FROM</text><text x="126" y="332">quarterly_revenue curr</text>
+    <text x="70" y="352" fill="#9085e9">JOIN</text><text x="120" y="352">quarterly_revenue prev USING (region)</text>
+    <text x="70" y="372" fill="#9085e9">WHERE</text><text x="130" y="372">curr.quarter = '2026-Q2' AND growth &gt; 0.15</text>
+  </g>
+
+  <rect x="54" y="428" width="180" height="30" rx="15" fill="#173226"/>
+  <text x="144" y="448" fill="#5fb98e" font-size="12" text-anchor="middle">✓ Validated · read-only</text>
+  <rect x="246" y="428" width="140" height="30" rx="15" fill="#161c23"/>
+  <text x="316" y="448" fill="#9aa4ad" font-size="12" text-anchor="middle">118ms runtime</text>
+
+  <text x="54" y="500" fill="#7f8b95" font-size="12">ANSWER</text>
+  <rect x="54" y="512" width="652" height="60" rx="10" fill="#0d1218"/>
+  <text x="72" y="548" fill="#f4efe6" font-size="14">4 regions grew over 15%: APAC (22%), LATAM (19%), EMEA-North (17%), West (15.4%).</text>
+
+  <text x="54" y="606" fill="#7f8b95" font-size="12">QUERY HISTORY</text>
+  <g font-size="12.5" fill="#a9b2ba">
+    <circle cx="60" cy="632" r="3" fill="#199e70"/><text x="72" y="637">"Show top 10 customers by lifetime value"</text><text x="640" y="637" fill="#6b757e">2m ago</text>
+    <circle cx="60" cy="662" r="3" fill="#199e70"/><text x="72" y="667">"Compare churn rate by plan tier this year"</text><text x="640" y="667" fill="#6b757e">14m ago</text>
+    <circle cx="60" cy="692" r="3" fill="#199e70"/><text x="72" y="697">"Which SKUs had the biggest margin drop?"</text><text x="640" y="697" fill="#6b757e">1h ago</text>
+    <circle cx="60" cy="722" r="3" fill="#e66767"/><text x="72" y="727">"Delete all rows where..." — blocked by guardrail</text><text x="640" y="727" fill="#6b757e">1h ago</text>
+  </g>
+
+  <!-- chart preview panel -->
+  <rect x="750" y="100" width="820" height="360" rx="14" fill="#12181f"/>
+  <text x="774" y="140" fill="#f4efe6" font-size="17" font-weight="600">Auto-generated chart</text>
+  <text x="774" y="160" fill="#7f8b95" font-size="12">Revenue growth by region, Q2 2026</text>
+  <g stroke="#1e262f"><line x1="800" y1="200" x2="1520" y2="200"/><line x1="800" y1="260" x2="1520" y2="260"/><line x1="800" y1="320" x2="1520" y2="320"/><line x1="800" y1="380" x2="1520" y2="380"/></g>
+  <g>
+    <rect x="830" y="220" width="40" height="180" rx="4" fill="#3987e5"/>
+    <rect x="920" y="256" width="40" height="144" rx="4" fill="#3987e5"/>
+    <rect x="1010" y="272" width="40" height="128" rx="4" fill="#3987e5"/>
+    <rect x="1100" y="286" width="40" height="114" rx="4" fill="#3987e5"/>
+    <rect x="1190" y="340" width="40" height="60" rx="4" fill="#2c3540"/>
+    <rect x="1280" y="352" width="40" height="48" rx="4" fill="#2c3540"/>
+  </g>
+  <g font-size="11" fill="#7f8b95" text-anchor="middle">
+    <text x="850" y="418">APAC</text><text x="940" y="418">LATAM</text><text x="1030" y="418">EMEA-N</text><text x="1120" y="418">West</text><text x="1210" y="418">EMEA-S</text><text x="1300" y="418">Central</text>
+  </g>
+  <g font-size="12" fill="#f4efe6" text-anchor="middle" font-weight="600">
+    <text x="850" y="212">22%</text><text x="940" y="248">19%</text><text x="1030" y="264">17%</text><text x="1120" y="278">15.4%</text>
+  </g>
+
+  <!-- schema panel -->
+  <rect x="750" y="478" width="820" height="362" rx="14" fill="#12181f"/>
+  <text x="774" y="518" fill="#f4efe6" font-size="17" font-weight="600">Grounded schema</text>
+  <text x="774" y="538" fill="#7f8b95" font-size="12">agent only queries tables it has been granted</text>
+  <g font-size="13" fill="#c9d2da">
+    <rect x="774" y="558" width="360" height="112" rx="8" fill="#0d1218"/>
+    <text x="790" y="580" fill="#5b6ee1" font-weight="600">quarterly_revenue</text>
+    <text x="790" y="600" fill="#8b96a0">region, quarter, revenue, updated_at</text>
+    <text x="790" y="620" fill="#8b96a0">row-level: read-only</text>
+
+    <rect x="1160" y="558" width="360" height="112" rx="8" fill="#0d1218"/>
+    <text x="1176" y="580" fill="#5b6ee1" font-weight="600">customers</text>
+    <text x="1176" y="600" fill="#8b96a0">id, plan_tier, ltv, churned_at</text>
+    <text x="1176" y="620" fill="#8b96a0">row-level: read-only, PII masked</text>
+
+    <rect x="774" y="686" width="746" height="112" rx="8" fill="#0d1218"/>
+    <text x="790" y="708" fill="#5b6ee1" font-weight="600">Guardrails</text>
+    <text x="790" y="730" fill="#8b96a0">Blocks INSERT / UPDATE / DELETE / DDL, enforces row limits,</text>
+    <text x="790" y="750" fill="#8b96a0">and logs every generated query for review.</text>
+  </g>
+</svg>

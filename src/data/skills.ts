@@ -1,87 +1,40 @@
-/**
- * Skill groups rendered as an interactive network graph.
- */
-
-export type SkillGroupId = "ai" | "data" | "blockchain" | "networks";
+export type SkillGroupId = string;
 
 export interface SkillGroup {
   id: SkillGroupId;
   label: string;
   blurb: string;
+  outcome: string;
   skills: string[];
 }
 
 export const skillGroups: SkillGroup[] = [
   {
+    id: "discover",
+    label: "Embed & discover",
+    blurb: "Map the real workflow, constraints, systems, users, and success criteria before building the full solution.",
+    outcome: "Turns an unclear request into a testable delivery plan.",
+    skills: ["Customer discovery", "Requirements mapping", "Workflow design", "Stakeholder communication", "Technical translation", "Rapid prototyping"],
+  },
+  {
     id: "ai",
-    label: "AI & Governance Communication",
-    blurb:
-      "Using AI tools responsibly to research, summarize, edit, and communicate complex technical and policy-oriented material with human review.",
-    skills: [
-      "Responsible generative AI",
-      "AI governance communication",
-      "Prompt engineering",
-      "Research summarization",
-      "Content evaluation",
-      "Factual verification",
-      "Audience adaptation",
-      "AI safety interest",
-      "Human-in-the-loop review",
-      "Technical translation",
-    ],
+    label: "Build AI workflows",
+    blurb: "Design LLM and agent workflows that retrieve context, call tools, handle failure, and keep people in control.",
+    outcome: "Moves from impressive demo to dependable working loop.",
+    skills: ["Python", "FastAPI", "RAG", "Agent orchestration", "Tool calling", "Prompt design", "Model evaluation"],
   },
   {
-    id: "data",
-    label: "Analytics & Reporting",
-    blurb:
-      "Turning engagement, workflow, and operational data into dashboards, performance reports, recommendations, and clear decision support.",
-    skills: [
-      "Power BI",
-      "Excel",
-      "Google Analytics concepts",
-      "Performance reporting",
-      "Engagement metrics",
-      "Data visualization",
-      "Python",
-      "SQL",
-      "Reporting automation",
-      "Insight development",
-    ],
+    id: "integration",
+    label: "Integrate data & tools",
+    blurb: "Connect AI to the systems a business already uses, including APIs, databases, auth, webhooks, and reporting pipelines.",
+    outcome: "Removes manual handoffs and puts output inside the real workflow.",
+    skills: ["SQL", "PostgreSQL", "REST APIs", "Webhooks", "Supabase", "Data pipelines", "Power BI", "Automation"],
   },
   {
-    id: "blockchain",
-    label: "Digital Publishing",
-    blurb:
-      "Producing accurate, accessible content across websites, newsletters, reports, presentations, social media, and branded materials.",
-    skills: [
-      "WordPress",
-      "Mailchimp",
-      "Canva",
-      "Digital publishing",
-      "Newsletter production",
-      "Social media content",
-      "Report formatting",
-      "Presentation design",
-      "Proofreading and editing",
-      "Brand consistency",
-    ],
-  },
-  {
-    id: "networks",
-    label: "Communications Operations",
-    blurb:
-      "Coordinating people, content, timelines, approvals, and assets across concurrent projects in remote and cross-functional environments.",
-    skills: [
-      "Publication workflows",
-      "Content calendars",
-      "Campaign coordination",
-      "Stakeholder follow-up",
-      "Editorial review",
-      "Deadline management",
-      "Version control",
-      "Event communications",
-      "Remote collaboration",
-      "Document production",
-    ],
+    id: "governance",
+    label: "Evaluate & govern",
+    blurb: "Measure quality, surface failure modes, add human approvals, document decisions, and monitor deployed behavior.",
+    outcome: "Makes AI behavior reviewable, safer, and easier to operate.",
+    skills: ["LLM evaluations", "Human review", "Guardrails", "Monitoring", "Audit logs", "Runbooks", "AI governance", "Root-cause analysis"],
   },
 ];

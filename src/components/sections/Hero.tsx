@@ -7,87 +7,50 @@ import { useReducedMotion } from "@/lib/accessibility/useReducedMotion";
 
 export default function Hero() {
   const reduced = useReducedMotion();
-  const container = {
-    hidden: {},
-    visible: { transition: { staggerChildren: reduced ? 0 : 0.1, delayChildren: 0.08 } },
-  };
   const item = {
-    hidden: { opacity: 0, y: reduced ? 0 : 18 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] as const },
-    },
+    hidden: { opacity: 0, y: reduced ? 0 : 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.58, ease: [0.22, 1, 0.36, 1] as const } },
   };
 
   return (
-    <section id="home" className="portfolio-hero-shell content-pad mx-auto w-full max-w-[1500px] pt-28">
-      <div className="portfolio-hero">
-        <motion.div className="portfolio-hero__copy" variants={container} initial="hidden" animate="visible">
-          <motion.h1 variants={item} className="portfolio-hero__title text-rice">
+    <section id="home" className="content-pad mx-auto w-full max-w-7xl pb-16 pt-28 md:pb-20 md:pt-32">
+      <div className="grid items-end gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+        <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: reduced ? 0 : 0.07 }}>
+          <motion.p variants={item} className="font-mono-label" style={{ color: "var(--color-copper)" }}>
+            {hero.status}
+          </motion.p>
+          <motion.h1 variants={item} className="mt-5 max-w-4xl text-rice" style={{ fontSize: "clamp(3rem, 7.2vw, 6.5rem)", lineHeight: 0.96 }}>
             {hero.headline}
           </motion.h1>
-
-          <motion.p variants={item} className="portfolio-hero__support text-silver">
-            {hero.supporting[0]}
+          <motion.p variants={item} className="mt-7 max-w-3xl text-base leading-7 text-silver md:text-lg md:leading-8">
+            {hero.supporting}
           </motion.p>
-
-          <motion.div variants={item} className="portfolio-hero__actions">
-            {hero.actions.map((action) => {
-              const primary = action.kind === "primary";
-              return (
-                <a
-                  key={action.label}
-                  href={action.href}
-                  {...("external" in action && action.external
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                  className={primary ? "portfolio-button portfolio-button--primary" : "portfolio-button"}
-                >
-                  {action.label}
-                  <ArrowIcon width={15} height={15} aria-hidden="true" />
-                </a>
-              );
-            })}
+          <motion.ul variants={item} className="mt-6 flex flex-wrap gap-2" aria-label="Core capabilities">
+            {hero.capabilities.map((capability) => (
+              <li key={capability} className="rounded-full border px-3 py-1.5 text-xs text-rice" style={{ background: "color-mix(in srgb, var(--color-charcoal) 70%, transparent)" }}>
+                {capability}
+              </li>
+            ))}
+          </motion.ul>
+          <motion.div variants={item} className="mt-8 flex flex-wrap gap-3">
+            {hero.actions.map((action) => (
+              <a key={action.label} href={action.href} className={action.kind === "primary" ? "portfolio-cta portfolio-cta--primary" : "portfolio-cta"}>
+                {action.label}<ArrowIcon width={14} height={14} aria-hidden="true" />
+              </a>
+            ))}
           </motion.div>
         </motion.div>
 
-        <motion.div
-          className="portfolio-hero__visual"
-          initial={{ opacity: 0, scale: reduced ? 1 : 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-          aria-hidden="true"
-        >
-          <div className="portfolio-hero__sun" />
-          <div className="portfolio-hero__swirl portfolio-hero__swirl--one" />
-          <div className="portfolio-hero__swirl portfolio-hero__swirl--two" />
-          <div className="portfolio-hero__horizon" />
-          <span className="portfolio-hero__kanji">流れ</span>
-          <div className="portfolio-hero__theme-copy">
-            <span>Suminagashi</span>
-            <span>Shodō</span>
-            <span>Bushidō</span>
-          </div>
+        <motion.div initial={{ opacity: 0, y: reduced ? 0 : 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: reduced ? 0 : 0.2 }} className="grid grid-cols-2 overflow-hidden rounded-2xl border" style={{ background: "color-mix(in srgb, var(--color-charcoal) 72%, transparent)" }}>
+          {hero.proof.map((proof, index) => (
+            <div key={proof.label} className="min-h-36 p-5 md:p-6" style={{ borderRight: index % 2 === 0 ? "1px solid color-mix(in srgb, var(--color-silver) 14%, transparent)" : undefined, borderBottom: index < 2 ? "1px solid color-mix(in srgb, var(--color-silver) 14%, transparent)" : undefined }}>
+              <strong className="font-serif text-3xl text-rice md:text-4xl">{proof.value}</strong>
+              <p className="mt-2 text-sm font-medium text-rice">{proof.label}</p>
+              <p className="mt-1 text-xs leading-5 text-silver">{proof.detail}</p>
+            </div>
+          ))}
         </motion.div>
       </div>
-
-      <motion.div
-        className="portfolio-identities"
-        initial={{ opacity: 0, y: reduced ? 0 : 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, delay: 0.42 }}
-      >
-        {hero.identities.map((identity, index) => (
-          <div key={identity.title} className="portfolio-identity">
-            <span className="portfolio-identity__number">0{index + 1}</span>
-            <div>
-              <h2>{identity.title}</h2>
-              <p>{identity.body}</p>
-            </div>
-          </div>
-        ))}
-      </motion.div>
     </section>
   );
 }

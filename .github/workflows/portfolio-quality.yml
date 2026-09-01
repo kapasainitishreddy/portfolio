@@ -1,0 +1,32 @@
+name: Portfolio quality
+
+on:
+  push:
+    branches:
+      - feat/portfolio-polish-ink-engines
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Static production build
+        env:
+          STATIC_EXPORT: "true"
+          NEXT_PUBLIC_STATIC_EXPORT: "true"
+          NEXT_PUBLIC_SITE_URL: https://kapasainitishreddy.github.io/portfolio
+        run: |
+          rm -rf src/app/api
+          npm run build

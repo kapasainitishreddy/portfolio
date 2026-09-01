@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - claude/sharp-tesla-f8epam
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Static export has no server, so the /api/contact route is stripped
+      # before build. The contact form falls back to a mailto flow when
+      # NEXT_PUBLIC_STATIC_EXPORT is enabled.
+      - run: rm -rf src/app/api
+
+      - name: Build static export
+        run: npm run build
+        env:
+          STATIC_EXPORT: "true"
+          NEXT_PUBLIC_STATIC_EXPORT: "true"
+          NEXT_PUBLIC_SITE_URL: https://kapasainitishreddy.github.io/portfolio
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,50 +1,21 @@
+import { Section } from "@/components/layout/Section";
 import { certifications } from "@/data/certifications";
 import Reveal from "@/components/layout/Reveal";
 import { ArrowIcon } from "@/components/layout/icons";
 
 export default function CertificationsSection() {
   return (
-    <section id="certifications" className="space-y-12">
-      <Reveal>
-        <div className="space-y-4">
-          <h2 className="text-3xl font-serif text-rice">Certifications & Credentials</h2>
-          <p className="max-w-2xl text-silver">
-            Professional certifications that validate expertise and specialized skills.
-          </p>
-        </div>
-      </Reveal>
-
-      <div className="space-y-4">
+    <Section id="certifications" label="Credentials">
+      <Reveal><div className="max-w-3xl"><h2 className="text-rice" style={{ fontSize: "clamp(2.1rem, 4vw, 3.6rem)" }}>Training that supports the work.</h2><p className="mt-5 max-w-2xl leading-7 text-silver">Credentials are supporting evidence, not the headline. The work above is the main proof.</p></div></Reveal>
+      <div className="mt-10 grid gap-4 md:grid-cols-3">
         {certifications.map((cert, idx) => (
-          <Reveal key={cert.title} delay={idx * 0.08}>
-            <div className="group rounded-lg border border-charcoal bg-charcoal/40 p-6 transition-all hover:border-accent hover:bg-charcoal/60">
-              <div className="flex items-start justify-between gap-4">
-                <div className="space-y-1 flex-1">
-                  <h3 className="font-serif text-lg text-rice group-hover:text-soft transition-colors">
-                    {cert.title}
-                  </h3>
-                  <p className="text-silver text-sm">
-                    {cert.issuer}
-                    {cert.date && ` • ${cert.date}`}
-                  </p>
-                  <p className="text-xs text-silver/70 uppercase tracking-wider">{cert.credential}</p>
-                </div>
-                {cert.url && (
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-shrink-0 flex h-9 w-9 items-center justify-center rounded-full border border-silver/20 text-silver transition-all hover:border-accent hover:text-accent hover:bg-accent/10"
-                    aria-label={`View ${cert.title}`}
-                  >
-                    <ArrowIcon width={14} height={14} />
-                  </a>
-                )}
-              </div>
-            </div>
+          <Reveal key={cert.title} delay={idx * 0.04}>
+            <article className="capability-card h-full p-5">
+              <div className="flex items-start justify-between gap-4"><div><h3 className="font-serif text-xl text-rice">{cert.title}</h3><p className="mt-1 text-sm text-silver">{cert.issuer}{cert.date && ` · ${cert.date}`}</p><p className="mt-3 text-xs uppercase tracking-wider text-silver">{cert.credential}</p></div>{cert.url && <a href={cert.url} target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-silver" aria-label={`View ${cert.title}`}><ArrowIcon width={14} height={14} /></a>}</div>
+            </article>
           </Reveal>
         ))}
       </div>
-    </section>
+    </Section>
   );
 }

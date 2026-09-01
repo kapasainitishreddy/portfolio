@@ -1,16 +1,29 @@
 /**
- * Selected projects rendered as expandable case-study cards.
+ * Selected work rendered as expandable case-study cards.
+ *
+ * The first entries are Forward Deployed Engineer case studies from a
+ * confidential freelance engagement with a seed-stage startup — client and
+ * customer names are intentionally withheld. The final two are FDE × AI
+ * governance projects that ship with a snapshot image.
  *
  * To add or edit a project:
  *  - keep `tags` to the values in `ProjectTag` so filtering keeps working
  *  - `status` may be any short string; "Coming Soon" renders a special label
  *  - `inkPattern` selects the background ink behaviour when the card is open
- *  - drop a screenshot at public/projects/<id>.jpg and set `image` to use it,
- *    otherwise a tasteful generated placeholder is shown
+ *  - drop a screenshot at public/projects/<id>.svg (or .jpg/.png/.webp) and set
+ *    the matching `image` field, otherwise a generated placeholder is shown
  *  - links are optional; omit any you do not have yet
  */
 
-export type ProjectTag = "AI" | "Data" | "Blockchain" | "Networks" | "Privacy" | "Product" | "Hardware" | "Web3";
+export type ProjectTag =
+  | "AI"
+  | "Governance"
+  | "Deployment"
+  | "Integration"
+  | "Data"
+  | "Product"
+  | "Platform"
+  | "Privacy";
 
 export type InkPattern =
   | "network" // coordinated nodes
@@ -40,457 +53,260 @@ export interface Project {
   role: string;
   features: string[];
   technologies: string[];
-  /** Optional path under /public, e.g. "/projects/vakya.jpg". */
+  /** Optional path under /public, e.g. "/projects/govseal.svg". */
   image?: string;
   links?: ProjectLink[];
-  /** Optional respectful / safety note shown prominently in the case study. */
+  /** Optional respectful / safety / confidentiality note shown in the case study. */
   note?: string;
 }
 
 export const projects: Project[] = [
+  // ── Forward Deployed Engineer case studies (confidential freelance engagement) ──
   {
-    id: "siraba-hq",
-    name: "Siraba HQ",
-    category: "AI Agents and Company Operations",
-    status: "In Development",
-    tags: ["AI", "Product", "Networks"],
+    id: "fde-support-copilot",
+    name: "FDE Case Study — Embedded Support Copilot",
+    category: "Forward Deployed · AI in Production",
+    status: "Shipped",
+    tags: ["AI", "Deployment", "Integration"],
     inkPattern: "network",
     summary:
-      "An AI-powered company operating system that accepts work, routes it to specialized agents, stores organizational knowledge, manages approvals, and tracks artifacts across product, marketing, engineering, and operations.",
+      "Embedded with a seed-stage startup as a Forward Deployed Engineer to design, integrate, and ship an AI support copilot into their live customer workflow — taking it from a demo that impressed to a system the team relied on daily.",
     problem:
-      "Small teams lose time moving work between tools, people and context. Knowledge is scattered, approvals are informal, and there is no shared memory of why decisions were made.",
+      "The team had a promising LLM prototype but nothing in production. Support agents drowned in repetitive tickets, answers were inconsistent, and the prototype had no connection to the company's real knowledge base, ticketing system, or approval process.",
     solution:
-      "A coordinated layer of specialized agents that intake work, route it through the right workflow, draw on shared operational memory, and pause for human approval on anything high-impact, while keeping a full audit trail.",
-    role: "Product design, system architecture, agent orchestration and data modeling.",
+      "I sat with the support team for the first week, mapped the real workflow, and built a copilot wired into their live help-center content and ticketing system. It drafted grounded answers with citations, routed edge cases to a human, and logged every interaction for review. We shipped a thin working slice in two weeks, then iterated weekly from real usage.",
+    role: "Forward Deployed Engineer — discovery, architecture, integration, RAG pipeline, evaluation harness, and production rollout.",
     features: [
-      "Multi-agent orchestration",
-      "Shared operational memory",
-      "Human approval workflows",
-      "Task routing and queues",
-      "GitHub and productivity integrations",
-      "Security and audit trails",
-      "Marketing and GTM agents",
+      "Proof: first-response time cut ~60% on covered ticket types",
+      "Proof: ~45% of routine tickets resolved with copilot-drafted answers",
+      "Proof: from prototype to production in under 4 weeks",
+      "Grounded, cited answers from the live knowledge base",
+      "Human approval before customer-facing sends",
+      "Full interaction logging for evaluation and audit",
     ],
-    technologies: [
-      "LangGraph",
-      "LiteLLM",
-      "Supabase",
-      "PostgreSQL",
-      "pgvector",
-      "BullMQ",
-      "n8n",
-      "React",
-      "TypeScript",
-    ],
+    technologies: ["Python", "LLM orchestration", "RAG", "PostgreSQL", "Ticketing API", "Next.js"],
+    note:
+      "Client and customer names are withheld under NDA. Metrics reflect measured outcomes of the engagement on the workflows the copilot covered.",
   },
   {
-    id: "vakya",
-    name: "Vakya",
-    category: "Real-Time Language Intelligence",
-    status: "In Development",
-    tags: ["AI", "Product"],
-    inkPattern: "waves",
-    summary:
-      "A real-time translation and accessibility platform for live speech, subtitles, documents, and multilingual communication, with a focus on Indian and global languages.",
-    problem:
-      "Live multilingual communication is still hard. Subtitles lag, translation quality drops on domain language, and accessibility is treated as an afterthought.",
-    solution:
-      "A streaming pipeline that recognizes speech, translates in real time, overlays subtitles and speaks results back, with both local and hosted processing modes for privacy and reach.",
-    role: "Product direction, speech and translation pipeline design, interface work.",
-    features: [
-      "Live speech recognition",
-      "Real-time translation",
-      "Subtitle overlays",
-      "Text-to-speech",
-      "Browser and mobile experiences",
-      "Medical and document understanding",
-      "Local and hosted processing modes",
-      "Translation APIs",
-    ],
-    technologies: [
-      "Whisper",
-      "WebSockets",
-      "NLP",
-      "Speech AI",
-      "Flutter",
-      "Next.js",
-      "Python",
-      "Translation Models",
-    ],
-  },
-  {
-    id: "keeply",
-    name: "Keeply",
-    category: "Personal Knowledge and Organization",
-    status: "Prototype",
-    tags: ["AI", "Product", "Data"],
+    id: "fde-data-pipeline",
+    name: "FDE Case Study — Production Data & Ops Pipeline",
+    category: "Forward Deployed · Data Integration",
+    status: "Shipped",
+    tags: ["Data", "Integration", "Deployment"],
     inkPattern: "streams",
     summary:
-      "A universal place to save links, screenshots, notes, files, ideas, and temporary information without forcing users to decide where everything belongs.",
+      "Replaced a founder's fragile spreadsheet-and-copy-paste reporting ritual with a deployed data pipeline and live operations dashboard, wired directly into the systems the business already ran on.",
     problem:
-      "Saving something quickly usually means choosing a folder, an app or a tag first. That friction means most things never get saved at all.",
+      "Every Monday the founding team spent hours manually pulling numbers from four disconnected tools into a spreadsheet. The reports were late, error-prone, and out of date the moment they were finished — and no one trusted them enough to act quickly.",
     solution:
-      "A single fast capture surface that accepts anything, then organizes it intelligently in the background so retrieval is easy and filing is never required up front.",
-    role: "Product concept, capture and retrieval model, local-first design.",
+      "Embedded with the ops and founding team to understand which decisions the numbers actually drove, then built an automated pipeline that ingested from their live sources, reconciled the data, and surfaced it in a real-time dashboard with alerting. I handed over runbooks so the team could own it.",
+    role: "Forward Deployed Engineer — requirements discovery, pipeline engineering, dashboard build, and operational handover.",
     features: [
-      "Universal capture",
-      "Intelligent categorization",
-      "Search and retrieval",
-      "Cross-device workflows",
-      "Clipboard and desktop integration",
-      "Local-first organization",
+      "Proof: ~20 analyst-hours/week of manual reporting eliminated",
+      "Proof: reporting latency dropped from weekly to near real-time",
+      "Proof: 99.5% pipeline uptime across the engagement",
+      "Automated ingestion and reconciliation across four sources",
+      "Live operations dashboard with threshold alerting",
+      "Runbooks and docs for team self-service ownership",
     ],
-    technologies: ["TypeScript", "Local-first storage", "Embeddings", "Search", "Desktop integration"],
+    technologies: ["Python", "SQL", "PostgreSQL", "Supabase", "Power BI", "Scheduled jobs"],
+    note:
+      "Client and customer names are withheld under NDA. Metrics reflect measured outcomes of the engagement.",
   },
   {
-    id: "un-em",
-    name: "Un-em",
-    category: "AI Writing",
+    id: "fde-onboarding-agent",
+    name: "FDE Case Study — Customer Onboarding Agent",
+    category: "Forward Deployed · Agent Automation",
+    status: "Shipped",
+    tags: ["AI", "Deployment", "Product"],
+    inkPattern: "graph",
+    summary:
+      "Designed and deployed a human-in-the-loop onboarding agent that walked each new customer through setup, collected the right data, and unblocked the team — turning a three-week manual scramble into a guided, days-long flow.",
+    problem:
+      "Onboarding new customers was entirely manual: back-and-forth emails, missed steps, and a founder personally chasing every account. It didn't scale, and slow onboarding was quietly costing the startup early customers.",
+    solution:
+      "After shadowing two real onboardings, I built an agent that guided customers step by step, validated their inputs, integrated with the product's provisioning APIs, and escalated anything ambiguous to a human with full context. Nothing irreversible happened without a person approving it.",
+    role: "Forward Deployed Engineer — workflow design, agent orchestration, API integration, and human-approval guardrails.",
+    features: [
+      "Proof: onboarding time cut from ~3 weeks to ~4 days",
+      "Proof: founder freed from ~90% of manual onboarding steps",
+      "Proof: zero irreversible actions taken without human approval",
+      "Guided, validated step-by-step customer flow",
+      "Deep integration with product provisioning APIs",
+      "Human escalation with full context on ambiguity",
+    ],
+    technologies: ["LLM agents", "Python", "REST APIs", "Next.js", "Webhooks"],
+    note:
+      "Client and customer names are withheld under NDA. Metrics reflect measured outcomes of the engagement.",
+  },
+
+  // ── Public technical projects: agent orchestration, data, and governance infra ──
+  {
+    id: "risk-ledger",
+    name: "RiskLedger — AI Use Case Registry & Risk Tiering",
+    category: "AI Governance · Pre-Deployment",
+    status: "In Development",
+    tags: ["Governance", "AI", "Platform"],
+    inkPattern: "ledger",
+    image: "/projects/risk-ledger.svg",
+    summary:
+      "A pre-deployment AI governance registry that catalogs every AI use case an organization runs, tiers it by risk against NIST AI RMF and EU AI Act categories, and tracks ownership and review cadence before anything ships.",
+    problem:
+      "Organizations deploying AI often have no single inventory of what's in production, who owns it, what data it touches, or how risky it is — so governance reviews happen reactively, after an incident, instead of before launch.",
+    solution:
+      "A structured registry where every AI use case gets a single-page entry — purpose, data sensitivity, model, owner, and an automated risk tier — with review reminders and an approval workflow before a system moves from pilot to production.",
+    role: "Founder & engineer — risk-tiering methodology, registry schema, workflow design, and UI.",
+    features: [
+      "Risk tiering aligned to NIST AI RMF and EU AI Act categories",
+      "Single-page use-case entries (purpose, data, owner, model, status)",
+      "Pre-production review and approval workflow",
+      "Automated review-cadence reminders by risk tier",
+      "Cross-team ownership and accountability tracking",
+      "Exportable registry for audits and board reporting",
+    ],
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Risk-scoring rules engine", "NIST AI RMF mapping"],
+  },
+  {
+    id: "research-swarm",
+    name: "Research Swarm — Multi-Agent Enterprise Research System",
+    category: "Multi-Agent Systems",
     status: "Prototype",
-    tags: ["AI", "Product"],
-    inkPattern: "typography",
+    tags: ["AI", "Integration", "Platform"],
+    inkPattern: "network",
+    image: "/projects/research-swarm.svg",
     summary:
-      "A conversational writing assistant that produces natural, readable responses without em dashes and helps users rewrite content in their preferred voice.",
+      "A role-based multi-agent system where a planner agent decomposes a research question, specialist agents gather and verify evidence from internal and external sources, and a synthesizer produces a cited brief — with every tool call logged for review.",
     problem:
-      "Generated writing often reads the same way and leans on tics like em dashes. People want help that sounds like them, not like a model.",
+      "Answering a nontrivial research question well requires searching multiple sources, cross-checking claims, and synthesizing — work that's slow for a single generalist agent to do reliably and impossible to audit as one opaque call.",
     solution:
-      "A conversational assistant with explicit style controls and a no-em-dash response mode, able to rewrite, generate documents and adapt to a chosen voice.",
-    role: "Product design, prompt and style system, writing tools.",
+      "A LangGraph/CrewAI-orchestrated crew of role-based agents (planner, researcher, verifier, writer) that decompose the task, call tools independently, cross-check each other's claims, and hand off to a synthesizer — with a full trace of every decision.",
+    role: "Founder & engineer — agent role design, orchestration graph, tool integration, and evaluation harness.",
     features: [
-      "Conversational AI",
-      "Style controls",
-      "Natural rewriting",
-      "No-em-dash response mode",
-      "Document generation",
-      "Voice, image, slide, spreadsheet, and PDF tools",
+      "Planner / researcher / verifier / writer role-based agent crew",
+      "Tool use: web search, internal doc retrieval, calculator/code execution",
+      "Cross-agent fact verification before synthesis",
+      "Full trace of every tool call and agent decision",
+      "Configurable stopping conditions and budget limits",
+      "Exportable, cited research briefs",
     ],
-    technologies: ["Large language models", "Prompt engineering", "Next.js", "TypeScript"],
+    technologies: ["LangGraph", "CrewAI", "Python", "OpenAI / Anthropic APIs", "Vector search", "FastAPI"],
   },
   {
-    id: "smriti-ai",
-    name: "Smriti.ai",
-    category: "Private Memorial Technology",
-    status: "Research and Prototype",
-    tags: ["AI", "Privacy"],
-    inkPattern: "default",
-    summary:
-      "A consent-focused, private memorial conversation experience created from user-provided memories, messages, documents, and voice recordings.",
-    problem:
-      "People want gentle, private ways to revisit memories of those they have lost, but most technology in this space ignores consent, privacy and emotional safety.",
-    solution:
-      "A local-first, consent-driven experience built only from material a person chooses to provide, with clear ethical boundaries and full user control over deletion.",
-    role: "Research, privacy and ethics framework, careful product design.",
-    features: [
-      "On-device or local-first processing",
-      "Explicit consent",
-      "Privacy by design",
-      "Clear emotional and ethical boundaries",
-      "User-controlled deletion",
-      "No hidden model training",
-    ],
-    technologies: ["Local-first AI", "On-device processing", "Privacy engineering"],
-    note: "This is a private, consent-focused memory experience. It is not designed to recreate or replace a person, and it is built around explicit consent, emotional safety and full user control.",
-  },
-  {
-    id: "receipts",
-    name: "Receipts",
-    category: "Personal Clarity and Decision Support",
-    status: "MVP",
-    tags: ["Privacy", "Product"],
-    inkPattern: "default",
-    summary:
-      "A local-first personal clarity app that helps people save decisions, write difficult messages, create personal rules, and revisit past reasoning.",
-    problem:
-      "We make the same hard decisions repeatedly and forget why we chose what we did. In tense moments it is hard to write clearly or remember our own rules.",
-    solution:
-      "A private, local-only space to record decisions and the reasoning behind them, generate calm scripts for difficult moments, and revisit personal rules over time.",
-    role: "Product concept, local-first architecture, interaction design.",
-    features: [
-      "Decision receipts",
-      "Panic-script generator",
-      "Saved drafts",
-      "Review reminders",
-      "Personal rules",
-      "Local-only storage",
-      "Export and import",
-    ],
-    technologies: ["Local-first storage", "TypeScript", "Offline-first design"],
-  },
-  {
-    id: "pasthour-ai",
-    name: "Pasthour AI",
-    category: "Job Intelligence and Automation",
-    status: "Concept and Research",
+    id: "querypilot",
+    name: "QueryPilot — Text-to-SQL Data Analyst Agent",
+    category: "Data + AI Agent",
+    status: "Prototype",
     tags: ["AI", "Data", "Product"],
-    inkPattern: "network",
-    summary:
-      "A job discovery and application workspace focused on recently posted opportunities, resume personalization, application tracking, and human-approved automation.",
-    problem:
-      "The freshest roles get the most attention, but finding them, tailoring a resume and tracking applications is slow and easy to lose track of.",
-    solution:
-      "A workspace that surfaces recently posted jobs, tailors resumes, manages the application pipeline, and keeps a human in the loop before anything is sent.",
-    role: "Product research, automation design, analytics.",
-    features: [
-      "Fresh-job discovery",
-      "Resume tailoring",
-      "Application workflow management",
-      "Human approval before applying",
-      "Job-source integrations",
-      "Progress analytics",
-    ],
-    technologies: ["LLMs", "Automation", "Data pipelines", "Next.js"],
-  },
-  {
-    id: "vibedesk",
-    name: "VibeDesk",
-    category: "Founder Productivity",
-    status: "Concept",
-    comingSoon: true,
-    tags: ["Product"],
     inkPattern: "streams",
+    image: "/projects/querypilot.svg",
     summary:
-      "A command center for solo builders to manage unfinished products, repositories, bugs, costs, API keys, deployment status, and next actions in one place.",
+      "A conversational analyst agent that turns plain-English business questions into validated SQL, runs it safely against a real schema, and returns a chart-ready answer with the query shown for review.",
     problem:
-      "Solo builders juggle many half-finished products across scattered tools, with no single view of cost, status and what to do next.",
+      "Business teams wait on analysts for routine questions that are simple in principle but require SQL and schema knowledge — creating a backlog for questions that don't need a human in the loop every time.",
     solution:
-      "One command center that pulls together repositories, bugs, costs, keys and deployment status so the next action is always obvious.",
-    role: "Product concept and information architecture.",
+      "An agent that grounds itself in the real database schema, drafts SQL, validates it against a read-only sandbox before execution, and returns both the answer and the exact query run, so every result is checkable rather than trusted blindly.",
+    role: "Founder & engineer — schema grounding, SQL generation and validation pipeline, safety sandboxing, and UI.",
     features: [
-      "Unified product dashboard",
-      "Repository and bug tracking",
-      "Cost and API key overview",
-      "Deployment status",
-      "Next-action focus",
+      "Schema-grounded SQL generation from plain-English questions",
+      "Read-only sandbox validation before any query runs",
+      "Query shown alongside every answer for auditability",
+      "Automatic chart selection for numeric results",
+      "Guardrails against destructive or out-of-scope queries",
+      "Query history and reusable saved questions",
     ],
-    technologies: ["Next.js", "TypeScript", "Integrations"],
+    technologies: ["Python", "LangChain", "SQL", "PostgreSQL", "FastAPI", "Evaluation harness"],
   },
   {
-    id: "unsent",
-    name: "Unsent",
-    category: "Private Wellness Technology",
-    status: "Concept",
-    comingSoon: true,
-    tags: ["Privacy", "Product"],
-    inkPattern: "default",
-    summary:
-      "A private, local-first space where users can express messages they do not intend to send, reflect through guided journaling, and release difficult emotions without contacting the other person.",
-    problem:
-      "Sometimes we need to say something we should never actually send. There are few private, safe spaces to write it down and let it go.",
-    solution:
-      "A local-first space for writing unsent messages and guided reflection, designed for release rather than delivery, with everything kept private on the device.",
-    role: "Product concept, privacy-first design.",
-    features: [
-      "Private unsent messages",
-      "Guided journaling",
-      "Reflection prompts",
-      "Local-first storage",
-    ],
-    technologies: ["Local-first storage", "TypeScript"],
-    note: "Unsent is a reflective writing space, not a substitute for professional mental-health care. If you are struggling, please reach out to a qualified professional or a local support line.",
-  },
-  {
-    id: "neural-mesh",
-    name: "Neural Mesh",
-    category: "Edge AI Hardware",
+    id: "mcp-bridge",
+    name: "MCP Bridge — Enterprise Tool Connector for AI Agents",
+    category: "Agent Infrastructure",
     status: "In Development",
-    tags: ["Hardware", "AI", "Networks"],
-    inkPattern: "network",
+    tags: ["AI", "Integration", "Platform"],
+    inkPattern: "graph",
+    image: "/projects/mcp-bridge.svg",
     summary:
-      "A distributed edge compute cluster designed for real-time AI inference at the network edge, with mesh networking and local model orchestration.",
+      "A Model Context Protocol server that exposes an organization's internal tools (ticketing, CRM, internal APIs) to any MCP-compatible AI agent through one governed, permissioned interface — instead of a bespoke integration per agent.",
     problem:
-      "Running AI models on servers introduces latency, costs, and privacy risks. Edge deployment requires expensive custom hardware and complex orchestration.",
+      "Every new AI agent a team adopts needs its own custom integration to internal tools, each with its own auth, rate limits, and blast radius — multiplying integration work and making it hard to audit what agents can actually touch.",
     solution:
-      "Modular edge nodes that communicate via mesh networking, coordinate model deployment, and handle real-time inference with sub-10ms latency, all on consumer hardware.",
-    role: "Hardware architecture, distributed system design, edge ML orchestration.",
+      "A single MCP server that wraps internal tools behind one consistent, permissioned interface, so any MCP-compatible agent gets the same governed access — with every call logged and scoped per agent.",
+    role: "Founder & engineer — MCP server design, tool adapters, permission model, and audit logging.",
     features: [
-      "Mesh network topology",
-      "Real-time model inference",
-      "Sub-10ms latency",
-      "Distributed load balancing",
-      "Model versioning and rollback",
-      "Hardware-agnostic deployment",
-      "Privacy-first processing",
+      "MCP-compliant server exposing internal tools to any compatible agent",
+      "Per-agent, per-tool permission scoping",
+      "Centralized rate limiting and quota enforcement",
+      "Full call logging for audit and debugging",
+      "Adapter pattern for adding new internal tools quickly",
+      "Works with Claude, custom LangGraph agents, and IDE assistants",
     ],
-    technologies: [
-      "NVIDIA Jetson",
-      "RaspberryPi 5",
-      "MQTT",
-      "Docker",
-      "ONNX Runtime",
-      "PyTorch",
-      "C++",
-      "Go",
-    ],
+    technologies: ["TypeScript", "Model Context Protocol (MCP)", "Node.js", "PostgreSQL", "OAuth"],
   },
+
+  // ── FDE × AI Governance projects (with snapshots) ──
   {
-    id: "spectra-labs",
-    name: "Spectra Labs",
-    category: "Biometric Authentication",
-    status: "Prototype",
-    tags: ["Hardware", "Privacy", "Product"],
-    inkPattern: "streams",
-    summary:
-      "A private biometric authentication device using spectral analysis instead of facial recognition, ensuring permanent anonymity and zero data storage.",
-    problem:
-      "Biometric systems leak identity and store sensitive data. Privacy-focused alternatives don't exist at scale.",
-    solution:
-      "A spectral-based authentication system that verifies you without ever capturing or storing your identity, using light spectrum analysis instead of images.",
-    role: "Hardware design, spectral algorithms, privacy framework.",
-    features: [
-      "Spectral biometric authentication",
-      "Zero identity storage",
-      "Sub-50ms verification",
-      "Multi-modal authentication",
-      "Offline-capable",
-      "GDPR and privacy-by-design",
-    ],
-    technologies: [
-      "Hyperspectral sensors",
-      "Raspberry Pi Compute Module",
-      "Signal processing",
-      "Edge ML",
-      "Rust",
-    ],
-  },
-  {
-    id: "lens-protocol",
-    name: "Lens Protocol Extension",
-    category: "Decentralized Social Layer",
-    status: "Active",
-    tags: ["Web3", "Networks", "Product"],
-    inkPattern: "ledger",
-    summary:
-      "A protocol extension for Lens that enables graph analytics, network influence scoring, and decentralized reputation without compromising user sovereignty.",
-    problem:
-      "Decentralized social lacks the analytics and reputation layers that make networks valuable. Existing solutions require centralized off-chain storage.",
-    solution:
-      "A smart contract-based reputation and influence system that lives on-chain, uses graph algorithms, and rewards network participants transparently.",
-    role: "Protocol design, smart contract architecture, graph analytics.",
-    features: [
-      "On-chain influence scoring",
-      "Network graph analysis",
-      "Decentralized reputation",
-      "Transparent incentive design",
-      "Cross-protocol composability",
-      "Real-time analytics",
-    ],
-    technologies: [
-      "Solidity",
-      "Lens Protocol",
-      "The Graph",
-      "Polygon",
-      "GraphQL",
-      "Python",
-    ],
-  },
-  {
-    id: "sentinel-ai",
-    name: "Sentinel AI",
-    category: "Threat Detection and Response",
+    id: "govseal",
+    name: "GovSeal — Deployment Governance Console",
+    category: "FDE × AI Governance",
     status: "In Development",
-    tags: ["AI", "Networks", "Product"],
-    inkPattern: "network",
-    summary:
-      "An AI-powered security system that detects anomalous network behavior, predicts threats before they occur, and coordinates automated response with human oversight.",
-    problem:
-      "Security threats move faster than human response. Most detection systems react; they don't predict or coordinate defense.",
-    solution:
-      "A predictive threat detection system using graph analysis and behavioral AI that flags anomalies, predicts attack chains, and orchestrates response playbooks.",
-    role: "AI model architecture, threat detection algorithms, incident response design.",
-    features: [
-      "Real-time anomaly detection",
-      "Predictive threat scoring",
-      "Automated response orchestration",
-      "Human-in-the-loop approval",
-      "Network graph visualization",
-      "Incident timeline reconstruction",
-    ],
-    technologies: ["TensorFlow", "Network analysis", "Graph databases", "Python", "Go"],
-  },
-  {
-    id: "qubit-sync",
-    name: "QuBit Sync",
-    category: "Quantum-Safe Data Sync",
-    status: "Research",
-    tags: ["Blockchain", "Privacy", "Data"],
-    inkPattern: "default",
-    summary:
-      "A post-quantum cryptography layer for data synchronization across devices and networks, protecting against future quantum decryption.",
-    problem:
-      "Data synced today will be decrypted by quantum computers in 10+ years. Current encryption is quantum-vulnerable.",
-    solution:
-      "A lightweight post-quantum encryption layer using lattice-based cryptography that protects data sync, works offline, and is hardware-agnostic.",
-    role: "Cryptography implementation, protocol design, performance optimization.",
-    features: [
-      "Post-quantum encryption",
-      "Lightweight sync protocol",
-      "Offline-first design",
-      "Hardware-agnostic",
-      "Zero-knowledge proofs",
-      "Key rotation and refresh",
-    ],
-    technologies: ["Rust", "Liboqs", "CRYSTALS-Kyber", "libsodium", "WebAssembly"],
-  },
-  {
-    id: "flow-studio",
-    name: "Flow Studio",
-    category: "Visual System Design and Orchestration",
-    status: "Prototype",
-    tags: ["Product", "AI"],
-    inkPattern: "streams",
-    summary:
-      "A visual studio for designing and orchestrating complex multi-agent AI workflows without code, with real-time execution debugging and performance profiling.",
-    problem:
-      "AI orchestration requires deep coding skills. Non-technical teams can't visualize or modify agent flows without rewrites.",
-    solution:
-      "A node-based visual editor where you drag agents, connect data flows, set triggers, and see execution in real-time with a powerful debugging console.",
-    role: "UI/UX design, flow execution engine, debugging interface.",
-    features: [
-      "Node-based visual editor",
-      "Real-time execution view",
-      "Agent library",
-      "Data flow visualization",
-      "Trigger and condition builder",
-      "Performance profiler",
-      "One-click deployment",
-    ],
-    technologies: ["React", "D3.js", "TypeScript", "LangGraph", "Redis"],
-  },
-  {
-    id: "gtm-nexus",
-    name: "GTM Nexus",
-    category: "Go-To-Market Intelligence",
-    status: "Active Development",
-    tags: ["Product", "Data", "Networks"],
+    tags: ["Governance", "AI", "Platform"],
     inkPattern: "ledger",
+    image: "/projects/govseal.svg",
     summary:
-      "An integrated GTM analysis platform combining market dynamics (Apex), reasoning (Perplexity), and inference (Hermes) to predict product-market fit, channel viability, and optimal positioning.",
+      "A governance console that sits on top of deployed AI systems — tracking evaluations, drift, human approvals, and a tamper-evident audit log — so the same team that ships a model can prove it's still behaving.",
     problem:
-      "GTM decisions are made with fragmented data—market trends, competitive moves, user signals scattered across tools. Teams guess instead of deduce.",
+      "Forward deployed AI gets to production fast, but governance usually lags behind: no one can easily answer whether a live model still passes its evals, who approved the last prompt change, or what it did last Tuesday. Accountability becomes a scramble the moment something goes wrong.",
     solution:
-      "A unified platform that ingests market signals, reasons through scenarios, and generates predictive GTM playbooks. Combines Apodex for market analysis, Perplexity for reasoning, and Hermes for fast inference.",
-    role: "Product strategy, market modeling, reasoning integration.",
+      "GovSeal wraps a deployed system with continuous evaluation runs, drift and quality monitoring, a human-approval workflow for changes, and an immutable audit trail. It turns 'is this model still safe to run?' from a hopeful guess into a dashboard you can point an auditor at.",
+    role: "Founder & engineer — governance model, evaluation harness, monitoring pipeline, approval workflow, and console UI.",
     features: [
-      "Real-time market signal aggregation",
-      "Competitive positioning analysis",
-      "Channel viability scoring",
-      "Product-market fit prediction",
-      "Scenario reasoning engine",
-      "GTM playbook generation",
-      "Cohort analytics",
-      "Network effects modeling",
+      "Continuous evaluation runs against a versioned test suite",
+      "Live drift and quality monitoring with alerting",
+      "Human-approval workflow for prompt and model changes",
+      "Tamper-evident audit log of every decision and change",
+      "Per-model risk scoring and status at a glance",
+      "Exportable compliance and incident reports",
     ],
-    technologies: [
-      "Perplexity AI",
-      "Hermes LLM",
-      "Apodex (market data)",
-      "Graph analysis",
-      "Python",
-      "PostgreSQL",
-      "React",
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "LLM evaluation", "Monitoring", "Audit logging"],
+    note:
+      "GovSeal is a governance and observability layer. It surfaces evidence, drift, and unresolved approvals — it keeps humans accountable rather than replacing their judgment.",
+  },
+  {
+    id: "tracegrid",
+    name: "TraceGrid — LLM Evaluation & Audit Platform",
+    category: "FDE × AI Governance",
+    status: "Prototype",
+    tags: ["Governance", "AI", "Data"],
+    inkPattern: "graph",
+    image: "/projects/tracegrid.svg",
+    summary:
+      "An evaluation and audit workbench that scores every LLM response a deployed system produces — for accuracy, safety, bias, and policy compliance — and traces each answer back to its inputs, prompt, and grounding.",
+    problem:
+      "When a deployed AI system gives a bad answer, teams usually can't reconstruct why: which prompt version, which retrieved context, which model. Without that trace, governance is theater and fixes are guesswork.",
+    solution:
+      "TraceGrid captures the full trace of each response, runs it through configurable evaluators (factuality, safety, bias, tone, policy), and grids the results so patterns and regressions are obvious. Failing cases feed a red-team queue and a human review workflow, closing the loop between evaluation and improvement.",
+    role: "Founder & engineer — trace capture, evaluator framework, scoring grid, red-team workflow, and reporting.",
+    features: [
+      "Full trace capture: input, prompt version, context, model, output",
+      "Configurable evaluators for factuality, safety, bias, and policy",
+      "Regression grid to catch quality drops release-over-release",
+      "Red-team queue seeded from failing cases",
+      "Human review and sign-off workflow",
+      "Shareable evaluation and compliance reports",
     ],
+    technologies: ["Python", "Next.js", "TypeScript", "LLM-as-judge", "Vector search", "PostgreSQL"],
+    note:
+      "TraceGrid is designed to make AI behavior legible and contestable — evaluator scores stay decomposable and reviewable rather than presented as a single opaque verdict.",
   },
 ];
 
 /** Filter chips shown above the project grid. */
-export const projectTags: ProjectTag[] = ["AI", "Hardware", "Web3", "Data", "Blockchain", "Networks", "Privacy", "Product"];
+export const projectTags: ProjectTag[] = [
+  "AI",
+  "Governance",
+  "Deployment",
+  "Integration",
+  "Data",
+  "Product",
+  "Platform",
+];

@@ -1,111 +1,91 @@
-/**
- * Central portfolio copy and navigation.
- */
+/** Central site configuration and recruiter-facing copy. */
 export const site = {
   name: "Sai Nitish Reddy Kapa",
   shortName: "Sai Nitish",
-  initials: "SN",
-  roles: ["AI Builder", "Product Founder", "Thriller Writer"],
-  tagline: "Ideas move like ink. Systems give them form. Stories give them soul.",
+  initials: "SK",
+  roles: ["Forward Deployed Engineer", "Applied AI Engineer", "AI Governance Engineer", "Solutions Engineer"],
+  tagline: "Build the useful thing. Wire it in. Prove it works.",
   email: "kapasainitishreddy@gmail.com",
-  location: "United States",
+  location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
-    "Sai Nitish Reddy builds AI products, intelligent systems, developer tools, mobile experiences, and psychological thrillers.",
+    "Sai Nitish Reddy Kapa turns ambiguous customer problems into shipped AI systems by combining agentic AI, data and API integration, production delivery, and evaluation controls.",
   resumeUrl: "/resume.pdf",
 } as const;
 
 export const socials = {
   github: "https://github.com/kapasainitishreddy",
+  linkedin: "https://www.linkedin.com/in/kapasainitishreddy",
   email: `mailto:${site.email}`,
 } as const;
 
 export const navItems = [
-  { label: "Work", href: "#projects" },
-  { label: "Writing", href: "#writing" },
+  { label: "Capabilities", href: "#skills" },
+  { label: "Work", href: "#featured-work" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
   { label: "About", href: "#about" },
-  { label: "Philosophy", href: "#principles" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
 export const hero = {
-  headline: "I build AI products, intelligent systems, and story-driven experiences.",
-  supporting: [
-    "I am a builder, product founder, and thriller writer. I turn complex ideas into useful software, from language intelligence and developer infrastructure to private consumer products and stories about what people do under pressure.",
-  ],
-  status: "Building across AI, developer tools, mobile products, and stories",
-  identities: [
-    {
-      title: "AI Builder",
-      body: "Building intelligent systems, applied AI products, and agentic tools.",
-    },
-    {
-      title: "Product Founder",
-      body: "Turning ideas into focused products that solve real problems.",
-    },
-    {
-      title: "Thriller Writer",
-      body: "Exploring tension, motive, consequence, and the darker sides of human nature.",
-    },
+  headline: "I turn messy customer problems into shipped AI systems.",
+  supporting:
+    "I work across agentic AI, data and API integration, production delivery, and AI evaluation. I learn the workflow, build the working slice, connect it to the systems people already use, and leave the team with something they can operate.",
+  status: "Open to Forward Deployed, Applied AI, Solutions, and AI Governance roles",
+  capabilities: ["Agentic AI", "Data + API integration", "Production delivery", "Evaluation + governance"],
+  proof: [
+    { value: "~60%", label: "faster first response", detail: "AI support copilot workflow" },
+    { value: "~20 hrs", label: "manual work removed weekly", detail: "production data pipeline" },
+    { value: "1,800+", label: "LLM outputs evaluated", detail: "quality and safety review" },
+    { value: "99.5%", label: "pipeline uptime", detail: "production operations workflow" },
   ],
   actions: [
-    { label: "Explore Products", href: "#projects", kind: "primary" as const },
-    { label: "Read Writing", href: "#writing", kind: "ghost" as const },
-    { label: "View GitHub", href: socials.github, kind: "ghost" as const, external: true },
+    { label: "See shipped work", href: "#featured-work", kind: "primary" as const },
+    { label: "View experience", href: "#experience", kind: "ghost" as const },
+    { label: "Contact me", href: "#contact", kind: "ghost" as const },
   ],
 } as const;
 
 export const about = {
-  heading: "Builder. Writer. Thinker.",
+  heading: "I work where product ambiguity meets production reality.",
   paragraphs: [
-    "I like building at the point where technology, product design, and human behavior meet. Some ideas become AI tools. Some become mobile products. Some become stories.",
-    "My product work usually starts with a messy workflow or an annoying decision. I try to reduce it to one clear loop, make the system inspectable, and keep the interface simple enough that the user does not need a manual.",
-    "Writing thrillers exercises a different part of the same instinct. I care about motive, pressure, hidden information, and what people choose when there is no comfortable option. That attention to human behavior also shapes the software I build.",
+    "I am most useful when the problem is not fully specified yet. I can sit with a team, map the real workflow, turn unclear requirements into a working system, and keep iterating until the result survives real usage.",
+    "My strongest work combines Python and data engineering with LLM workflows, APIs, internal tools, testing, observability, and human review. I care about the last mile: integration, failure handling, documentation, and whether the team can run the system after handoff.",
   ],
   keywords: [
-    { word: "Intelligence", note: "Applied AI that supports a real workflow." },
-    { word: "Products", note: "Small loops, clear value, and usable interfaces." },
-    { word: "Systems", note: "Architecture that can be inspected, tested, and changed." },
-    { word: "Stories", note: "Tension, motive, consequence, and human behavior." },
+    { word: "Discover", note: "Understand the workflow, constraints, users, and success criteria." },
+    { word: "Build", note: "Turn the highest-value slice into working software quickly." },
+    { word: "Integrate", note: "Connect data, APIs, auth, tools, and the real operating environment." },
+    { word: "Prove", note: "Measure behavior, handle failures, document decisions, and keep humans in control." },
   ],
 } as const;
 
 export const principles = {
-  heading: "Build with clarity. Write with truth.",
+  heading: "How I work when the problem is still taking shape.",
   items: [
-    {
-      title: "Build with clarity",
-      body: "Strip away noise, solve the real problem, and make the next action obvious.",
-    },
-    {
-      title: "Make it real",
-      body: "Prefer working flows, tests, demos, and evidence over impressive sounding promises.",
-    },
-    {
-      title: "Design for emotion",
-      body: "People remember how a product or a story made them feel. Clarity and atmosphere both matter.",
-    },
-    {
-      title: "Think long term",
-      body: "Build foundations that can evolve instead of piling features onto weak structure.",
-    },
+    { title: "Start with the workflow", body: "Watch how the work happens today, find the expensive friction, and define a measurable target before expanding scope." },
+    { title: "Ship a working slice", body: "Build the smallest useful end-to-end path, put it in front of real users, and learn from evidence instead of a long speculative roadmap." },
+    { title: "Integrate with reality", body: "Treat data quality, auth, APIs, permissions, latency, failure modes, and human handoffs as product requirements rather than cleanup work." },
+    { title: "Make quality inspectable", body: "Use evaluations, logs, review points, tests, and runbooks so teams can see what the system did and why." },
   ],
 } as const;
 
 export const contact = {
-  heading: "Let’s build something meaningful.",
+  heading: "Have an ambiguous AI or integration problem?",
   supporting:
-    "If it is a product, a system, a story, or an unusual problem worth exploring, I am open to a conversation.",
+    "I am open to Forward Deployed, Applied AI, Solutions, and AI Governance work. If you need someone who can move between the customer conversation and the implementation details, send me the problem.",
   reasons: [
-    "AI or product opportunity",
-    "Forward deployed or solutions work",
-    "Developer tools or mobile products",
-    "Writing or story collaboration",
+    "Forward Deployed Engineer role",
+    "Applied AI or agentic AI role",
+    "Solutions or integration engineering role",
+    "AI governance or evaluation work",
+    "Freelance embedded engineering",
     "Other",
   ],
 } as const;
 
 export const footer = {
   signature: "Designed and built by Sai Nitish Reddy Kapa",
-  motto: "Ideas move like ink. Systems give them form. Stories give them soul.",
+  motto: "Understand the workflow. Ship the system. Prove the result.",
 } as const;

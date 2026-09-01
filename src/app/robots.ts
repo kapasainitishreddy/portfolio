@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/data/site";
 
+// Static content with no request-time data — required for GitHub Pages'
+// fully static export build (STATIC_EXPORT=true).
+export const dynamic = "force-static";
+
 export default function robots(): MetadataRoute.Robots {
   const base = site.url.replace(/\/$/, "");
   return {

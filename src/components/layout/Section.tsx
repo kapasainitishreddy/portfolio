@@ -1,29 +1,9 @@
-import Reveal from "./Reveal";
+import type { ReactNode } from "react";
 
-export function Section({
-  id,
-  label,
-  children,
-  className = "",
-}: {
-  id: string;
-  label?: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
+export function Section({ id, label, children, className = "" }: { id: string; label: string; children: ReactNode; className?: string }) {
   return (
-    <section
-      id={id}
-      className={`content-pad mx-auto w-full max-w-7xl scroll-mt-24 py-24 md:py-32 ${className}`}
-    >
-      {label && (
-        <Reveal>
-          <p className="font-mono-label mb-6 flex items-center gap-3">
-            <span className="inline-block h-px w-8" style={{ background: "var(--color-silver)" }} />
-            {label}
-          </p>
-        </Reveal>
-      )}
+    <section id={id} className={`content-pad mx-auto w-full max-w-7xl py-16 md:py-20 lg:py-24 ${className}`}>
+      <p className="font-mono-label mb-4">{label}</p>
       {children}
     </section>
   );

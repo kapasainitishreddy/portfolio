@@ -15,12 +15,9 @@ interface InkState {
 }
 
 const InkContext = createContext<InkState | null>(null);
-const DEFAULT_INK_INTENSITY = 0.82;
 
 export function InkProvider({ children }: { children: React.ReactNode }) {
-  // Tuned for a more legible mobile-first wake, using MIT-licensed
-  // WebGL fluid demos as interaction reference without importing their solver.
-  const [intensity, setIntensity] = useState(DEFAULT_INK_INTENSITY);
+  const [intensity, setIntensity] = useState(0.6);
   const [paused, setPaused] = useState(false);
   const [pattern, setPattern] = useState<InkPattern>("default");
 
@@ -37,8 +34,9 @@ export function InkProvider({ children }: { children: React.ReactNode }) {
 export function useInk(): InkState {
   const ctx = useContext(InkContext);
   if (!ctx) {
+    // Safe fallback so components never crash outside the provider.
     return {
-      intensity: DEFAULT_INK_INTENSITY,
+      intensity: 0.6,
       setIntensity: () => {},
       paused: false,
       togglePaused: () => {},

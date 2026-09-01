@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { footer, site, socials } from "@/data/site";
-import { GitHubIcon, MailIcon, FileIcon } from "./icons";
+import { GitHubIcon, LinkedInIcon, MailIcon, FileIcon } from "./icons";
+import { withBasePath } from "@/lib/basePath";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -17,10 +18,13 @@ export default function Footer() {
             <a href={socials.github} target="_blank" rel="noopener noreferrer" className="link-quiet flex items-center gap-2 text-sm text-silver">
               <GitHubIcon width={16} height={16} /> GitHub
             </a>
+            <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" className="link-quiet flex items-center gap-2 text-sm text-silver">
+              <LinkedInIcon width={16} height={16} /> LinkedIn
+            </a>
             <a href={`mailto:${site.email}`} className="link-quiet flex items-center gap-2 text-sm text-silver">
               <MailIcon width={16} height={16} /> Email
             </a>
-            <a href={site.resumeUrl} className="link-quiet flex items-center gap-2 text-sm text-silver">
+            <a href={withBasePath(site.resumeUrl)} className="link-quiet flex items-center gap-2 text-sm text-silver">
               <FileIcon width={16} height={16} /> Résumé
             </a>
             <Link href="/privacy" className="link-quiet flex items-center gap-2 text-sm text-silver">

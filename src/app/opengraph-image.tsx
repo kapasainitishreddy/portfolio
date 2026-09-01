@@ -4,6 +4,9 @@ import { site } from "@/data/site";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = `${site.name} · ${site.roles[0]}`;
+// Static content with no request-time data — required for GitHub Pages'
+// fully static export build (STATIC_EXPORT=true).
+export const dynamic = "force-static";
 
 // Social-share card: editorial name + tagline over an ink-dark field.
 export default function OgImage() {
