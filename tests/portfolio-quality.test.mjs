@@ -6,6 +6,7 @@ import test from "node:test";
 const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const exists = (file) => fs.existsSync(path.join(root, file));
+const size = (file) => fs.statSync(path.join(root, file)).size;
 
 const visibleCopyFiles = [
   "src/data/site.ts",
@@ -35,16 +36,29 @@ test("homepage tells the recruiter story in the intended order", () => {
   assert.equal(page.includes("<Loader />"), false, "Homepage should not block first paint with an intro loader");
 });
 
-test("hero and favicon use the uploaded profile photo", () => {
+test("profile assets are valid optimized binaries and used throughout the site", () => {
   const hero = read("src/components/sections/Hero.tsx");
+  const nav = read("src/components/layout/Navigation.tsx");
   const layout = read("src/app/layout.tsx");
   const manifest = read("src/app/manifest.ts");
-  assert.equal(exists("public/profile.jpg"), true, "Exact uploaded profile crop must exist");
-  assert.equal(exists("public/favicon.png"), true, "Exact uploaded favicon crop must exist");
-  assert.match(hero, /profile\.jpg/);
-  assert.match(hero, /Sai Nitish Reddy Kapa/);
+  assert.equal(exists("public/profile.webp"), true, "Optimized real profile photo must exist");
+  assert.equal(exists("public/favicon.png"), true, "Real-photo favicon must exist");
+  assert.ok(size("public/profile.webp") > 3000, "Profile asset is unexpectedly small/corrupt");
+  assert.ok(size("public/favicon.png") > 3000, "Favicon asset is unexpectedly small/corrupt");
+  assert.match(hero, /profile\.webp/);
+  assert.match(nav, /profile\.webp/);
+  assert.doesNotMatch(nav, /site\.initials/);
   assert.match(layout, /favicon\.png/);
   assert.match(manifest, /favicon\.png/);
+});
+
+test("mobile navigation uses a dedicated readable surface", () => {
+  const nav = read("src/components/layout/Navigation.tsx");
+  const css = read("src/app/polish.css");
+  assert.match(nav, /portfolio-nav/);
+  assert.match(css, /\.portfolio-nav/);
+  assert.match(css, /backdrop-filter/i);
+  assert.match(css, /color-mix\(in srgb,var\(--color-ink\) 9[0-9]%/i);
 });
 
 test("multi-client startup section covers basic to advanced delivery", () => {
