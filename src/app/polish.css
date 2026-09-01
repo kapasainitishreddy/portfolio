@@ -9,9 +9,11 @@
 .portfolio-cta:hover{transform:translateY(-1px);background:color-mix(in srgb,var(--color-charcoal) 78%,transparent)}
 .portfolio-cta--primary{background:var(--color-soft);color:var(--color-ink);border-color:var(--color-soft)}
 .portfolio-cta--primary:hover{background:color-mix(in srgb,var(--color-soft) 90%,var(--color-accent));}
+.portfolio-nav{background:color-mix(in srgb,var(--color-ink) 94%,transparent);backdrop-filter:blur(18px) saturate(135%);-webkit-backdrop-filter:blur(18px) saturate(135%);box-shadow:0 10px 34px rgba(0,0,0,.14);transition:padding .2s ease,background-color .2s ease,border-color .2s ease}
 .suminagashi-static{background:linear-gradient(145deg,#efe5d2,#f6efe2);overflow:hidden}
 .suminagashi-static__ring{position:absolute;border-radius:48% 52% 46% 54%;border:clamp(2px,.4vw,6px) solid rgba(31,28,24,.52);transform:rotate(var(--r,0deg));filter:blur(.15px)}
 .suminagashi-static__ring--1{width:72vmax;height:55vmax;left:-12vmax;top:-8vmax;--r:-7deg}.suminagashi-static__ring--2{width:62vmax;height:48vmax;left:-6vmax;top:-2vmax;--r:5deg}.suminagashi-static__ring--3{width:48vmax;height:39vmax;left:2vmax;top:5vmax;--r:-3deg}.suminagashi-static__ring--4{width:46vmax;height:36vmax;right:-8vmax;bottom:-6vmax;--r:11deg}.suminagashi-static__ring--5{width:34vmax;height:27vmax;right:-2vmax;bottom:0;--r:-8deg}.suminagashi-static__ring--6{width:22vmax;height:18vmax;right:6vmax;bottom:7vmax;--r:6deg}
 [data-mode="dark"] .suminagashi-static{background:linear-gradient(145deg,#07090b,#11151c)}[data-mode="dark"] .suminagashi-static__ring{border-color:rgba(199,194,179,.44)}
 .surface{box-shadow:0 12px 40px rgba(0,0,0,.08)}
-@media(max-width:640px){.content-pad{padding-inline:1.15rem}.capability-card,.experience-card{border-radius:15px}.theme-veil--ink{background:rgba(var(--color-veil),.48)}}
+@media(min-width:1024px){.portfolio-nav{background:color-mix(in srgb,var(--color-ink) 86%,transparent)}}
+@media(max-width:640px){.content-pad{padding-inline:1.15rem}.capability-card,.experience-card{border-radius:15px}.theme-veil--ink{background:rgba(var(--color-veil),.48)}.portfolio-nav{margin-top:.55rem;border-radius:1.25rem}}
