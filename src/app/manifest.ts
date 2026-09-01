@@ -1,8 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/data/site";
 
-// Static content with no request-time data — required for GitHub Pages'
-// fully static export build (STATIC_EXPORT=true).
 export const dynamic = "force-static";
 
 export default function manifest(): MetadataRoute.Manifest {
@@ -14,6 +12,6 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#080A0C",
     theme_color: "#080A0C",
-    icons: [{ src: "/icon", sizes: "64x64", type: "image/png" }],
+    icons: [{ src: "favicon.png", sizes: "192x192", type: "image/png" }],
   };
 }
