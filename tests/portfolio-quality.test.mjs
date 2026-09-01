@@ -55,6 +55,14 @@ test("three visual themes use three independent background engines", () => {
   assert.match(bushido, /scar/i);
 });
 
+test("Suminagashi WebGL failures fall back without crashing the portfolio", () => {
+  const sumi = read("src/components/suminagashi/SuminagashiBackground.tsx");
+  assert.match(sumi, /StaticFallback/);
+  assert.match(sumi, /setFailed/);
+  assert.match(sumi, /catch\s*\(/);
+  assert.match(sumi, /if\s*\(failed\)/);
+});
+
 test("visible portfolio copy does not use em dashes", () => {
   const offenders = visibleCopyFiles.filter((file) => read(file).includes("—"));
   assert.deepEqual(offenders, [], `Em dash found in visible-copy sources: ${offenders.join(", ")}`);
