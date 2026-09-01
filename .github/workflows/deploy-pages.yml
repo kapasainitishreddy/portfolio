@@ -2,7 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - claude/sharp-tesla-f8epam
   workflow_dispatch:
 
 permissions:
@@ -30,9 +32,9 @@ jobs:
 
       - run: npm ci
 
-      # Static export has no server, so the /api/contact route (which needs
-      # one) is stripped before the build; the contact form falls back to a
-      # mailto: link on this build via NEXT_PUBLIC_STATIC_EXPORT.
+      # Static export has no server, so the /api/contact route is stripped
+      # before build. The contact form falls back to a mailto flow when
+      # NEXT_PUBLIC_STATIC_EXPORT is enabled.
       - run: rm -rf src/app/api
 
       - name: Build static export
