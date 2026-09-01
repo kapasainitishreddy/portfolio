@@ -1,24 +1,15 @@
-/**
- * Central site configuration.
- * Edit names, links, navigation and hero copy here. Nothing else needs to change.
- */
-
+/** Central site configuration and recruiter-facing copy. */
 export const site = {
   name: "Sai Nitish Reddy Kapa",
   shortName: "Sai Nitish",
   initials: "SK",
-  roles: [
-    "Forward Deployed Engineer",
-    "AI Governance Engineer",
-    "Solutions & Deployment Engineer",
-    "Embedded Technical Partner",
-  ],
-  tagline: "I embed with teams to ship AI systems that actually work in the real world",
+  roles: ["Forward Deployed Engineer", "Applied AI Engineer", "AI Governance Engineer", "Solutions Engineer"],
+  tagline: "Build the useful thing. Wire it in. Prove it works.",
   email: "kapasainitishreddy@gmail.com",
   location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
-    "Sai Nitish Reddy Kapa is a Forward Deployed Engineer who embeds with teams to design, integrate, and safely deploy AI systems in production — pairing hands-on delivery with responsible AI governance.",
+    "Sai Nitish Reddy Kapa turns ambiguous customer problems into shipped AI systems by combining agentic AI, data and API integration, production delivery, and evaluation controls.",
   resumeUrl: "/resume.pdf",
 } as const;
 
@@ -29,83 +20,72 @@ export const socials = {
 } as const;
 
 export const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
   { label: "Capabilities", href: "#skills" },
-  { label: "Case Studies", href: "#projects" },
+  { label: "Work", href: "#featured-work" },
   { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
 export const hero = {
-  headline: "I embed with teams to ship AI systems that work in the real world.",
-  supporting: [
-    "I'm Sai Nitish Reddy Kapa, a Forward Deployed Engineer. I sit with founders and product teams, learn their domain firsthand, and turn messy real-world requirements into deployed, reliable AI software.",
-    "I'm FDE-certified through Educative and currently completing an AI Governance certification — so the systems I ship don't just work, they stay monitored, explainable, and accountable after launch.",
+  headline: "I turn messy customer problems into shipped AI systems.",
+  supporting:
+    "I work across agentic AI, data and API integration, production delivery, and AI evaluation. I learn the workflow, build the working slice, connect it to the systems people already use, and leave the team with something they can operate.",
+  status: "Open to Forward Deployed, Applied AI, Solutions, and AI Governance roles",
+  capabilities: ["Agentic AI", "Data + API integration", "Production delivery", "Evaluation + governance"],
+  proof: [
+    { value: "~60%", label: "faster first response", detail: "AI support copilot workflow" },
+    { value: "~20 hrs", label: "manual work removed weekly", detail: "production data pipeline" },
+    { value: "1,800+", label: "LLM outputs evaluated", detail: "quality and safety review" },
+    { value: "99.5%", label: "pipeline uptime", detail: "production operations workflow" },
   ],
-  status: "Open to Forward Deployed Engineer & AI governance roles",
   actions: [
-    { label: "View FDE Case Studies", href: "#projects", kind: "primary" as const },
-    { label: "Read My Experience", href: "#experience", kind: "ghost" as const },
-    { label: "Let's Talk", href: "#contact", kind: "ghost" as const },
+    { label: "See shipped work", href: "#featured-work", kind: "primary" as const },
+    { label: "View experience", href: "#experience", kind: "ghost" as const },
+    { label: "Contact me", href: "#contact", kind: "ghost" as const },
   ],
 } as const;
 
 export const about = {
-  heading: "A Forward Deployed Engineer turns a customer's problem into shipped software.",
+  heading: "I work where product ambiguity meets production reality.",
   paragraphs: [
-    "Forward deployed work means going to where the problem actually lives. I embed with a team, learn their domain and constraints firsthand, prototype against real data, and iterate in tight loops until the system is running in production and creating value.",
-    "My work spans integration engineering, data pipelines, LLM and agent orchestration, internal tooling, and the glue code that makes AI dependable in the messy conditions of a live business. I move between writing code, talking to stakeholders, and debugging in production without losing the thread.",
-    "I pair that delivery focus with responsible AI governance — evaluations, human-in-the-loop review, monitoring, and clear documentation — so the systems I deploy stay explainable, safe, and accountable long after the first launch.",
+    "I am most useful when the problem is not fully specified yet. I can sit with a team, map the real workflow, turn unclear requirements into a working system, and keep iterating until the result survives real usage.",
+    "My strongest work combines Python and data engineering with LLM workflows, APIs, internal tools, testing, observability, and human review. I care about the last mile: integration, failure handling, documentation, and whether the team can run the system after handoff.",
   ],
   keywords: [
-    { word: "Embed", note: "Sit with the customer, learn the domain, build against real workflows." },
-    { word: "Ship", note: "Prototype fast, integrate deeply, get systems running in production." },
-    { word: "Iterate", note: "Tight feedback loops with real users until the system truly works." },
-    { word: "Govern", note: "Evaluations, monitoring, and human oversight so deployed AI stays accountable." },
+    { word: "Discover", note: "Understand the workflow, constraints, users, and success criteria." },
+    { word: "Build", note: "Turn the highest-value slice into working software quickly." },
+    { word: "Integrate", note: "Connect data, APIs, auth, tools, and the real operating environment." },
+    { word: "Prove", note: "Measure behavior, handle failures, document decisions, and keep humans in control." },
   ],
 } as const;
 
 export const principles = {
-  heading: "How I approach forward deployed engineering.",
+  heading: "How I work when the problem is still taking shape.",
   items: [
-    {
-      title: "Go to where the problem is",
-      body: "Embed with the team, watch the real workflow, and build against actual data and constraints instead of a spec written from a distance.",
-    },
-    {
-      title: "Ship the thinnest thing that works",
-      body: "Get a working slice into production early, learn from real usage, and expand from evidence rather than assumptions.",
-    },
-    {
-      title: "Integrate deeply, not around",
-      body: "Wire into the customer's real systems — data sources, auth, tools, and workflows — so the solution survives contact with production.",
-    },
-    {
-      title: "Keep a human in the loop",
-      body: "Design approvals, review steps, and fallbacks so AI accelerates people without ever removing accountability.",
-    },
-    {
-      title: "Govern what you deploy",
-      body: "Add evaluations, monitoring, logging, and documentation so a shipped system stays explainable, safe, and auditable.",
-    },
+    { title: "Start with the workflow", body: "Watch how the work happens today, find the expensive friction, and define a measurable target before expanding scope." },
+    { title: "Ship a working slice", body: "Build the smallest useful end-to-end path, put it in front of real users, and learn from evidence instead of a long speculative roadmap." },
+    { title: "Integrate with reality", body: "Treat data quality, auth, APIs, permissions, latency, failure modes, and human handoffs as product requirements rather than cleanup work." },
+    { title: "Make quality inspectable", body: "Use evaluations, logs, review points, tests, and runbooks so teams can see what the system did and why." },
   ],
 } as const;
 
 export const contact = {
-  heading: "Let's talk — I'm making a point of talking to more people.",
+  heading: "Have an ambiguous AI or integration problem?",
   supporting:
-    "I'm actively looking for Forward Deployed Engineer and AI governance work, and I'm deliberately reaching out to more people to sharpen my communication skills. If you're building something hard, I'd genuinely love a conversation — even just to compare notes.",
+    "I am open to Forward Deployed, Applied AI, Solutions, and AI Governance work. If you need someone who can move between the customer conversation and the implementation details, send me the problem.",
   reasons: [
     "Forward Deployed Engineer role",
-    "AI governance or responsible-AI collaboration",
-    "Freelance / embedded engineering engagement",
-    "Just want to connect and talk shop",
+    "Applied AI or agentic AI role",
+    "Solutions or integration engineering role",
+    "AI governance or evaluation work",
+    "Freelance embedded engineering",
     "Other",
   ],
 } as const;
 
 export const footer = {
   signature: "Designed and built by Sai Nitish Reddy Kapa",
-  motto: "Embed. Ship. Govern.",
+  motto: "Understand the workflow. Ship the system. Prove the result.",
 } as const;

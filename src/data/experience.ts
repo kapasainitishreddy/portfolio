@@ -1,56 +1,62 @@
-/**
- * Experience timeline aligned with the current resume.
- */
-
 export interface Role {
   title: string;
-  org: string;
-  focus: string[];
+  organization: string;
+  period: string;
+  summary: string;
+  bullets: string[];
 }
 
 export const experience: Role[] = [
   {
     title: "Forward Deployed Engineer (Freelance)",
-    org: "Seed-Stage AI Startup · Client confidential | 2024 - Present",
-    focus: [
-      "Embedded with a small founding team to take their AI product from prototype to production inside real customer environments",
-      "Built and integrated LLM-powered workflows against the customer's live data, auth, and internal tools, replacing brittle manual processes",
-      "Instrumented evaluations, logging, and human-in-the-loop review so the deployed system stayed accurate, safe, and auditable",
-      "Ran weekly feedback loops with end users, shipping iterative improvements and closing the gap between demo and dependable software",
-      "Wrote architecture docs, runbooks, and governance controls so the team could operate and extend the system without me",
+    organization: "Independent / confidential early-stage AI work",
+    period: "2024 - Present",
+    summary: "Embedded delivery across AI workflows, data integration, production debugging, evaluation, and customer feedback loops.",
+    bullets: [
+      "Built Python/FastAPI and React/TypeScript workflows that connected LLMs, retrieval, APIs, persistence, logging, and human review into usable end-to-end systems.",
+      "Shipped an embedded support copilot that cut first-response time by about 60% for covered workflows and moved from prototype to production in under four weeks.",
+      "Replaced a manual reporting process with a production data pipeline that removed about 20 analyst-hours per week and maintained 99.5% uptime.",
+      "Added evaluations, approval points, structured logs, retry handling, and runbooks so teams could inspect failures and operate the system after handoff.",
+      "Ran tight feedback loops with end users and translated ambiguous requests into scoped changes, tests, demos, and measurable acceptance criteria.",
     ],
   },
   {
     title: "Business Data Analyst",
-    org: "Augmentare Inc. | Aug 2024 - Present",
-    focus: [
-      "Deploy internal data tooling, dashboards, and reporting pipelines that put operational insight directly in front of decision-makers",
-      "Integrate data across business and technical systems and translate findings into executive-ready reports and one-pagers",
-      "Automate recurring reporting workflows, improving reporting efficiency by 28% and freeing analyst time for higher-value work",
-      "Coordinate timelines, source materials, review cycles, and handoffs across cross-functional teams",
-      "Apply AI-enabled tooling responsibly for research, drafting, and quality review with human verification in the loop",
+    organization: "Augmentare Inc.",
+    period: "Aug 2024 - Present",
+    summary: "Data pipelines, analytics, automation, quality controls, and stakeholder-facing decision support.",
+    bullets: [
+      "Built Python, SQL, and Pandas workflows across datasets up to 2M rows for validation, anomaly detection, recurring analysis, and operational reporting.",
+      "Delivered 25+ dashboards, internal tools, and automations used across 65+ stakeholder workflows, improving recurring reporting efficiency by 28%.",
+      "Defined KPIs, acceptance criteria, test plans, and repeatable data-quality checks before analytical and automation changes were released.",
+      "Integrated API and relational data sources while documenting schemas, transformations, assumptions, and exception-handling rules.",
+      "Turned loosely framed business questions into measurable hypotheses, reproducible analysis, concise findings, and follow-up actions.",
     ],
   },
   {
-    title: "AI Evaluation & Governance Specialist",
-    org: "Outlier AI | Freelance",
-    focus: [
-      "Evaluated and corrected AI-generated outputs for factual accuracy, safety, reasoning quality, and instruction following",
-      "Reviewed 1,800+ model responses and documented 30+ recurring failure modes as structured, actionable feedback",
-      "Built the kind of evaluation judgment that underpins responsible AI governance — separating evidence from inference",
-      "Supported human-in-the-loop review workflows that keep AI systems accountable and audit-ready",
-      "Turned qualitative model behavior into clear, repeatable quality signals for engineering teams",
+    title: "AI Model Trainer / Evaluation Analyst",
+    organization: "Outlier AI · Freelance",
+    period: "Sep 2024 - Present",
+    summary: "Hands-on evaluation of reasoning, factuality, coding quality, safety, and instruction adherence in model outputs.",
+    bullets: [
+      "Evaluated 1,800+ model outputs for factual accuracy, reasoning quality, coding and data correctness, safety, relevance, and instruction adherence.",
+      "Documented 30+ recurring failure modes and converted them into reusable rubrics, regression-style checks, and reviewer guidance.",
+      "Tested adversarial, ambiguous, and edge-case prompts to surface hallucinations, brittle behavior, and inconsistent reasoning patterns.",
+      "Authored corrected answers, reviewer notes, and evidence-based adjudication rationale under changing evaluation standards.",
+      "Used Python and SQL knowledge during technical reviews while keeping traceable records of model behavior and quality decisions.",
     ],
   },
   {
-    title: "Data Analyst",
-    org: "VN Technologies | Jun 2020 - Jan 2023",
-    focus: [
-      "Built recurring dashboards and data pipelines that reduced analysis turnaround by 30%",
-      "Partnered with cross-functional stakeholders to gather requirements, resolve inconsistencies, and manage revisions",
-      "Standardized templates, organized source data, and maintained version control across deliverables",
-      "Produced client-ready reports, process documentation, and milestone updates for distributed teams",
-      "Surfaced trends and recommendations that fed directly into operational decisions",
+    title: "Operations Data Analyst",
+    organization: "VN Technologies",
+    period: "Jun 2020 - Jan 2023",
+    summary: "Operational analytics, data quality, recurring reporting, and cross-functional issue resolution.",
+    bullets: [
+      "Developed SQL and Python pipelines, KPI trackers, recurring reports, and data-quality routines for high-volume operational datasets.",
+      "Reduced analysis turnaround by 30% through reusable scripts, standardized queries, exception handling, and documented workflows.",
+      "Reconciled multi-source records and investigated conflicting values to improve the reliability of downstream reporting.",
+      "Monitored trends, outliers, and exceptions and converted raw operational data into concise root-cause findings and next actions.",
+      "Partnered with technical and business stakeholders on requirements, validation, issue resolution, and reproducible reporting methods.",
     ],
   },
 ];

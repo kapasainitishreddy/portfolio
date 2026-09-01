@@ -1,87 +1,38 @@
-/**
- * Skill groups rendered as an interactive network graph.
- */
-
-export type SkillGroupId = "ai" | "data" | "blockchain" | "networks";
-
 export interface SkillGroup {
-  id: SkillGroupId;
+  id: string;
   label: string;
   blurb: string;
+  outcome: string;
   skills: string[];
 }
 
 export const skillGroups: SkillGroup[] = [
   {
+    id: "discover",
+    label: "Embed & discover",
+    blurb: "Map the real workflow, constraints, systems, users, and success criteria before building the full solution.",
+    outcome: "Turns an unclear request into a testable delivery plan.",
+    skills: ["Customer discovery", "Requirements mapping", "Workflow design", "Stakeholder communication", "Technical translation", "Rapid prototyping"],
+  },
+  {
     id: "ai",
-    label: "AI Engineering & Governance",
-    blurb:
-      "Building, evaluating, and deploying LLM and agent systems with the guardrails, evaluations, and human oversight that keep them accountable in production.",
-    skills: [
-      "LLM & agent orchestration",
-      "Prompt engineering",
-      "RAG pipelines",
-      "Model evaluation",
-      "Human-in-the-loop review",
-      "AI governance frameworks",
-      "Monitoring & drift detection",
-      "Guardrails & policy checks",
-      "Responsible AI",
-      "Audit & documentation",
-    ],
+    label: "Build AI workflows",
+    blurb: "Design LLM and agent workflows that retrieve context, call tools, handle failure, and keep people in control.",
+    outcome: "Moves from impressive demo to dependable working loop.",
+    skills: ["Python", "FastAPI", "RAG", "Agent orchestration", "Tool calling", "Prompt design", "Model evaluation"],
   },
   {
-    id: "data",
-    label: "Data & Integration Engineering",
-    blurb:
-      "Wiring AI systems into real customer environments — data sources, APIs, auth, and internal tools — and turning raw data into dependable pipelines and dashboards.",
-    skills: [
-      "Python",
-      "SQL",
-      "API integration",
-      "Data pipelines",
-      "PostgreSQL",
-      "Supabase",
-      "Power BI",
-      "Dashboarding",
-      "Reporting automation",
-      "Webhooks & connectors",
-    ],
+    id: "integration",
+    label: "Integrate data & tools",
+    blurb: "Connect AI to the systems a business already uses, including APIs, databases, auth, webhooks, and reporting pipelines.",
+    outcome: "Removes manual handoffs and puts output inside the real workflow.",
+    skills: ["SQL", "PostgreSQL", "REST APIs", "Webhooks", "Supabase", "Data pipelines", "Power BI", "Automation"],
   },
   {
-    id: "blockchain",
-    label: "Deployment & Delivery",
-    blurb:
-      "Getting a working slice into production early, then iterating from real usage — shipping, deploying, and operating systems in live conditions.",
-    skills: [
-      "Next.js",
-      "TypeScript",
-      "Prototyping",
-      "CI/CD basics",
-      "Netlify / Vercel",
-      "Runbooks",
-      "Production debugging",
-      "Iterative delivery",
-      "Feature slicing",
-      "Observability",
-    ],
-  },
-  {
-    id: "networks",
-    label: "Embedded Collaboration",
-    blurb:
-      "The forward-deployed muscle: sitting with customers, learning their domain, and turning conversations into shipped software across remote, cross-functional teams.",
-    skills: [
-      "Customer discovery",
-      "Requirements gathering",
-      "Stakeholder communication",
-      "Technical translation",
-      "On-site & remote embedding",
-      "Feedback loops",
-      "Documentation",
-      "Cross-functional coordination",
-      "Demos & enablement",
-      "Deadline management",
-    ],
+    id: "governance",
+    label: "Evaluate & govern",
+    blurb: "Measure quality, surface failure modes, add human approvals, document decisions, and monitor deployed behavior.",
+    outcome: "Makes AI behavior reviewable, safer, and easier to operate.",
+    skills: ["LLM evaluations", "Human review", "Guardrails", "Monitoring", "Audit logs", "Runbooks", "AI governance", "Root-cause analysis"],
   },
 ];
