@@ -6,7 +6,7 @@ import test from "node:test";
 const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const exists = (file) => fs.existsSync(path.join(root, file));
-const size = (file) => fs.statSync(path.join(root, file)).size;
+const bytes = (file) => fs.readFileSync(path.join(root, file));
 
 const visibleCopyFiles = [
   "src/data/site.ts",
@@ -36,20 +36,23 @@ test("homepage tells the recruiter story in the intended order", () => {
   assert.equal(page.includes("<Loader />"), false, "Homepage should not block first paint with an intro loader");
 });
 
-test("profile assets are valid optimized binaries and used throughout the site", () => {
+test("profile photo is a valid WebP and is used for hero, nav, and favicon", () => {
   const hero = read("src/components/sections/Hero.tsx");
   const nav = read("src/components/layout/Navigation.tsx");
   const layout = read("src/app/layout.tsx");
   const manifest = read("src/app/manifest.ts");
   assert.equal(exists("public/profile.webp"), true, "Optimized real profile photo must exist");
-  assert.equal(exists("public/favicon.png"), true, "Real-photo favicon must exist");
-  assert.ok(size("public/profile.webp") > 3000, "Profile asset is unexpectedly small/corrupt");
-  assert.ok(size("public/favicon.png") > 3000, "Favicon asset is unexpectedly small/corrupt");
+  const profile = bytes("public/profile.webp");
+  assert.equal(profile.subarray(0, 4).toString("ascii"), "RIFF", "Profile asset must start with RIFF");
+  assert.equal(profile.subarray(8, 12).toString("ascii"), "WEBP", "Profile asset must be a valid WebP container");
+  assert.ok(profile.length > 3000, "Profile asset is unexpectedly small");
   assert.match(hero, /profile\.webp/);
   assert.match(nav, /profile\.webp/);
   assert.doesNotMatch(nav, /site\.initials/);
-  assert.match(layout, /favicon\.png/);
-  assert.match(manifest, /favicon\.png/);
+  assert.match(layout, /profile\.webp/);
+  assert.match(manifest, /profile\.webp/);
+  assert.equal(exists("public/profile.jpg"), false, "Corrupt legacy JPEG must be removed");
+  assert.equal(exists("public/favicon.png"), false, "Corrupt legacy favicon must be removed");
 });
 
 test("mobile navigation uses a dedicated readable surface", () => {
