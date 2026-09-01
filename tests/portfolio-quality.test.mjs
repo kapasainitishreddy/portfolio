@@ -55,12 +55,13 @@ test("three visual themes use three independent background engines", () => {
   assert.match(bushido, /scar/i);
 });
 
-test("Suminagashi WebGL failures fall back without crashing the portfolio", () => {
-  const sumi = read("src/components/suminagashi/SuminagashiBackground.tsx");
-  assert.match(sumi, /StaticFallback/);
-  assert.match(sumi, /setFailed/);
-  assert.match(sumi, /catch\s*\(/);
-  assert.match(sumi, /if\s*\(failed\)/);
+test("Suminagashi runtime errors are isolated from the portfolio", () => {
+  const themed = read("src/components/theme/ThemedBackground.tsx");
+  const boundary = read("src/components/theme/BackgroundErrorBoundary.tsx");
+  assert.match(themed, /BackgroundErrorBoundary/);
+  assert.match(themed, /StaticFallback/);
+  assert.match(boundary, /getDerivedStateFromError/);
+  assert.match(boundary, /componentDidCatch/);
 });
 
 test("visible portfolio copy does not use em dashes", () => {
