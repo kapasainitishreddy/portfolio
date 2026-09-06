@@ -1,0 +1,55 @@
+name: Portfolio reconciled release gate
+
+on:
+  push:
+    branches:
+      - release/portfolio-main-hardening-20260906
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  release-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install exact lockfile
+        run: npm ci
+
+      - name: Tests
+        run: npm test
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Server production build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://example.invalid
+        run: npm run build
+
+      - name: High-severity dependency audit
+        run: npm audit --audit-level=high
+
+      - name: Static production build
+        env:
+          STATIC_EXPORT: "true"
+          NEXT_PUBLIC_STATIC_EXPORT: "true"
+          NEXT_PUBLIC_SITE_URL: https://kapasainitishreddy.github.io/portfolio
+        run: |
+          rm -rf .next out
+          rm -rf src/app/api
+          npm run build
