@@ -65,10 +65,10 @@ export default function PrivacyPolicy() {
               <section className="space-y-3">
                 <h2 className="font-serif text-2xl text-rice">Portfolio guide and AI</h2>
                 <p>
-                  The “Ask Nitish” guide loads its interface module from syrava.com and matches typed questions against public portfolio knowledge in your browser. This portfolio configuration disables Chrome and Puter AI providers and disables voice input, so typed guide questions are not intentionally sent to a cloud AI service by this site. Optional text-to-speech is handled by your browser or operating system.
+                  The “Ask Nitish” guide is optional. Its interface code is not requested from syrava.com until you choose the Ask Nitish button. When you do, syrava.com can receive ordinary request metadata such as your IP address, browser information, timestamp, and referrer information allowed by your browser while serving that module. The guide then matches typed questions against public portfolio knowledge in your browser.
                 </p>
                 <p>
-                  The portfolio does not use automated decision-making to make decisions about visitors.
+                  This portfolio configuration disables Chrome and Puter AI providers and disables voice input, so typed guide questions are not intentionally sent to a cloud AI service by this site. Optional text-to-speech is handled by your browser or operating system. The portfolio does not use automated decision-making to make decisions about visitors.
                 </p>
               </section>
             </Reveal>
