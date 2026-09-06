@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Newsreader, Inter, JetBrains_Mono, Ma_Shan_Zheng, Shippori_Mincho } from "next/font/google";
 import "./globals.css";
 import { site, socials } from "@/data/site";
@@ -8,6 +7,7 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { ModeProvider } from "@/components/theme/ModeContext";
 import ThemedBackground from "@/components/theme/ThemedBackground";
 import ThemeExtras from "@/components/theme/ThemeExtras";
+import AssistantConsentLauncher from "@/components/assistant/AssistantConsentLauncher";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -134,18 +134,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </InkProvider>
           </ThemeProvider>
         </ModeProvider>
-        <div id="syrava-assistant-host" aria-hidden="false" />
-        <Script
-          id="syrava-assistant-widget"
-          type="module"
-          src="https://syrava.com/assistant/v1/widget.js"
-          strategy="afterInteractive"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var host=document.getElementById('syrava-assistant-host');if(!host)return;var el=document.createElement('syrava-assistant');el.setAttribute('site-config','/assistant/site.json');host.appendChild(el);}());`,
-          }}
-        />
+        <div id="syrava-assistant-host" aria-live="polite" />
+        <AssistantConsentLauncher />
       </body>
     </html>
   );
