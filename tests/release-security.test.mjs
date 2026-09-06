@@ -67,11 +67,26 @@ test("portfolio assistant is deterministic-only at release", () => {
   assert.ok(config.maxContextEntries <= 5);
 });
 
+test("assistant third-party code is user initiated and fails without blocking the portfolio", () => {
+  const layout = read("src/app/layout.tsx");
+  const launcher = read("src/components/assistant/AssistantConsentLauncher.tsx");
+
+  assert.match(layout, /AssistantConsentLauncher/);
+  assert.doesNotMatch(layout, /src="https:\/\/syrava\.com\/assistant\/v1\/widget\.js"/);
+  assert.match(launcher, /onClick={loadAssistant}/);
+  assert.match(launcher, /SCRIPT_SRC = "https:\/\/syrava\.com\/assistant\/v1\/widget\.js"/);
+  assert.match(launcher, /document\.body\.appendChild\(script\)/);
+  assert.match(launcher, /referrerPolicy = "strict-origin-when-cross-origin"/);
+  assert.match(launcher, /The rest of the site still works normally/);
+  assert.match(launcher, /No third-party guide request is made before you choose this button/);
+});
+
 test("privacy disclosure matches contact, storage, assistant, and international-rights behavior", () => {
   const privacy = read("src/app/privacy/page.tsx");
   assert.match(privacy, /local storage/);
   assert.match(privacy, /not sold/);
   assert.match(privacy, /targeted advertising/);
+  assert.match(privacy, /not requested from syrava\.com until you choose the Ask Nitish button/);
   assert.match(privacy, /disables Chrome and Puter AI providers/);
   assert.match(privacy, /without intentionally logging your message body or email address/);
   assert.match(privacy, /international processing/);
