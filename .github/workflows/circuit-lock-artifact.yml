@@ -1,0 +1,61 @@
+name: Generate Circuit lock artifact
+
+on:
+  push:
+    branches:
+      - tmp-do-not-use
+    paths:
+      - .github/workflows/circuit-lock-artifact.yml
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: tools/circuit-lock-repair
+    steps:
+      - name: Checkout disposable runner branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm 9.12.0
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+          run_install: false
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: tools/circuit-lock-repair/package.json
+
+      - name: Generate lockfile from Circuit manifests
+        run: pnpm install --lockfile-only --no-frozen-lockfile
+
+      - name: Verify frozen install
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify premium fonts and hardened resolutions
+        shell: bash
+        run: |
+          grep -q "'@expo-google-fonts/jetbrains-mono':" pnpm-lock.yaml
+          grep -q "'@expo-google-fonts/newsreader':" pnpm-lock.yaml
+          grep -A2 '^      mysql2:$' pnpm-lock.yaml | grep -q 'specifier: ^3.22.0'
+          grep -A2 '^      mysql2:$' pnpm-lock.yaml | grep -q 'version: 3.22.0'
+          grep -q '^  mysql2: 3.22.0$' pnpm-lock.yaml
+          grep -q '^  browserslist: 4.28.7$' pnpm-lock.yaml
+
+      - name: Upload generated lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: circuit-pnpm-lock
+          path: tools/circuit-lock-repair/pnpm-lock.yaml
+          if-no-files-found: error
+          retention-days: 1
