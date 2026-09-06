@@ -1,0 +1,53 @@
+name: Portfolio dependency repair
+
+on:
+  push:
+    branches:
+      - release/portfolio-main-hardening-20260906
+    paths:
+      - .github/workflows/dependency-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v4
+        with:
+          ref: release/portfolio-main-hardening-20260906
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Regenerate dependency tree
+        run: |
+          npm install
+          npm audit fix
+
+      - name: Verify repaired dependency tree
+        run: |
+          npm test
+          npm run typecheck
+          npm run lint
+          npm run build
+          npm audit --audit-level=high
+
+      - name: Commit regenerated lockfile
+        run: |
+          if git diff --quiet -- package.json package-lock.json; then
+            echo "No dependency file changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: regenerate audited portfolio lockfile [skip ci]"
+          git push origin HEAD:release/portfolio-main-hardening-20260906
