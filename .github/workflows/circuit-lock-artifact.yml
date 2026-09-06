@@ -8,7 +8,7 @@ on:
       - .github/workflows/circuit-lock-artifact.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   generate:
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout disposable runner branch
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Setup pnpm 9.12.0
         uses: pnpm/action-setup@v4
@@ -55,6 +55,22 @@ jobs:
         run: |
           grep -q "@expo-google-fonts/jetbrains-mono" pnpm-lock.yaml
           grep -q "@expo-google-fonts/newsreader" pnpm-lock.yaml
-          grep -q "specifier: ^3.22.0" pnpm-lock.yaml
           grep -q "mysql2: 3.22.0" pnpm-lock.yaml
+          grep -q "mysql2@3.22.0" pnpm-lock.yaml
           grep -q "browserslist: 4.28.7" pnpm-lock.yaml
+          grep -q "browserslist@4.28.7" pnpm-lock.yaml
+
+      - name: Persist generated lockfile on disposable branch
+        working-directory: ${{ github.workspace }}
+        shell: bash
+        run: |
+          cp tools/circuit-lock-repair/pnpm-lock.yaml circuit-generated-pnpm-lock.yaml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add circuit-generated-pnpm-lock.yaml
+          if git diff --cached --quiet; then
+            echo "Generated lockfile is unchanged."
+          else
+            git commit -m "chore: persist generated Circuit lockfile"
+            git push origin HEAD:tmp-do-not-use
+          fi
