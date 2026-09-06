@@ -6,6 +6,13 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf
 
 test("production header manifest includes the applicable static-site protections", () => {
   const config = read("next.config.mjs");
+  assert.match(config, /Content-Security-Policy/);
+  assert.match(config, /default-src 'self'/);
+  assert.match(config, /object-src 'none'/);
+  assert.match(config, /base-uri 'self'/);
+  assert.match(config, /form-action 'self'/);
+  assert.match(config, /frame-ancestors 'none'/);
+  assert.match(config, /https:\/\/syrava\.com/);
   assert.match(config, /Strict-Transport-Security/);
   assert.match(config, /max-age=31536000/);
   assert.match(config, /X-Content-Type-Options/);
