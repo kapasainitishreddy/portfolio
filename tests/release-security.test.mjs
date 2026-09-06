@@ -39,6 +39,18 @@ test("contact form exposes privacy, recovery, accessibility, and message-length 
   assert.match(form, /You can also email/);
 });
 
+test("mobile navigation has explicit dialog, focus, escape, and touch-target behavior", () => {
+  const navigation = read("src/components/layout/Navigation.tsx");
+  assert.match(navigation, /aria-controls="mobile-primary-menu"/);
+  assert.match(navigation, /aria-haspopup="dialog"/);
+  assert.match(navigation, /aria-modal="true"/);
+  assert.match(navigation, /event\.key !== "Escape"/);
+  assert.match(navigation, /firstMenuLinkRef\.current\?\.focus\(\)/);
+  assert.match(navigation, /menuButtonRef\.current\?\.focus\(\)/);
+  assert.match(navigation, /h-11 w-11/);
+  assert.match(navigation, /min-h-14/);
+});
+
 test("portfolio assistant is deterministic-only at release", () => {
   const config = JSON.parse(read("public/assistant/site.json"));
   assert.equal(config.ai.chrome, false);
