@@ -26,6 +26,19 @@ test("contact endpoint fails closed without delivery configuration and does not 
   assert.doesNotMatch(route, /console\.(info|log)\([^\n]*\{\s*name,\s*email/);
 });
 
+test("contact form exposes privacy, recovery, accessibility, and message-length UX", () => {
+  const form = read("src/components/contact/ContactForm.tsx");
+  assert.match(form, /used only to respond to this inquiry/);
+  assert.match(form, /not added to a marketing list or sold/);
+  assert.match(form, /href="\/privacy"/);
+  assert.match(form, /aria-busy=/);
+  assert.match(form, /message-counter/);
+  assert.match(form, /MESSAGE_LIMIT = 5000/);
+  assert.match(form, /form\.checkValidity\(\)/);
+  assert.match(form, /form\.reportValidity\(\)/);
+  assert.match(form, /You can also email/);
+});
+
 test("portfolio assistant is deterministic-only at release", () => {
   const config = JSON.parse(read("public/assistant/site.json"));
   assert.equal(config.ai.chrome, false);
@@ -35,9 +48,24 @@ test("portfolio assistant is deterministic-only at release", () => {
   assert.ok(config.maxContextEntries <= 5);
 });
 
-test("privacy disclosure matches contact and assistant behavior", () => {
+test("privacy disclosure matches contact, storage, assistant, and international-rights behavior", () => {
   const privacy = read("src/app/privacy/page.tsx");
-  assert.match(privacy, /fails closed/);
+  assert.match(privacy, /local storage/);
+  assert.match(privacy, /not sold/);
+  assert.match(privacy, /targeted advertising/);
   assert.match(privacy, /disables Chrome and Puter AI providers/);
-  assert.match(privacy, /without intentionally logging the message body or email address/);
+  assert.match(privacy, /without intentionally logging your message body or email address/);
+  assert.match(privacy, /international processing/);
+  assert.match(privacy, /Retention and deletion/);
+  assert.match(privacy, /Your privacy rights around the world/);
+  assert.match(privacy, /GDPR\/UK GDPR/);
+  assert.match(privacy, /CCPA\/CPRA/);
+  assert.match(privacy, /PIPEDA/);
+  assert.match(privacy, /LGPD/);
+  assert.match(privacy, /Digital Personal Data Protection/);
+  assert.match(privacy, /Privacy Act/);
+  assert.match(privacy, /PDPA/);
+  assert.match(privacy, /APPI/);
+  assert.match(privacy, /PIPA/);
+  assert.match(privacy, /does not claim formal certification/);
 });
