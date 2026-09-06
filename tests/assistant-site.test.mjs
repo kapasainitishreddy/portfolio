@@ -14,9 +14,17 @@ test('portfolio assistant is grounded in portfolio-only facts', async () => {
   assert.ok(knowledge.entries.every((entry) => !/THRNS membership|Aasta Books sponsorship/.test(entry.text)));
 });
 
-test('root layout mounts the shared Syrava assistant runtime', async () => {
+test('root layout mounts a consent-gated assistant launcher instead of loading third-party code immediately', async () => {
   const layout = await read('src/app/layout.tsx');
-  assert.match(layout, /syrava-assistant/);
-  assert.match(layout, /https:\/\/syrava\.com\/assistant\/v1\/widget\.js/);
-  assert.match(layout, /\/assistant\/site\.json/);
+  const launcher = await read('src/components/assistant/AssistantConsentLauncher.tsx');
+
+  assert.match(layout, /syrava-assistant-host/);
+  assert.match(layout, /AssistantConsentLauncher/);
+  assert.doesNotMatch(layout, /https:\/\/syrava\.com\/assistant\/v1\/widget\.js/);
+
+  assert.match(launcher, /https:\/\/syrava\.com\/assistant\/v1\/widget\.js/);
+  assert.match(launcher, /site-config/);
+  assert.match(launcher, /\/assistant\/site\.json/);
+  assert.match(launcher, /onClick=\{loadAssistant\}/);
+  assert.match(launcher, /No third-party guide request is made before you choose this button/);
 });
