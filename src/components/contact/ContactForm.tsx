@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { contact, site } from "@/data/site";
+import { withBasePath } from "@/lib/basePath";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -12,6 +13,7 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [messageLength, setMessageLength] = useState(0);
+  const [draftRequested, setDraftRequested] = useState(false);
   const startedAt = useRef(Date.now());
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -25,6 +27,7 @@ export default function ContactForm() {
 
     setStatus("submitting");
     setError("");
+    setDraftRequested(false);
 
     const data = new FormData(form);
     const companyWebsite = String(data.get("company_website") ?? "");
@@ -50,10 +53,8 @@ export default function ContactForm() {
         `Name: ${payload.name}\nEmail: ${payload.email}\nOrganization: ${payload.organization || "n/a"}\nReason: ${payload.reason}\n\n${payload.message}`,
       );
       window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-      setStatus("success");
-      form.reset();
-      setMessageLength(0);
-      startedAt.current = Date.now();
+      setStatus("idle");
+      setDraftRequested(true);
       return;
     }
 
@@ -80,16 +81,10 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <div className="surface flex flex-col items-start gap-3 p-6 md:p-8" role="status" aria-live="polite">
-        <span className="font-serif text-2xl text-rice">
-          {IS_STATIC_EXPORT ? "Opening your email client…" : "Message delivered."}
-        </span>
-        <p className="max-w-xl text-silver">
-          {IS_STATIC_EXPORT
-            ? "Your message is pre-filled in a new email. Nothing is sent by this website until you choose Send in your email app."
-            : "Your message was accepted by the configured email provider."}
-        </p>
+        <span className="font-serif text-2xl text-rice">Message delivered.</span>
+        <p className="max-w-xl text-silver">Your message was accepted by the configured email provider.</p>
         <p className="text-sm leading-relaxed text-silver">
-          If nothing opened or you do not hear back, email{" "}
+          If you do not hear back, email{" "}
           <a href={`mailto:${site.email}`} className="link-quiet text-rice">
             {site.email}
           </a>
@@ -186,8 +181,25 @@ export default function ContactForm() {
         {IS_STATIC_EXPORT
           ? "This static version opens your own email app; the website does not transmit the form itself. "
           : "Your contact details and message are used only to respond to this inquiry and are not added to a marketing list or sold. "}
-        <a href="/privacy" className="link-quiet text-rice">Privacy details</a>.
+        <a href={withBasePath("/privacy")} className="link-quiet text-rice">Privacy details</a>.
       </p>
+
+      {draftRequested && (
+        <div
+          className="rounded-lg border p-4 text-sm"
+          style={{ borderColor: "color-mix(in srgb, var(--color-silver) 28%, transparent)" }}
+          role="status"
+          aria-live="polite"
+        >
+          <p className="text-rice">Email draft requested.</p>
+          <p className="mt-2 text-silver">
+            Review the draft in your email app and choose Send. Nothing is sent by this website until you choose Send. Your form stays filled in here in case no email app opens.
+          </p>
+          <p className="mt-2 text-silver">
+            You can also email <a href={`mailto:${site.email}`} className="link-quiet text-rice">{site.email}</a> directly.
+          </p>
+        </div>
+      )}
 
       {status === "error" && (
         <div className="rounded-lg border p-4 text-sm" style={{ borderColor: "color-mix(in srgb, var(--color-copper) 42%, transparent)", color: "var(--color-copper)" }} role="alert">
