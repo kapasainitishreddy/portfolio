@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const source = await readFile(new URL("../src/components/layout/Navigation.tsx", import.meta.url), "utf8");
+const footer = await readFile(new URL("../src/components/layout/Footer.tsx", import.meta.url), "utf8");
 
 test("mobile navigation exposes an accessible modal relationship", () => {
   assert.match(source, /aria-controls="mobile-primary-menu"/);
@@ -34,4 +35,11 @@ test("mobile navigation respects reduced-motion preference", () => {
   assert.match(source, /useReducedMotion/);
   assert.match(source, /initial=\{reduceMotion \? false : \{ opacity: 0 \}\}/);
   assert.match(source, /transition=\{reduceMotion \? \{ duration: 0 \}/);
+});
+
+test("footer links remain comfortably tappable and identify new-tab destinations", () => {
+  assert.match(footer, /min-h-11/);
+  assert.match(footer, /GitHub, opens in a new tab/);
+  assert.match(footer, /LinkedIn, opens in a new tab/);
+  assert.match(footer, /aria-label="Footer"/);
 });
