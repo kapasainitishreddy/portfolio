@@ -17,13 +17,16 @@ test("server build carries defense-in-depth response headers", () => {
   assert.match(config, /camera=\(\), microphone=\(\), geolocation=\(\), payment=\(\), usb=\(\)/);
 });
 
-test("static export exposes an honest client contact mode", () => {
+test("static export exposes an honest client contact mode without discarding the draft", () => {
   const config = read("next.config.mjs");
   const form = read("src/components/contact/ContactForm.tsx");
   assert.match(config, /NEXT_PUBLIC_STATIC_EXPORT: isStaticExport \? "true" : "false"/);
   assert.match(form, /IS_STATIC_EXPORT/);
   assert.match(form, /window\.location\.href = `mailto:/);
+  assert.match(form, /setStatus\("idle"\);\s+setDraftRequested\(true\);\s+return;/);
   assert.match(form, /Nothing is sent by this website until you choose Send/);
+  assert.match(form, /Your form stays filled in here in case no email app opens/);
+  assert.match(form, /withBasePath\("\/privacy"\)/);
 });
 
 test("hosted contact route is bounded, origin checked, rate limited, and fail closed", () => {
