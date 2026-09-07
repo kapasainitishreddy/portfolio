@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const source = await readFile(new URL("../src/components/layout/Navigation.tsx", import.meta.url), "utf8");
 const footer = await readFile(new URL("../src/components/layout/Footer.tsx", import.meta.url), "utf8");
+const terms = await readFile(new URL("../src/app/terms/page.tsx", import.meta.url), "utf8");
 
 test("mobile navigation exposes an accessible modal relationship", () => {
   assert.match(source, /aria-controls="mobile-primary-menu"/);
@@ -42,4 +43,11 @@ test("footer links remain comfortably tappable and identify new-tab destinations
   assert.match(footer, /GitHub, opens in a new tab/);
   assert.match(footer, /LinkedIn, opens in a new tab/);
   assert.match(footer, /aria-label="Footer"/);
+});
+
+test("terms page offers a keyboard skip target and uses the canonical contact address", () => {
+  assert.match(terms, /href="#terms-main"/);
+  assert.match(terms, /id="terms-main"/);
+  assert.match(terms, /mailto:\$\{site\.email\}/);
+  assert.doesNotMatch(terms, /mailto:kapasainitishreddy@gmail\.com/);
 });
