@@ -37,9 +37,11 @@ test("desktop navigation provides active-section feedback", () => {
   assert.match(navigation, /portfolio-rail__progress/);
 });
 
-test("hero portrait has an explicit failure fallback", () => {
+test("hero portrait has a durable source and explicit failure fallback", () => {
+  const site = read("src/data/site.ts");
   const hero = read("src/components/sections/Hero.tsx");
-  assert.match(hero, /withBasePath\("\/profile\.webp"\)/);
+  assert.match(site, /portraitUrl:\s*"https:\/\/avatars\.githubusercontent\.com\//);
+  assert.match(hero, /site\.portraitUrl/);
   assert.match(hero, /onError=\{\(\) => setImageFailed\(true\)\}/);
   assert.match(hero, /hero-portrait__fallback/);
 });
