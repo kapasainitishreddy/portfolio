@@ -15,10 +15,16 @@ const visibleCopyFiles = [
   "src/data/certifications.ts",
   "src/data/building.ts",
   "src/data/startupCaseStudies.ts",
+  "src/data/aiUniverse.ts",
+  "src/data/askNitish.ts",
   "src/components/sections/Hero.tsx",
   "src/components/sections/Skills.tsx",
   "src/components/sections/StartupCaseStudies.tsx",
   "src/components/sections/Experience.tsx",
+  "src/components/sections/IdentityRail.tsx",
+  "src/components/sections/AskNitish.tsx",
+  "src/components/sections/AIUniverse.tsx",
+  "src/components/sections/AISafetyTeaching.tsx",
   "src/components/sections/WhyHireMe.tsx",
   "src/components/sections/Contact.tsx",
   "src/components/contact/ContactForm.tsx",
@@ -34,6 +40,16 @@ test("homepage tells the recruiter story in the intended order", () => {
     assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
   }
   assert.equal(page.includes("<Loader />"), false, "Homepage should not block first paint with an intro loader");
+});
+
+test("AI-first homepage exposes identity, grounded guide, universe, and safety teaching", () => {
+  const page = read("src/app/page.tsx");
+  const markers = ["<Hero />", "<IdentityRail />", "<AskNitish />", "<AIUniverse />", "<FeaturedWork />", "<StartupCaseStudies />", "<AISafetyTeaching />", "<Experience />"];
+  const positions = markers.map((marker) => page.indexOf(marker));
+  assert.ok(positions.every((value) => value >= 0), `Missing AI-first section: ${markers.filter((_, i) => positions[i] < 0).join(", ")}`);
+  for (let i = 1; i < positions.length; i++) {
+    assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
+  }
 });
 
 test("profile photo is a valid WebP and is used for hero, nav, and favicon", () => {
@@ -75,6 +91,23 @@ test("multi-client startup section covers basic to advanced delivery", () => {
   assert.match(data, /Client names are withheld/i);
   assert.match(section, /Basic to advanced/i);
   assert.match(section, /startupCaseStudies/);
+});
+
+test("portfolio states undergraduate AI safety teaching clearly", () => {
+  const teaching = read("src/components/sections/AISafetyTeaching.tsx");
+  assert.match(teaching, /undergraduate/i);
+  assert.match(teaching, /jailbreak/i);
+  assert.match(teaching, /AI safety/i);
+  assert.match(teaching, /AI governance/i);
+  assert.match(teaching, /evaluations|guardrails|oversight/i);
+});
+
+test("Ask Nitish is grounded locally and does not pretend to be an external LLM", () => {
+  const guide = read("src/data/askNitish.ts");
+  const section = read("src/components/sections/AskNitish.tsx");
+  assert.match(guide, /findGroundedAnswer/);
+  assert.match(section, /A grounded guide to my work/i);
+  assert.doesNotMatch(section, /GPT|OpenAI|large language model/i);
 });
 
 test("three visual themes use three independent background engines", () => {
