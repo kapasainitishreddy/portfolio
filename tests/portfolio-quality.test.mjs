@@ -68,17 +68,18 @@ test("homepage keeps deeper proof available without restoring the old endless sc
   }
 });
 
-test("profile photo is a high-quality valid WebP and the hero has a resilient fallback", () => {
+test("portrait has a durable source, valid local icon, and explicit UI fallback", () => {
+  const site = read("src/data/site.ts");
   const hero = read("src/components/sections/Hero.tsx");
   const nav = read("src/components/layout/Navigation.tsx");
   const layout = read("src/app/layout.tsx");
   const manifest = read("src/app/manifest.ts");
-  assert.equal(exists("public/profile.webp"), true, "High-quality real profile photo must exist");
+  assert.equal(exists("public/profile.webp"), true, "Local profile icon must exist");
   const profile = bytes("public/profile.webp");
   assert.equal(profile.subarray(0, 4).toString("ascii"), "RIFF", "Profile asset must start with RIFF");
   assert.equal(profile.subarray(8, 12).toString("ascii"), "WEBP", "Profile asset must be a valid WebP container");
-  assert.ok(profile.length > 50000, `Hero portrait is still over-compressed at ${profile.length} bytes`);
-  assert.match(hero, /profile\.webp/);
+  assert.match(site, /portraitUrl:\s*"https:\/\/avatars\.githubusercontent\.com\//);
+  assert.match(hero, /site\.portraitUrl/);
   assert.match(hero, /hero-portrait__fallback/);
   assert.match(hero, /onError/);
   assert.match(nav, /site\.initials/);
