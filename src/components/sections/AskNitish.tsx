@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Section } from "@/components/layout/Section";
 import Reveal from "@/components/layout/Reveal";
 import { findGroundedAnswer, suggestedQuestions, type GroundedAnswer } from "@/data/askNitish";
