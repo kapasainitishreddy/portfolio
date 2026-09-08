@@ -19,6 +19,7 @@ const visibleCopyFiles = [
   "src/data/askNitish.ts",
   "src/data/crossFunctional.ts",
   "src/data/flagshipCaseStudies.ts",
+  "src/data/novels.ts",
   "src/components/sections/Hero.tsx",
   "src/components/sections/Skills.tsx",
   "src/components/sections/StartupCaseStudies.tsx",
@@ -30,30 +31,44 @@ const visibleCopyFiles = [
   "src/components/sections/CrossFunctional.tsx",
   "src/components/sections/ProofLens.tsx",
   "src/components/sections/FlagshipCaseStudies.tsx",
+  "src/components/sections/Novels.tsx",
   "src/components/sections/WhyHireMe.tsx",
   "src/components/sections/Contact.tsx",
   "src/components/contact/ContactForm.tsx",
   "src/components/theme/ThemeSwitcher.tsx",
 ];
 
-test("homepage tells the recruiter story in the intended order", () => {
+test("homepage tells the engineer-writer story in the intended order", () => {
   const page = read("src/app/page.tsx");
-  const markers = ["<Hero />", "<Skills />", "<FeaturedWork />", "<StartupCaseStudies />", "<Experience />", "<Projects />"];
+  const markers = [
+    "<Hero />",
+    "<IdentityRail />",
+    "<ProofLens />",
+    "<FeaturedWork />",
+    "<Novels />",
+    "<AIUniverse />",
+    "<AISafetyTeaching />",
+    "<Experience />",
+    "<About />",
+    "<Contact />",
+  ];
   const positions = markers.map((marker) => page.indexOf(marker));
-  assert.ok(positions.every((value) => value >= 0), `Missing recruiter-first section: ${markers.filter((_, i) => positions[i] < 0).join(", ")}`);
+  assert.ok(positions.every((value) => value >= 0), `Missing primary portfolio section: ${markers.filter((_, i) => positions[i] < 0).join(", ")}`);
   for (let i = 1; i < positions.length; i++) assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
   assert.equal(page.includes("<Loader />"), false, "Homepage should not block first paint with an intro loader");
 });
 
-test("AI-first homepage exposes identity, proof lens, cross-functional range, case studies, and safety teaching", () => {
+test("homepage keeps deeper proof available without restoring the old endless scroll", () => {
   const page = read("src/app/page.tsx");
-  const markers = ["<Hero />", "<IdentityRail />", "<ProofLens />", "<CrossFunctional />", "<AskNitish />", "<AIUniverse />", "<FlagshipCaseStudies />", "<FeaturedWork />", "<AISafetyTeaching />", "<Experience />"];
-  const positions = markers.map((marker) => page.indexOf(marker));
-  assert.ok(positions.every((value) => value >= 0), `Missing AI-first section: ${markers.filter((_, i) => positions[i] < 0).join(", ")}`);
-  for (let i = 1; i < positions.length; i++) assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
+  for (const marker of ["<CrossFunctional />", "<AskNitish />", "<StartupCaseStudies />", "<Projects />", "<WhyHireMe />"]) {
+    assert.equal(page.includes(marker), false, `${marker} should stay out of the primary homepage flow`);
+  }
+  for (const retained of ["src/components/sections/CrossFunctional.tsx", "src/components/sections/AskNitish.tsx", "src/components/sections/StartupCaseStudies.tsx", "src/components/sections/FlagshipCaseStudies.tsx"]) {
+    assert.equal(exists(retained), true, `Deep-proof component should remain available: ${retained}`);
+  }
 });
 
-test("profile photo is a high-quality valid WebP and is used for hero and brand surfaces", () => {
+test("profile photo is a high-quality valid WebP and the hero has a resilient fallback", () => {
   const hero = read("src/components/sections/Hero.tsx");
   const nav = read("src/components/layout/Navigation.tsx");
   const layout = read("src/app/layout.tsx");
@@ -64,8 +79,10 @@ test("profile photo is a high-quality valid WebP and is used for hero and brand 
   assert.equal(profile.subarray(8, 12).toString("ascii"), "WEBP", "Profile asset must be a valid WebP container");
   assert.ok(profile.length > 50000, `Hero portrait is still over-compressed at ${profile.length} bytes`);
   assert.match(hero, /profile\.webp/);
-  assert.match(nav, /profile(?:-avatar)?\.webp/);
-  assert.doesNotMatch(nav, /site\.initials/);
+  assert.match(hero, /hero-portrait__fallback/);
+  assert.match(hero, /onError/);
+  assert.match(nav, /site\.initials/);
+  assert.match(nav, /portfolio-rail__monogram/);
   assert.match(layout, /profile\.webp/);
   assert.match(manifest, /profile\.webp/);
 });
@@ -101,11 +118,14 @@ test("flagship case studies expose system anatomy and engineering judgment", () 
   assert.match(data, /~4 days/);
 });
 
-test("mobile navigation uses a dedicated readable surface", () => {
+test("responsive navigation has dedicated desktop and mobile surfaces", () => {
   const nav = read("src/components/layout/Navigation.tsx");
-  const css = read("src/app/polish.css");
-  assert.match(nav, /portfolio-nav/);
-  assert.match(css, /\.portfolio-nav/);
+  const css = read("src/app/portfolio-redesign.css");
+  assert.match(nav, /portfolio-rail/);
+  assert.match(nav, /portfolio-mobile-nav/);
+  assert.match(nav, /portfolio-mobile-menu/);
+  assert.match(css, /\.portfolio-rail/);
+  assert.match(css, /\.portfolio-mobile-nav__bar/);
   assert.match(css, /backdrop-filter/i);
   assert.match(css, /color-mix\(in srgb,var\(--color-ink\) 9[0-9]%/i);
 });
