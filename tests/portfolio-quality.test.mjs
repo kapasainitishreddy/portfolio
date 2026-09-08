@@ -17,6 +17,8 @@ const visibleCopyFiles = [
   "src/data/startupCaseStudies.ts",
   "src/data/aiUniverse.ts",
   "src/data/askNitish.ts",
+  "src/data/crossFunctional.ts",
+  "src/data/flagshipCaseStudies.ts",
   "src/components/sections/Hero.tsx",
   "src/components/sections/Skills.tsx",
   "src/components/sections/StartupCaseStudies.tsx",
@@ -25,6 +27,9 @@ const visibleCopyFiles = [
   "src/components/sections/AskNitish.tsx",
   "src/components/sections/AIUniverse.tsx",
   "src/components/sections/AISafetyTeaching.tsx",
+  "src/components/sections/CrossFunctional.tsx",
+  "src/components/sections/ProofLens.tsx",
+  "src/components/sections/FlagshipCaseStudies.tsx",
   "src/components/sections/WhyHireMe.tsx",
   "src/components/sections/Contact.tsx",
   "src/components/contact/ContactForm.tsx",
@@ -36,39 +41,64 @@ test("homepage tells the recruiter story in the intended order", () => {
   const markers = ["<Hero />", "<Skills />", "<FeaturedWork />", "<StartupCaseStudies />", "<Experience />", "<Projects />"];
   const positions = markers.map((marker) => page.indexOf(marker));
   assert.ok(positions.every((value) => value >= 0), `Missing recruiter-first section: ${markers.filter((_, i) => positions[i] < 0).join(", ")}`);
-  for (let i = 1; i < positions.length; i++) {
-    assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
-  }
+  for (let i = 1; i < positions.length; i++) assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
   assert.equal(page.includes("<Loader />"), false, "Homepage should not block first paint with an intro loader");
 });
 
-test("AI-first homepage exposes identity, grounded guide, universe, and safety teaching", () => {
+test("AI-first homepage exposes identity, proof lens, cross-functional range, case studies, and safety teaching", () => {
   const page = read("src/app/page.tsx");
-  const markers = ["<Hero />", "<IdentityRail />", "<AskNitish />", "<AIUniverse />", "<FeaturedWork />", "<StartupCaseStudies />", "<AISafetyTeaching />", "<Experience />"];
+  const markers = ["<Hero />", "<IdentityRail />", "<ProofLens />", "<CrossFunctional />", "<AskNitish />", "<AIUniverse />", "<FlagshipCaseStudies />", "<FeaturedWork />", "<AISafetyTeaching />", "<Experience />"];
   const positions = markers.map((marker) => page.indexOf(marker));
   assert.ok(positions.every((value) => value >= 0), `Missing AI-first section: ${markers.filter((_, i) => positions[i] < 0).join(", ")}`);
-  for (let i = 1; i < positions.length; i++) {
-    assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
-  }
+  for (let i = 1; i < positions.length; i++) assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
 });
 
-test("profile photo is a valid WebP and is used for hero, nav, and favicon", () => {
+test("profile photo is a high-quality valid WebP and is used for hero and brand surfaces", () => {
   const hero = read("src/components/sections/Hero.tsx");
   const nav = read("src/components/layout/Navigation.tsx");
   const layout = read("src/app/layout.tsx");
   const manifest = read("src/app/manifest.ts");
-  assert.equal(exists("public/profile.webp"), true, "Optimized real profile photo must exist");
+  assert.equal(exists("public/profile.webp"), true, "High-quality real profile photo must exist");
   const profile = bytes("public/profile.webp");
   assert.equal(profile.subarray(0, 4).toString("ascii"), "RIFF", "Profile asset must start with RIFF");
   assert.equal(profile.subarray(8, 12).toString("ascii"), "WEBP", "Profile asset must be a valid WebP container");
-  assert.ok(profile.length > 3000, "Profile asset is unexpectedly small");
+  assert.ok(profile.length > 50000, `Hero portrait is still over-compressed at ${profile.length} bytes`);
   assert.match(hero, /profile\.webp/);
-  assert.match(nav, /profile\.webp/);
+  assert.match(nav, /profile(?:-avatar)?\.webp/);
   assert.doesNotMatch(nav, /site\.initials/);
   assert.match(layout, /profile\.webp/);
   assert.match(manifest, /profile\.webp/);
-  assert.equal(exists("public/profile.jpg"), false, "Corrupt legacy JPEG must be removed");
-  assert.equal(exists("public/favicon.png"), false, "Corrupt legacy favicon must be removed");
+});
+
+test("cross-functional section communicates real domain range enabled by AI", () => {
+  const data = read("src/data/crossFunctional.ts");
+  const section = read("src/components/sections/CrossFunctional.tsx");
+  for (const keyword of ["HR", "recruit", "support", "CX", "operations", "data", "engineer", "governance"]) {
+    assert.match(data + section, new RegExp(keyword, "i"), `Missing cross-functional signal: ${keyword}`);
+  }
+  assert.match(section, /AI/i);
+  assert.match(section, /range|different rooms|different functions|cross-functional/i);
+});
+
+test("proof lens has four recruiter views and accessible controls", () => {
+  const section = read("src/components/sections/ProofLens.tsx");
+  for (const mode of ["AI Engineer", "Forward Deployed", "Founder", "AI Safety"]) assert.match(section, new RegExp(mode));
+  assert.match(section, /aria-pressed|role="tab"|role="tablist"/);
+  assert.match(section, /useState/);
+});
+
+test("flagship case studies expose system anatomy and engineering judgment", () => {
+  const data = read("src/data/flagshipCaseStudies.ts");
+  const section = read("src/components/sections/FlagshipCaseStudies.tsx");
+  const ids = [...data.matchAll(/\bid:\s*"/g)];
+  assert.ok(ids.length >= 5, `Expected at least 5 flagship case studies, found ${ids.length}`);
+  for (const keyword of ["Problem", "Discovery", "System anatomy", "Controls", "Proof", "Why not let the model do everything"]) {
+    assert.match(data + section, new RegExp(keyword, "i"), `Missing flagship case-study element: ${keyword}`);
+  }
+  for (const domain of ["Support", "Data", "Onboarding", "Multi-Agent", "Governance"]) assert.match(data, new RegExp(domain, "i"));
+  assert.match(data, /~60%/);
+  assert.match(data, /~20/);
+  assert.match(data, /~4 days/);
 });
 
 test("mobile navigation uses a dedicated readable surface", () => {
@@ -85,9 +115,7 @@ test("multi-client startup section covers basic to advanced delivery", () => {
   const section = read("src/components/sections/StartupCaseStudies.tsx");
   const ids = [...data.matchAll(/\bid:\s*"/g)];
   assert.ok(ids.length >= 8, `Expected at least 8 case studies, found ${ids.length}`);
-  for (const keyword of ["Chatbot", "Financial", "Workflow", "Agent", "Multi-client", "Multi-agent", "Analytics"]) {
-    assert.match(data, new RegExp(keyword, "i"), `Missing ${keyword} case study coverage`);
-  }
+  for (const keyword of ["Chatbot", "Financial", "Workflow", "Agent", "Multi-client", "Multi-agent", "Analytics"]) assert.match(data, new RegExp(keyword, "i"), `Missing ${keyword} case study coverage`);
   assert.match(data, /Client names are withheld/i);
   assert.match(section, /Basic to advanced/i);
   assert.match(section, /startupCaseStudies/);
@@ -116,17 +144,14 @@ test("three visual themes use three independent background engines", () => {
   assert.match(themed, /CalligraphyBackground/);
   assert.match(themed, /SamuraiBackground/);
   assert.doesNotMatch(themed, /ink-bg__veil/);
-
   const sumi = read("src/components/suminagashi/SuminagashiBackground.tsx");
   assert.match(sumi, /dropWarp/);
   assert.match(sumi, /MacCormack|mcc/);
   assert.match(sumi, /pointermove/);
-
   const shodo = read("src/components/calligraphy/CalligraphyBackground.tsx");
   assert.match(shodo, /pressure/);
   assert.match(shodo, /bristle/i);
   assert.doesNotMatch(shodo, /arrowhead/i);
-
   const bushido = read("src/components/samurai/SamuraiBackground.tsx");
   assert.match(bushido, /pointerdown/);
   assert.match(bushido, /pointerup/);
@@ -145,7 +170,6 @@ test("Suminagashi runtime errors are isolated from the portfolio", () => {
 test("visible portfolio copy does not use em dashes", () => {
   const offenders = visibleCopyFiles.filter((file) => read(file).includes("—"));
   assert.deepEqual(offenders, [], `Em dash found in visible-copy sources: ${offenders.join(", ")}`);
-
   const projectCard = read("src/components/projects/ProjectCard.tsx");
   const projectModal = read("src/components/projects/ProjectModal.tsx");
   assert.match(projectCard, /cleanVisibleCopy/);

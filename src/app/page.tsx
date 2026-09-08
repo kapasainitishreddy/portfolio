@@ -2,9 +2,12 @@ import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import IdentityRail from "@/components/sections/IdentityRail";
+import ProofLens from "@/components/sections/ProofLens";
+import CrossFunctional from "@/components/sections/CrossFunctional";
 import AskNitish from "@/components/sections/AskNitish";
 import AIUniverse from "@/components/sections/AIUniverse";
 import Skills from "@/components/sections/Skills";
+import FlagshipCaseStudies from "@/components/sections/FlagshipCaseStudies";
 import FeaturedWork from "@/components/sections/FeaturedWork";
 import StartupCaseStudies from "@/components/sections/StartupCaseStudies";
 import AISafetyTeaching from "@/components/sections/AISafetyTeaching";
@@ -24,9 +27,12 @@ export default function Home() {
       <main id="main">
         <Hero />
         <IdentityRail />
+        <ProofLens />
+        <CrossFunctional />
         <AskNitish />
         <AIUniverse />
         <Skills />
+        <FlagshipCaseStudies />
         <FeaturedWork />
         <StartupCaseStudies />
         <AISafetyTeaching />

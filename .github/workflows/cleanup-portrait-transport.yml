@@ -1,0 +1,34 @@
+name: Clean portrait transport scaffolding
+
+on:
+  push:
+    branches:
+      - tmp/portrait-binary-upload
+    paths:
+      - '.github/workflows/cleanup-portrait-transport.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify assembled portrait before cleanup
+        shell: bash
+        run: |
+          set -euo pipefail
+          bytes=$(wc -c < public/profile.webp)
+          test "$bytes" -gt 50000
+          test "$(head -c 4 public/profile.webp)" = "RIFF"
+          test "$(dd if=public/profile.webp bs=1 skip=8 count=4 status=none)" = "WEBP"
+      - name: Remove temporary transport files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -r .portrait-parts .github/workflows/assemble-portrait.yml .github/workflows/cleanup-portrait-transport.yml
+          git commit -m "chore: remove portrait transport scaffolding"
+          git push
