@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { navItems, site, socials } from "@/data/site";
 import { FileIcon, MenuIcon, CloseIcon, GitHubIcon, LinkedInIcon, ArrowIcon } from "./icons";
@@ -10,14 +10,14 @@ import ModeToggle from "@/components/theme/ModeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { withBasePath } from "@/lib/basePath";
 
+const railItems = [{ label: "Home", href: "#home" }, ...navItems] as const;
+
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("#home");
   const [progress, setProgress] = useState(0);
   const [showTop, setShowTop] = useState(false);
   const { theme } = useTheme();
-
-  const railItems = useMemo(() => [{ label: "Home", href: "#home" }, ...navItems], []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -48,7 +48,7 @@ export default function Navigation() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, [railItems]);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
