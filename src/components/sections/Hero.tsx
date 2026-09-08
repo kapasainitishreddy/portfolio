@@ -27,6 +27,12 @@ export default function Hero() {
           <motion.p variants={item} className="mt-7 max-w-3xl text-base leading-7 text-silver md:text-lg md:leading-8">
             {hero.supporting}
           </motion.p>
+          <motion.p
+            variants={item}
+            className="mt-5 max-w-3xl text-sm font-medium tracking-[0.08em] text-rice md:text-base"
+          >
+            {hero.identity}
+          </motion.p>
           <motion.ul variants={item} className="mt-6 flex flex-wrap gap-2" aria-label="Core capabilities">
             {hero.capabilities.map((capability) => (
               <li key={capability} className="rounded-full border px-3 py-1.5 text-xs text-rice" style={{ background: "color-mix(in srgb, var(--color-charcoal) 70%, transparent)" }}>
@@ -68,7 +74,7 @@ export default function Hero() {
             </div>
             <figcaption className="grid gap-1 px-5 py-4 text-sm sm:grid-cols-[auto_1fr] sm:items-center sm:gap-4">
               <span className="font-medium text-rice">Sai Nitish Reddy Kapa</span>
-              <span className="text-silver sm:text-right">Forward deployed AI, data, and integrations</span>
+              <span className="text-silver sm:text-right">AI systems, products, agents, and integrations</span>
             </figcaption>
           </figure>
 
