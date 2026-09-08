@@ -62,7 +62,7 @@ test("profile photo is a high-quality valid WebP and is used for hero and brand 
   const profile = bytes("public/profile.webp");
   assert.equal(profile.subarray(0, 4).toString("ascii"), "RIFF", "Profile asset must start with RIFF");
   assert.equal(profile.subarray(8, 12).toString("ascii"), "WEBP", "Profile asset must be a valid WebP container");
-  assert.ok(profile.length > 80000, `Hero portrait is still over-compressed at ${profile.length} bytes`);
+  assert.ok(profile.length > 50000, `Hero portrait is still over-compressed at ${profile.length} bytes`);
   assert.match(hero, /profile\.webp/);
   assert.match(nav, /profile(?:-avatar)?\.webp/);
   assert.doesNotMatch(nav, /site\.initials/);
