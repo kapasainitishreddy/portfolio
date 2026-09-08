@@ -20,7 +20,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .portrait-parts/*.b64 | tr -d '\r\n' | base64 -d > public/profile.webp
+          : > public/profile.webp
+          while IFS= read -r file; do
+            echo "decoding=$file"
+            tr -d '\r\n' < "$file" | base64 -d >> public/profile.webp
+          done < <(find .portrait-parts -maxdepth 1 -type f -name '*.b64' | sort -V)
           bytes=$(wc -c < public/profile.webp)
           echo "portrait_bytes=$bytes"
           test "$bytes" -gt 50000
