@@ -1,0 +1,42 @@
+name: Assemble portfolio portrait
+
+on:
+  push:
+    branches:
+      - chatgpt/engineer-writer-ux
+    paths:
+      - '.portrait-parts/**'
+      - '.github/workflows/assemble-portrait-chatgpt.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble and validate portrait
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .portrait-parts/*.b64 | tr -d '\r\n' | base64 -d > public/profile.webp
+          bytes=$(wc -c < public/profile.webp)
+          echo "portrait_bytes=$bytes"
+          test "$bytes" -gt 50000
+          test "$(head -c 4 public/profile.webp)" = "RIFF"
+          test "$(dd if=public/profile.webp bs=1 skip=8 count=4 status=none)" = "WEBP"
+          sha256sum public/profile.webp
+      - name: Commit assembled binary
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/profile.webp
+          if git diff --cached --quiet; then
+            echo "Portrait already matches assembled binary"
+            exit 0
+          fi
+          git commit -m "fix: assemble high-quality portfolio portrait"
+          git push
