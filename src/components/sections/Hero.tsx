@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { hero, site } from "@/data/site";
 import { ArrowIcon } from "@/components/layout/icons";
 import { useReducedMotion } from "@/lib/accessibility/useReducedMotion";
-import { withBasePath } from "@/lib/basePath";
 
 export default function Hero() {
   const reduced = useReducedMotion();
@@ -18,43 +17,22 @@ export default function Hero() {
   return (
     <section id="home" className="content-pad mx-auto w-full max-w-7xl pb-14 pt-24 md:pb-18 md:pt-28 lg:pb-20 lg:pt-20">
       <div className="hero-layout">
-        <motion.div
-          className="hero-copy"
-          initial="hidden"
-          animate="visible"
-          transition={{ staggerChildren: reduced ? 0 : 0.07 }}
-        >
+        <motion.div className="hero-copy" initial="hidden" animate="visible" transition={{ staggerChildren: reduced ? 0 : 0.07 }}>
           <motion.p variants={item} className="font-mono-label hero-status" style={{ color: "var(--color-copper)" }}>
             {hero.status}
           </motion.p>
-
           <motion.h1 variants={item} className="hero-headline text-rice">
             Engineer with heart of a <span>Writer.</span>
           </motion.h1>
-
-          <motion.p variants={item} className="hero-supporting text-silver">
-            {hero.supporting}
-          </motion.p>
-
-          <motion.p variants={item} className="hero-identity text-rice">
-            {hero.identity}
-          </motion.p>
-
+          <motion.p variants={item} className="hero-supporting text-silver">{hero.supporting}</motion.p>
+          <motion.p variants={item} className="hero-identity text-rice">{hero.identity}</motion.p>
           <motion.ul variants={item} className="hero-capabilities" aria-label="Core capabilities">
-            {hero.capabilities.map((capability) => (
-              <li key={capability}>{capability}</li>
-            ))}
+            {hero.capabilities.map((capability) => <li key={capability}>{capability}</li>)}
           </motion.ul>
-
           <motion.div variants={item} className="hero-actions">
             {hero.actions.map((action) => (
-              <a
-                key={action.label}
-                href={action.href}
-                className={action.kind === "primary" ? "portfolio-cta portfolio-cta--primary" : "portfolio-cta"}
-              >
-                {action.label}
-                <ArrowIcon width={14} height={14} aria-hidden="true" />
+              <a key={action.label} href={action.href} className={action.kind === "primary" ? "portfolio-cta portfolio-cta--primary" : "portfolio-cta"}>
+                {action.label}<ArrowIcon width={14} height={14} aria-hidden="true" />
               </a>
             ))}
           </motion.div>
@@ -75,7 +53,7 @@ export default function Hero() {
               </div>
               {!imageFailed && (
                 <img
-                  src={withBasePath("/profile.webp")}
+                  src={site.portraitUrl}
                   alt="Sai Nitish Reddy Kapa"
                   loading="eager"
                   decoding="async"
