@@ -3,13 +3,13 @@ export const site = {
   name: "Sai Nitish Reddy Kapa",
   shortName: "Sai Nitish",
   initials: "SK",
-  roles: ["Forward Deployed Engineer", "Applied AI Engineer", "AI Governance Engineer", "Solutions Engineer"],
+  roles: ["AI Builder", "Forward Deployed Engineer", "Applied AI Engineer", "AI Governance Engineer", "Founder / Product Builder"],
   tagline: "Build the useful thing. Wire it in. Prove it works.",
   email: "kapasainitishreddy@gmail.com",
   location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
-    "Sai Nitish Reddy Kapa turns ambiguous customer problems into shipped AI systems by combining agentic AI, data and API integration, production delivery, and evaluation controls.",
+    "Sai Nitish Reddy Kapa builds AI systems, products, and agents across agentic AI, data and API integration, production delivery, evaluation, and governance, and teaches undergraduate sessions on AI safety and governance.",
   resumeUrl: "/resume.pdf",
 } as const;
 
@@ -20,8 +20,9 @@ export const socials = {
 } as const;
 
 export const navItems = [
-  { label: "Capabilities", href: "#skills" },
+  { label: "AI", href: "#ai-universe" },
   { label: "Work", href: "#featured-work" },
+  { label: "Safety", href: "#ai-safety" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "About", href: "#about" },
@@ -29,11 +30,12 @@ export const navItems = [
 ] as const;
 
 export const hero = {
-  headline: "I turn messy customer problems into shipped AI systems.",
+  headline: "I build AI systems, products, and agents that survive contact with reality.",
   supporting:
-    "I work across agentic AI, data and API integration, production delivery, and AI evaluation. I learn the workflow, build the working slice, connect it to the systems people already use, and leave the team with something they can operate.",
+    "I work across agentic AI, data and API integration, production delivery, and AI evaluation. I learn the workflow, build the working slice, connect it to the systems people already use, and keep safety and governance inside the build loop.",
+  identity: "AI Builder · Forward Deployed Engineer · Founder / Product Builder · Writer",
   status: "Open to Forward Deployed, Applied AI, Solutions, and AI Governance roles",
-  capabilities: ["Agentic AI", "Data + API integration", "Production delivery", "Evaluation + governance"],
+  capabilities: ["Agentic AI", "Product systems", "Data + API integration", "AI safety + governance"],
   proof: [
     { value: "~60%", label: "faster first response", detail: "AI support copilot workflow" },
     { value: "~20 hrs", label: "manual work removed weekly", detail: "production data pipeline" },
@@ -41,8 +43,8 @@ export const hero = {
     { value: "99.5%", label: "pipeline uptime", detail: "production operations workflow" },
   ],
   actions: [
-    { label: "See shipped work", href: "#featured-work", kind: "primary" as const },
-    { label: "View experience", href: "#experience", kind: "ghost" as const },
+    { label: "Explore my AI work", href: "#ai-universe", kind: "primary" as const },
+    { label: "See shipped work", href: "#featured-work", kind: "ghost" as const },
     { label: "Contact me", href: "#contact", kind: "ghost" as const },
   ],
 } as const;
@@ -51,7 +53,8 @@ export const about = {
   heading: "I work where product ambiguity meets production reality.",
   paragraphs: [
     "I am most useful when the problem is not fully specified yet. I can sit with a team, map the real workflow, turn unclear requirements into a working system, and keep iterating until the result survives real usage.",
-    "My strongest work combines Python and data engineering with LLM workflows, APIs, internal tools, testing, observability, and human review. I care about the last mile: integration, failure handling, documentation, and whether the team can run the system after handoff.",
+    "My strongest engineering work combines Python and data engineering with LLM workflows, APIs, internal tools, testing, observability, human review, and AI governance. I care about the last mile: integration, failure handling, documentation, and whether the team can run the system after handoff.",
+    "I also build products through the Syrava ecosystem and write fiction under the Asta pen name. Product building keeps me close to real user friction, while long-form writing sharpens how I think about people, incentives, ambiguity, and communication.",
   ],
   keywords: [
     { word: "Discover", note: "Understand the workflow, constraints, users, and success criteria." },
@@ -72,9 +75,9 @@ export const principles = {
 } as const;
 
 export const contact = {
-  heading: "Have an ambiguous AI or integration problem?",
+  heading: "Have an ambiguous AI, product, or integration problem?",
   supporting:
-    "I am open to Forward Deployed, Applied AI, Solutions, and AI Governance work. If you need someone who can move between the customer conversation and the implementation details, send me the problem.",
+    "I am open to Forward Deployed, Applied AI, Solutions, and AI Governance work. If you need someone who can move between the customer conversation, product thinking, and implementation details, send me the problem.",
   reasons: [
     "Forward Deployed Engineer role",
     "Applied AI or agentic AI role",
