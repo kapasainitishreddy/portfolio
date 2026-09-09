@@ -1,8 +1,6 @@
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
-import IdentityRail from "@/components/sections/IdentityRail";
-import ProofLens from "@/components/sections/ProofLens";
 import FeaturedWork from "@/components/sections/FeaturedWork";
 import Novels from "@/components/sections/Novels";
 import AIUniverse from "@/components/sections/AIUniverse";
@@ -18,8 +16,6 @@ export default function Home() {
       <Navigation />
       <main id="main" className="portfolio-main">
         <Hero />
-        <IdentityRail />
-        <ProofLens />
         <FeaturedWork />
         <Novels />
         <AIUniverse />

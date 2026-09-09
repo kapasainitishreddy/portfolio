@@ -16,6 +16,8 @@ test("homepage keeps the shorter portfolio story", () => {
   const page = read("src/app/page.tsx");
   assert.match(page, /<Novels \/>/);
   assert.match(page, /<FeaturedWork \/>/);
+  assert.doesNotMatch(page, /<IdentityRail \/>/);
+  assert.doesNotMatch(page, /<ProofLens \/>/);
   assert.doesNotMatch(page, /<AskNitish \/>/);
   assert.doesNotMatch(page, /<StartupCaseStudies \/>/);
   assert.doesNotMatch(page, /<WhyHireMe \/>/);
@@ -29,22 +31,23 @@ test("the first three FDE cards have specific previews", () => {
   assert.match(preview, /Human approval required/);
 });
 
-test("desktop navigation provides active-section feedback", () => {
+test("desktop dock provides active-section feedback and quick command access", () => {
   const navigation = read("src/components/layout/Navigation.tsx");
   assert.match(navigation, /IntersectionObserver/);
-  assert.match(navigation, /portfolio-rail/);
+  assert.match(navigation, /portfolio-dock/);
   assert.match(navigation, /aria-current/);
-  assert.match(navigation, /portfolio-rail__progress/);
+  assert.match(navigation, /portfolio-dock__progress/);
+  assert.match(navigation, /portfolio-command/);
+  assert.match(navigation, /metaKey|ctrlKey/);
 });
 
-// Regression from the production screenshot: never render the GitHub identicon as the portfolio portrait.
-test("hero portrait uses the bundled local image with GitHub Pages base path and a fallback", () => {
-  const site = read("src/data/site.ts");
+// Regression from production: never depend on a GitHub-generated identicon for the hero portrait.
+test("hero portrait is embedded visual media and has no giant initials fallback", () => {
+  const media = read("src/data/visualMedia.ts");
   const hero = read("src/components/sections/Hero.tsx");
-  assert.match(site, /portraitUrl:\s*"\/profile\.webp"/);
-  assert.doesNotMatch(site, /avatars\.githubusercontent\.com/);
-  assert.match(hero, /withBasePath/);
-  assert.match(hero, /src=\{withBasePath\(site\.portraitUrl\)\}/);
-  assert.match(hero, /onError=\{\(\) => setImageFailed\(true\)\}/);
-  assert.match(hero, /hero-portrait__fallback/);
+  assert.match(media, /data:image\/webp;base64,/);
+  assert.doesNotMatch(media, /avatars\.githubusercontent\.com/);
+  assert.match(hero, /visualMedia\.portrait/);
+  assert.match(hero, /hero-gallery/);
+  assert.doesNotMatch(hero, /hero-portrait__fallback/);
 });
