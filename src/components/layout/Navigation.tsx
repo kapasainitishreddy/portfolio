@@ -1,29 +1,83 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { navItems, site, socials } from "@/data/site";
-import { FileIcon, MenuIcon, CloseIcon, GitHubIcon, LinkedInIcon, ArrowIcon } from "./icons";
+import { visualMedia } from "@/data/visualMedia";
+import { FileIcon, GitHubIcon, LinkedInIcon, CloseIcon } from "./icons";
 import InkControl from "@/components/ink/InkControl";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
 import ModeToggle from "@/components/theme/ModeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { withBasePath } from "@/lib/basePath";
 
-const railItems = [{ label: "Home", href: "#home" }, ...navItems] as const;
+type GlyphName = "home" | "ai" | "work" | "book" | "shield" | "timeline" | "person" | "mail" | "more";
+
+type DockItem = {
+  label: string;
+  href: string;
+  icon: GlyphName;
+  short?: string;
+};
+
+const iconByHref: Record<string, GlyphName> = {
+  "#home": "home",
+  "#ai-universe": "ai",
+  "#featured-work": "work",
+  "#novels": "book",
+  "#ai-safety": "shield",
+  "#experience": "timeline",
+  "#about": "person",
+  "#contact": "mail",
+};
+
+const dockItems: DockItem[] = [
+  { label: "Home", href: "#home", icon: "home" },
+  ...navItems.map((item) => ({ ...item, icon: iconByHref[item.href] ?? "more" })),
+];
+
+const mobileItems = dockItems.filter((item) => ["#home", "#featured-work", "#novels", "#ai-safety"].includes(item.href));
+
+function DockGlyph({ name }: { name: GlyphName }) {
+  const common = {
+    width: 19,
+    height: 19,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (name === "home") return <svg {...common}><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9Z" /></svg>;
+  if (name === "ai") return <svg {...common}><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.7 5.7l2.1 2.1m8.4 8.4 2.1 2.1m0-12.6-2.1 2.1m-8.4 8.4-2.1 2.1" /><circle cx="12" cy="12" r="4" /></svg>;
+  if (name === "work") return <svg {...common}><rect x="3" y="6" width="18" height="14" rx="2" /><path d="M9 6V4h6v2m-12 5h18m-10 0v2h2v-2" /></svg>;
+  if (name === "book") return <svg {...common}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Zm16 0A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5v-16Z" /></svg>;
+  if (name === "shield") return <svg {...common}><path d="M12 3 5 6v5c0 4.6 2.8 8 7 10 4.2-2 7-5.4 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-5" /></svg>;
+  if (name === "timeline") return <svg {...common}><path d="M7 4v16" /><circle cx="7" cy="7" r="2" /><circle cx="7" cy="16" r="2" /><path d="M10 7h9M10 16h7" /></svg>;
+  if (name === "person") return <svg {...common}><circle cx="12" cy="8" r="4" /><path d="M4.5 21a7.5 7.5 0 0 1 15 0" /></svg>;
+  if (name === "mail") return <svg {...common}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>;
+  return <svg {...common}><circle cx="5" cy="12" r="1" fill="currentColor" stroke="none" /><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" /><circle cx="19" cy="12" r="1" fill="currentColor" stroke="none" /></svg>;
+}
 
 export default function Navigation() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("#home");
   const [progress, setProgress] = useState(0);
-  const [showTop, setShowTop] = useState(false);
+  const [commandOpen, setCommandOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { theme } = useTheme();
+
+  const activeLabel = useMemo(
+    () => dockItems.find((item) => item.href === activeHref)?.label ?? "Home",
+    [activeHref],
+  );
 
   useEffect(() => {
     const onScroll = () => {
       const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
       setProgress(Math.min(1, Math.max(0, window.scrollY / max)));
-      setShowTop(window.scrollY > window.innerHeight * 0.7);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -32,7 +86,7 @@ export default function Navigation() {
 
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
-    const sections = railItems
+    const sections = dockItems
       .map((item) => document.querySelector<HTMLElement>(item.href))
       .filter((node): node is HTMLElement => Boolean(node));
 
@@ -43,7 +97,7 @@ export default function Navigation() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target.id) setActiveHref(`#${visible.target.id}`);
       },
-      { rootMargin: "-30% 0px -58% 0px", threshold: [0.01, 0.15, 0.35] },
+      { rootMargin: "-28% 0px -62% 0px", threshold: [0.01, 0.2, 0.45] },
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -51,128 +105,192 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setCommandOpen((open) => !open);
+      }
+      if (event.key === "Escape") {
+        setCommandOpen(false);
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [mobileOpen]);
+
+  const closeOverlays = () => {
+    setCommandOpen(false);
+    setMobileOpen(false);
+  };
 
   return (
     <>
-      <aside className="portfolio-rail" aria-label="Portfolio sections">
-        <a href="#home" className="portfolio-rail__brand" aria-label={`${site.name}, home`}>
-          <span className="portfolio-rail__monogram" aria-hidden="true">{site.initials}</span>
-          <span>{site.shortName}</span>
-          <small>Build · Write</small>
+      <aside className="portfolio-dock" aria-label="Portfolio navigation">
+        <a href="#home" className="portfolio-dock__avatar" aria-label={`${site.name}, home`}>
+          <img src={visualMedia.portrait} alt="" />
+          <span className="portfolio-dock__presence" aria-hidden="true" />
+          <span className="portfolio-dock__tooltip portfolio-dock__tooltip--brand">Sai Nitish</span>
         </a>
 
-        <nav className="portfolio-rail__nav" aria-label="Primary">
-          {railItems.map((item, index) => {
+        <div className="portfolio-dock__divider" />
+
+        <nav className="portfolio-dock__nav" aria-label="Primary">
+          {dockItems.map((item) => {
             const active = activeHref === item.href;
             return (
-              <a
+              <motion.a
                 key={item.href}
                 href={item.href}
-                className="portfolio-rail__link"
+                className="portfolio-dock__item"
                 data-active={active ? "true" : "false"}
                 aria-current={active ? "location" : undefined}
+                whileHover={{ x: 5, scale: 1.08 }}
+                whileFocus={{ x: 3, scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 440, damping: 28 }}
               >
-                <span className="portfolio-rail__index">{String(index + 1).padStart(2, "0")}</span>
-                <span>{item.label}</span>
-              </a>
+                <DockGlyph name={item.icon} />
+                <span className="portfolio-dock__active-dot" aria-hidden="true" />
+                <span className="portfolio-dock__tooltip">{item.label}</span>
+              </motion.a>
             );
           })}
-          <a href={withBasePath(site.resumeUrl)} className="portfolio-rail__link portfolio-rail__resume">
-            <FileIcon width={14} height={14} aria-hidden="true" />
-            <span>Résumé</span>
-          </a>
         </nav>
 
-        <div className="portfolio-rail__utility">
-          <ThemeSwitcher />
-          <div className="portfolio-rail__utility-row">
-            <ModeToggle />
-            {theme === "ink" && <InkControl />}
-          </div>
-        </div>
+        <div className="portfolio-dock__divider" />
 
-        <div className="portfolio-rail__progress" aria-hidden="true">
-          <span style={{ height: `${progress * 100}%` }} />
-        </div>
+        <button
+          type="button"
+          className="portfolio-dock__item portfolio-dock__command-button"
+          aria-label="Open command menu"
+          aria-expanded={commandOpen}
+          onClick={() => setCommandOpen((open) => !open)}
+        >
+          <DockGlyph name="more" />
+          <span className="portfolio-dock__tooltip">Menu · ⌘K</span>
+        </button>
 
-        <a href="#home" className="portfolio-rail__top" data-visible={showTop ? "true" : "false"}>
-          <ArrowIcon width={14} height={14} aria-hidden="true" />
-          Top
-        </a>
+        <div className="portfolio-dock__progress" aria-hidden="true">
+          <span style={{ transform: `scaleY(${progress})` }} />
+        </div>
       </aside>
 
-      <header className="portfolio-mobile-nav">
-        <nav aria-label="Mobile primary" className="portfolio-mobile-nav__bar">
-          <a href="#home" className="portfolio-mobile-nav__brand" aria-label={`${site.name}, home`}>
-            <span className="portfolio-mobile-nav__monogram" aria-hidden="true">{site.initials}</span>
-            <span>{site.shortName}</span>
+      <AnimatePresence>
+        {commandOpen && (
+          <motion.div
+            className="portfolio-command"
+            role="dialog"
+            aria-modal="false"
+            aria-label="Portfolio command menu"
+            initial={{ opacity: 0, x: -12, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -10, scale: 0.97 }}
+            transition={{ duration: 0.18 }}
+          >
+            <div className="portfolio-command__header">
+              <div>
+                <span className="font-mono-label">Now viewing</span>
+                <strong>{activeLabel}</strong>
+              </div>
+              <button type="button" onClick={() => setCommandOpen(false)} aria-label="Close command menu">
+                <CloseIcon width={17} height={17} />
+              </button>
+            </div>
+
+            <div className="portfolio-command__grid">
+              {dockItems.map((item) => (
+                <a key={item.href} href={item.href} onClick={closeOverlays} data-active={activeHref === item.href ? "true" : "false"}>
+                  <DockGlyph name={item.icon} />
+                  <span>{item.label}</span>
+                </a>
+              ))}
+            </div>
+
+            <div className="portfolio-command__utility">
+              <ThemeSwitcher />
+              <ModeToggle />
+              {theme === "ink" && <InkControl />}
+            </div>
+
+            <div className="portfolio-command__footer">
+              <a href={withBasePath(site.resumeUrl)}><FileIcon width={15} height={15} /> Résumé</a>
+              <a href={socials.github} target="_blank" rel="noopener noreferrer"><GitHubIcon width={16} height={16} /> GitHub</a>
+              <a href={socials.linkedin} target="_blank" rel="noopener noreferrer"><LinkedInIcon width={16} height={16} /> LinkedIn</a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <nav className="portfolio-mobile-dock" aria-label="Mobile primary">
+        {mobileItems.map((item) => (
+          <a key={item.href} href={item.href} data-active={activeHref === item.href ? "true" : "false"} aria-current={activeHref === item.href ? "location" : undefined}>
+            <DockGlyph name={item.icon} />
+            <span>{item.label === "Case studies" ? "Work" : item.label}</span>
           </a>
+        ))}
+        <button type="button" onClick={() => setMobileOpen(true)} aria-label="More navigation options" aria-expanded={mobileOpen}>
+          <DockGlyph name="more" />
+          <span>More</span>
+        </button>
+      </nav>
 
-          <div className="portfolio-mobile-nav__actions">
-            <ModeToggle />
-            <a href={withBasePath(site.resumeUrl)} className="portfolio-mobile-nav__resume" aria-label="Open résumé">
-              <FileIcon width={16} height={16} />
-            </a>
-            <button
-              type="button"
-              className="portfolio-mobile-nav__menu"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {menuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </div>
-        </nav>
-
-        <AnimatePresence>
-          {menuOpen && (
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            className="portfolio-mobile-sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-label="More portfolio navigation"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <button className="portfolio-mobile-sheet__backdrop" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation" />
             <motion.div
-              className="portfolio-mobile-menu"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
+              className="portfolio-mobile-sheet__panel"
+              initial={{ y: 38 }}
+              animate={{ y: 0 }}
+              exit={{ y: 38 }}
+              transition={{ type: "spring", stiffness: 360, damping: 32 }}
             >
-              <div className="portfolio-mobile-menu__inner">
-                <p className="font-mono-label">Navigate</p>
-                <ul className="portfolio-mobile-menu__links">
-                  {railItems.map((item, index) => (
-                    <li key={item.href}>
-                      <a href={item.href} onClick={() => setMenuOpen(false)}>
-                        <span>{String(index + 1).padStart(2, "0")}</span>
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              <div className="portfolio-mobile-sheet__handle" aria-hidden="true" />
+              <div className="portfolio-mobile-sheet__profile">
+                <img src={visualMedia.portrait} alt="" />
+                <div><strong>{site.shortName}</strong><span>Engineer · Writer</span></div>
+                <button type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation"><CloseIcon width={18} height={18} /></button>
+              </div>
 
-                <div className="portfolio-mobile-menu__themes">
-                  <ThemeSwitcher />
-                  {theme === "ink" && <InkControl />}
-                </div>
+              <div className="portfolio-mobile-sheet__links">
+                {dockItems.map((item) => (
+                  <a key={item.href} href={item.href} onClick={closeOverlays} data-active={activeHref === item.href ? "true" : "false"}>
+                    <DockGlyph name={item.icon} />
+                    <span>{item.label}</span>
+                  </a>
+                ))}
+              </div>
 
-                <div className="portfolio-mobile-menu__meta">
-                  <a href={withBasePath(site.resumeUrl)} onClick={() => setMenuOpen(false)}>
-                    <FileIcon width={16} height={16} /> Résumé
-                  </a>
-                  <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                    <GitHubIcon width={20} height={20} />
-                  </a>
-                  <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                    <LinkedInIcon width={20} height={20} />
-                  </a>
-                </div>
+              <div className="portfolio-mobile-sheet__utility">
+                <ThemeSwitcher />
+                <ModeToggle />
+                {theme === "ink" && <InkControl />}
+              </div>
+
+              <div className="portfolio-mobile-sheet__footer">
+                <a href={withBasePath(site.resumeUrl)} onClick={closeOverlays}><FileIcon width={16} height={16} /> Résumé</a>
+                <a href={socials.github} target="_blank" rel="noopener noreferrer"><GitHubIcon width={17} height={17} /> GitHub</a>
+                <a href={socials.linkedin} target="_blank" rel="noopener noreferrer"><LinkedInIcon width={17} height={17} /> LinkedIn</a>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

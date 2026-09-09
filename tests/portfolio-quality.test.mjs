@@ -42,8 +42,6 @@ test("homepage tells the engineer-writer story in the intended order", () => {
   const page = read("src/app/page.tsx");
   const markers = [
     "<Hero />",
-    "<IdentityRail />",
-    "<ProofLens />",
     "<FeaturedWork />",
     "<Novels />",
     "<AIUniverse />",
@@ -55,6 +53,8 @@ test("homepage tells the engineer-writer story in the intended order", () => {
   const positions = markers.map((marker) => page.indexOf(marker));
   assert.ok(positions.every((value) => value >= 0), `Missing primary portfolio section: ${markers.filter((_, i) => positions[i] < 0).join(", ")}`);
   for (let i = 1; i < positions.length; i++) assert.ok(positions[i - 1] < positions[i], `${markers[i - 1]} must appear before ${markers[i]}`);
+  assert.equal(page.includes("<IdentityRail />"), false, "Role summary should not duplicate the visual hero");
+  assert.equal(page.includes("<ProofLens />"), false, "Proof lens should not interrupt the primary visual story");
   assert.equal(page.includes("<Loader />"), false, "Homepage should not block first paint with an intro loader");
 });
 
@@ -63,13 +63,13 @@ test("homepage keeps deeper proof available without restoring the old endless sc
   for (const marker of ["<CrossFunctional />", "<AskNitish />", "<StartupCaseStudies />", "<Projects />", "<WhyHireMe />"]) {
     assert.equal(page.includes(marker), false, `${marker} should stay out of the primary homepage flow`);
   }
-  for (const retained of ["src/components/sections/CrossFunctional.tsx", "src/components/sections/AskNitish.tsx", "src/components/sections/StartupCaseStudies.tsx", "src/components/sections/FlagshipCaseStudies.tsx"]) {
+  for (const retained of ["src/components/sections/CrossFunctional.tsx", "src/components/sections/AskNitish.tsx", "src/components/sections/StartupCaseStudies.tsx", "src/components/sections/FlagshipCaseStudies.tsx", "src/components/sections/ProofLens.tsx"]) {
     assert.equal(exists(retained), true, `Deep-proof component should remain available: ${retained}`);
   }
 });
 
-test("portrait has a durable source, valid local icon, and explicit UI fallback", () => {
-  const site = read("src/data/site.ts");
+test("portrait media is durable, visual, and independent of external avatar services", () => {
+  const media = read("src/data/visualMedia.ts");
   const hero = read("src/components/sections/Hero.tsx");
   const nav = read("src/components/layout/Navigation.tsx");
   const layout = read("src/app/layout.tsx");
@@ -78,13 +78,10 @@ test("portrait has a durable source, valid local icon, and explicit UI fallback"
   const profile = bytes("public/profile.webp");
   assert.equal(profile.subarray(0, 4).toString("ascii"), "RIFF", "Profile asset must start with RIFF");
   assert.equal(profile.subarray(8, 12).toString("ascii"), "WEBP", "Profile asset must be a valid WebP container");
-  assert.match(site, /portraitUrl:\s*"\/profile\.webp"/);
-  assert.doesNotMatch(site, /avatars\.githubusercontent\.com/);
-  assert.match(hero, /withBasePath\(site\.portraitUrl\)/);
-  assert.match(hero, /hero-portrait__fallback/);
-  assert.match(hero, /onError/);
-  assert.match(nav, /site\.initials/);
-  assert.match(nav, /portfolio-rail__monogram/);
+  assert.match(media, /data:image\/webp;base64,/);
+  assert.doesNotMatch(media, /avatars\.githubusercontent\.com/);
+  assert.match(hero, /visualMedia\.portrait/);
+  assert.match(nav, /visualMedia\.portrait/);
   assert.match(layout, /profile\.webp/);
   assert.match(manifest, /profile\.webp/);
 });
@@ -120,16 +117,17 @@ test("flagship case studies expose system anatomy and engineering judgment", () 
   assert.match(data, /~4 days/);
 });
 
-test("responsive navigation has dedicated desktop and mobile surfaces", () => {
+test("responsive navigation has compact desktop and mobile dock surfaces", () => {
   const nav = read("src/components/layout/Navigation.tsx");
   const css = read("src/app/portfolio-redesign.css");
-  assert.match(nav, /portfolio-rail/);
-  assert.match(nav, /portfolio-mobile-nav/);
-  assert.match(nav, /portfolio-mobile-menu/);
-  assert.match(css, /\.portfolio-rail/);
-  assert.match(css, /\.portfolio-mobile-nav__bar/);
+  assert.match(nav, /portfolio-dock/);
+  assert.match(nav, /portfolio-command/);
+  assert.match(nav, /portfolio-mobile-dock/);
+  assert.match(nav, /portfolio-mobile-sheet/);
+  assert.match(css, /\.portfolio-dock/);
+  assert.match(css, /\.portfolio-mobile-dock/);
   assert.match(css, /backdrop-filter/i);
-  assert.match(css, /color-mix\(in srgb,var\(--color-ink\) 9[0-9]%/i);
+  assert.doesNotMatch(nav, /portfolio-rail__nav/);
 });
 
 test("multi-client startup section covers basic to advanced delivery", () => {
