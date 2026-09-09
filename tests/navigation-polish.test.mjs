@@ -12,7 +12,7 @@ const css = `${baseCss}\n${polishCss}`;
 test("desktop navigation exposes a moving active rail indicator", () => {
   assert.match(nav, /portfolio-dock__active-rail/);
   assert.match(css, /\.portfolio-dock__active-rail/);
-  assert.match(css, /transform:translateY\(/);
+  assert.match(css, /transform:\s*translateY\(/);
 });
 
 test("desktop navigation includes an accessible current-section readout", () => {
@@ -32,7 +32,7 @@ test("mobile dock uses a dedicated animated active marker", () => {
 });
 
 test("navigation polish keeps reduced-motion coverage for new animated surfaces", () => {
-  const reducedMotion = css.split("@media (prefers-reduced-motion:reduce)").pop() ?? "";
+  const reducedMotion = css.split("@media (prefers-reduced-motion: reduce)").pop() ?? "";
   assert.match(reducedMotion, /portfolio-dock__active-rail/);
   assert.match(reducedMotion, /portfolio-mobile-dock__indicator/);
 });
