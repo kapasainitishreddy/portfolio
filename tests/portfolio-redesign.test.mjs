@@ -37,6 +37,7 @@ test("desktop navigation provides active-section feedback", () => {
   assert.match(navigation, /portfolio-rail__progress/);
 });
 
+// Regression from the production screenshot: never render the GitHub identicon as the portfolio portrait.
 test("hero portrait uses the bundled local image with GitHub Pages base path and a fallback", () => {
   const site = read("src/data/site.ts");
   const hero = read("src/components/sections/Hero.tsx");
