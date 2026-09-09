@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { hero, site } from "@/data/site";
 import { ArrowIcon } from "@/components/layout/icons";
 import { useReducedMotion } from "@/lib/accessibility/useReducedMotion";
+import { withBasePath } from "@/lib/basePath";
 
 export default function Hero() {
   const reduced = useReducedMotion();
@@ -53,7 +54,7 @@ export default function Hero() {
               </div>
               {!imageFailed && (
                 <img
-                  src={site.portraitUrl}
+                  src={withBasePath(site.portraitUrl)}
                   alt="Sai Nitish Reddy Kapa"
                   loading="eager"
                   decoding="async"
