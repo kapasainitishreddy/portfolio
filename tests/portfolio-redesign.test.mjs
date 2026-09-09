@@ -37,11 +37,14 @@ test("desktop navigation provides active-section feedback", () => {
   assert.match(navigation, /portfolio-rail__progress/);
 });
 
-test("hero portrait has a durable source and explicit failure fallback", () => {
+// Regression from the production screenshot: never render the GitHub identicon as the portfolio portrait.
+test("hero portrait uses the bundled local image with GitHub Pages base path and a fallback", () => {
   const site = read("src/data/site.ts");
   const hero = read("src/components/sections/Hero.tsx");
-  assert.match(site, /portraitUrl:\s*"https:\/\/avatars\.githubusercontent\.com\//);
-  assert.match(hero, /site\.portraitUrl/);
+  assert.match(site, /portraitUrl:\s*"\/profile\.webp"/);
+  assert.doesNotMatch(site, /avatars\.githubusercontent\.com/);
+  assert.match(hero, /withBasePath/);
+  assert.match(hero, /src=\{withBasePath\(site\.portraitUrl\)\}/);
   assert.match(hero, /onError=\{\(\) => setImageFailed\(true\)\}/);
   assert.match(hero, /hero-portrait__fallback/);
 });
