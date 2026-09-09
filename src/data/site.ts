@@ -8,7 +8,7 @@ export const site = {
   email: "kapasainitishreddy@gmail.com",
   location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  portraitUrl: "https://avatars.githubusercontent.com/u/95132338?s=1024&v=4",
+  portraitUrl: "/profile.webp",
   description:
     "Sai Nitish Reddy Kapa is an engineer and writer building AI systems, products, agents, integrations, and safer AI workflows, while writing fiction under the Asta pen name.",
   resumeUrl: "/resume.pdf",
