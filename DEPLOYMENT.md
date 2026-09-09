@@ -62,15 +62,6 @@ Every push to your default branch redeploys automatically.
 
 ---
 
-## GitHub Pages
-
-The repository also has a static-export Pages workflow. The current GitHub Pages
-environment authorizes `claude/sharp-tesla-f8epam` as the deployment branch, so
-that branch is kept aligned with the verified production commit before a Pages
-deploy is triggered.
-
----
-
 ## Notes
 
 - The WebGL ink engine runs entirely in the browser and is dynamically imported,
