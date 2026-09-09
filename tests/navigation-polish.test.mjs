@@ -3,7 +3,11 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const nav = fs.readFileSync("src/components/layout/Navigation.tsx", "utf8");
-const css = fs.readFileSync("src/app/portfolio-redesign.css", "utf8");
+const baseCss = fs.readFileSync("src/app/portfolio-redesign.css", "utf8");
+const polishCss = fs.existsSync("src/app/navigation-polish.css")
+  ? fs.readFileSync("src/app/navigation-polish.css", "utf8")
+  : "";
+const css = `${baseCss}\n${polishCss}`;
 
 test("desktop navigation exposes a moving active rail indicator", () => {
   assert.match(nav, /portfolio-dock__active-rail/);
@@ -28,7 +32,7 @@ test("mobile dock uses a dedicated animated active marker", () => {
 });
 
 test("navigation polish keeps reduced-motion coverage for new animated surfaces", () => {
-  assert.match(css, /prefers-reduced-motion:reduce/);
-  assert.match(css, /portfolio-dock__active-rail/);
-  assert.match(css, /portfolio-mobile-dock__indicator/);
+  const reducedMotion = css.split("@media (prefers-reduced-motion:reduce)").pop() ?? "";
+  assert.match(reducedMotion, /portfolio-dock__active-rail/);
+  assert.match(reducedMotion, /portfolio-mobile-dock__indicator/);
 });
