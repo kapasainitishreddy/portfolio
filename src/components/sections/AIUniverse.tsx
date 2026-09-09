@@ -25,11 +25,7 @@ export default function AIUniverse() {
               </div>
               <h3>{group.title}</h3>
               <div className="ai-universe-visual__projects" aria-label={`${group.title} projects`}>
-                {group.projects.map((project, projectIndex) => (
-                  <span key={project} style={{ "--project-index": projectIndex } as React.CSSProperties}>
-                    {project}
-                  </span>
-                ))}
+                {group.projects.map((project) => <span key={project}>{project}</span>)}
               </div>
               <div className="ai-universe-visual__orbit" aria-hidden="true"><i /><i /><i /></div>
             </article>
