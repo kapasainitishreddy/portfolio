@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { navItems, site, socials } from "@/data/site";
 import { visualMedia } from "@/data/visualMedia";
 import { FileIcon, GitHubIcon, LinkedInIcon, CloseIcon } from "./icons";
@@ -68,11 +68,21 @@ export default function Navigation() {
   const [commandOpen, setCommandOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme } = useTheme();
+  const reduceMotion = useReducedMotion();
 
-  const activeLabel = useMemo(
-    () => dockItems.find((item) => item.href === activeHref)?.label ?? "Home",
+  const activeIndex = useMemo(
+    () => Math.max(0, dockItems.findIndex((item) => item.href === activeHref)),
     [activeHref],
   );
+
+  const activeLabel = useMemo(
+    () => dockItems[activeIndex]?.label ?? "Home",
+    [activeIndex],
+  );
+
+  const springTransition = reduceMotion
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 420, damping: 38, mass: 0.55 };
 
   useEffect(() => {
     const onScroll = () => {
@@ -140,9 +150,20 @@ export default function Navigation() {
           <span className="portfolio-dock__tooltip portfolio-dock__tooltip--brand">Sai Nitish</span>
         </a>
 
+        <div className="portfolio-dock__current" aria-live="polite" aria-atomic="true">
+          <span>Viewing</span>
+          <strong>{activeLabel}</strong>
+        </div>
+
         <div className="portfolio-dock__divider" />
 
         <nav className="portfolio-dock__nav" aria-label="Primary">
+          <motion.span
+            className="portfolio-dock__active-rail"
+            aria-hidden="true"
+            animate={{ y: `${activeIndex * 2.98}rem` }}
+            transition={springTransition}
+          />
           {dockItems.map((item) => {
             const active = activeHref === item.href;
             return (
@@ -152,12 +173,11 @@ export default function Navigation() {
                 className="portfolio-dock__item"
                 data-active={active ? "true" : "false"}
                 aria-current={active ? "location" : undefined}
-                whileHover={{ x: 5, scale: 1.08 }}
-                whileFocus={{ x: 3, scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 440, damping: 28 }}
+                whileHover={reduceMotion ? undefined : { x: 3, scale: 1.04 }}
+                whileFocus={reduceMotion ? undefined : { x: 2, scale: 1.025 }}
+                transition={springTransition}
               >
                 <DockGlyph name={item.icon} />
-                <span className="portfolio-dock__active-dot" aria-hidden="true" />
                 <span className="portfolio-dock__tooltip">{item.label}</span>
               </motion.a>
             );
@@ -174,7 +194,7 @@ export default function Navigation() {
           onClick={() => setCommandOpen((open) => !open)}
         >
           <DockGlyph name="more" />
-          <span className="portfolio-dock__tooltip">Menu · ⌘K</span>
+          <span className="portfolio-dock__tooltip">Quick menu · Ctrl/⌘ K</span>
         </button>
 
         <div className="portfolio-dock__progress" aria-hidden="true">
@@ -189,28 +209,41 @@ export default function Navigation() {
             role="dialog"
             aria-modal="false"
             aria-label="Portfolio command menu"
-            initial={{ opacity: 0, x: -12, scale: 0.96 }}
+            initial={reduceMotion ? false : { opacity: 0, x: -12, scale: 0.97 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -10, scale: 0.97 }}
-            transition={{ duration: 0.18 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -8, scale: 0.98 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
           >
             <div className="portfolio-command__header">
               <div>
-                <span className="font-mono-label">Now viewing</span>
+                <span className="portfolio-command__eyebrow">Quick jump</span>
                 <strong>{activeLabel}</strong>
               </div>
-              <button type="button" onClick={() => setCommandOpen(false)} aria-label="Close command menu">
-                <CloseIcon width={17} height={17} />
-              </button>
+              <div className="portfolio-command__header-actions">
+                <span className="portfolio-command__kbd" aria-hidden="true">Ctrl/⌘ K</span>
+                <button type="button" onClick={() => setCommandOpen(false)} aria-label="Close command menu">
+                  <CloseIcon width={17} height={17} />
+                </button>
+              </div>
             </div>
 
             <div className="portfolio-command__grid">
-              {dockItems.map((item) => (
-                <a key={item.href} href={item.href} onClick={closeOverlays} data-active={activeHref === item.href ? "true" : "false"}>
-                  <DockGlyph name={item.icon} />
-                  <span>{item.label}</span>
-                </a>
-              ))}
+              {dockItems.map((item) => {
+                const active = activeHref === item.href;
+                return (
+                  <a key={item.href} href={item.href} onClick={closeOverlays} data-active={active ? "true" : "false"}>
+                    <DockGlyph name={item.icon} />
+                    <span className="portfolio-command__item-copy">
+                      <strong>{item.label}</strong>
+                      <small>{item.href === "#home" ? "Start here" : "Portfolio section"}</small>
+                    </span>
+                    <span className="portfolio-command__meta" aria-hidden="true">
+                      <span>{active ? "Viewing" : "Jump"}</span>
+                      <span>↗</span>
+                    </span>
+                  </a>
+                );
+              })}
             </div>
 
             <div className="portfolio-command__utility">
@@ -229,12 +262,23 @@ export default function Navigation() {
       </AnimatePresence>
 
       <nav className="portfolio-mobile-dock" aria-label="Mobile primary">
-        {mobileItems.map((item) => (
-          <a key={item.href} href={item.href} data-active={activeHref === item.href ? "true" : "false"} aria-current={activeHref === item.href ? "location" : undefined}>
-            <DockGlyph name={item.icon} />
-            <span>{item.label === "Case studies" ? "Work" : item.label}</span>
-          </a>
-        ))}
+        {mobileItems.map((item) => {
+          const active = activeHref === item.href;
+          return (
+            <a key={item.href} href={item.href} data-active={active ? "true" : "false"} aria-current={active ? "location" : undefined}>
+              <DockGlyph name={item.icon} />
+              <span>{item.label === "Case studies" ? "Work" : item.label}</span>
+              {active && (
+                <motion.span
+                  className="portfolio-mobile-dock__indicator"
+                  layoutId="portfolio-mobile-active-indicator"
+                  transition={springTransition}
+                  aria-hidden="true"
+                />
+              )}
+            </a>
+          );
+        })}
         <button type="button" onClick={() => setMobileOpen(true)} aria-label="More navigation options" aria-expanded={mobileOpen}>
           <DockGlyph name="more" />
           <span>More</span>
@@ -248,17 +292,17 @@ export default function Navigation() {
             role="dialog"
             aria-modal="true"
             aria-label="More portfolio navigation"
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <button className="portfolio-mobile-sheet__backdrop" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation" />
             <motion.div
               className="portfolio-mobile-sheet__panel"
-              initial={{ y: 38 }}
+              initial={reduceMotion ? false : { y: 38 }}
               animate={{ y: 0 }}
-              exit={{ y: 38 }}
-              transition={{ type: "spring", stiffness: 360, damping: 32 }}
+              exit={reduceMotion ? { opacity: 0 } : { y: 38 }}
+              transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 360, damping: 32 }}
             >
               <div className="portfolio-mobile-sheet__handle" aria-hidden="true" />
               <div className="portfolio-mobile-sheet__profile">
