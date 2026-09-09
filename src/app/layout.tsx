@@ -3,6 +3,7 @@ import { Newsreader, Inter, JetBrains_Mono, Ma_Shan_Zheng, Shippori_Mincho } fro
 import "./globals.css";
 import "./polish.css";
 import "./portfolio-redesign.css";
+import "./navigation-polish.css";
 import { site, socials } from "@/data/site";
 import { InkProvider } from "@/components/ink/InkProvider";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
