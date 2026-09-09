@@ -1,4 +1,5 @@
-export type NovelAccent = "amber" | "blue" | "crimson" | "gold" | "violet" | "monsoon";
+export type NovelAccent = "amber" | "blue" | "crimson" | "gold" | "violet" | "monsoon" | "noir" | "city";
+export type NovelCoverKey = "girlDeadMan" | "cityDrinking";
 
 export interface Novel {
   id: string;
@@ -7,21 +8,22 @@ export interface Novel {
   genre: string;
   tone: string;
   accent: NovelAccent;
+  coverKey?: NovelCoverKey;
 }
 
 export const novels: Novel[] = [
   {
     id: "still-figuring-it-out",
     title: "Still Figuring It Out",
-    premise: "A story about uncertainty, relationships, and becoming without pretending adulthood arrives with instructions.",
-    genre: "Contemporary fiction",
+    premise: "Uncertainty, relationships, and becoming without pretending adulthood arrives with instructions.",
+    genre: "Autofiction",
     tone: "Reflective · intimate",
     accent: "blue",
   },
   {
     id: "bare-minimum",
     title: "Bare Minimum",
-    premise: "A cautionary relationship drama about what happens when emotional expectations harden into a language of scorekeeping.",
+    premise: "A relationship turns emotional expectations into a language of scorekeeping.",
     genre: "Relationship drama",
     tone: "Intimate · cautionary",
     accent: "amber",
@@ -29,7 +31,7 @@ export const novels: Novel[] = [
   {
     id: "you-always-come-back",
     title: "You Always Come Back",
-    premise: "A psychological relationship drama about recurring patterns, entitlement, and the stories people tell themselves to stay innocent.",
+    premise: "Recurring patterns, entitlement, and the stories people tell themselves to stay innocent.",
     genre: "Psychological drama",
     tone: "Uncomfortable · observant",
     accent: "violet",
@@ -37,7 +39,7 @@ export const novels: Novel[] = [
   {
     id: "regret",
     title: "REGRET",
-    premise: "A woman looks back at choices, intimacy, stigma, and the cost of being reduced to the parts of her past other people can judge.",
+    premise: "A woman confronts intimacy, stigma, memory, and the cost of being reduced to her past.",
     genre: "Literary drama",
     tone: "Adult · reflective",
     accent: "crimson",
@@ -45,7 +47,7 @@ export const novels: Novel[] = [
   {
     id: "the-cat-who-stayed",
     title: "The Cat Who Stayed",
-    premise: "A gentle story about grief, loneliness, home, and a white ragdoll cat that refuses to leave when everything else feels temporary.",
+    premise: "Grief, loneliness, home, and a white ragdoll cat that refuses to leave.",
     genre: "Contemporary fiction",
     tone: "Warm · bittersweet",
     accent: "gold",
@@ -53,9 +55,27 @@ export const novels: Novel[] = [
   {
     id: "wolf-one-red-monsoon",
     title: "Wolf One: Red Monsoon",
-    premise: "A Hyderabad vigilante thriller about a medical student, family legacy, and the line between protecting people and becoming what you hunt.",
+    premise: "A Hyderabad vigilante thriller about family legacy and the line between protection and obsession.",
     genre: "Vigilante thriller",
     tone: "Dark · kinetic",
     accent: "monsoon",
+  },
+  {
+    id: "girl-who-drew-a-dead-man",
+    title: "The Girl Who Drew a Dead Man",
+    premise: "A strange drawing pulls a quiet life toward a mystery it should never have known.",
+    genre: "Mystery thriller",
+    tone: "Unsettling · atmospheric",
+    accent: "noir",
+    coverKey: "girlDeadMan",
+  },
+  {
+    id: "when-city-stopped-drinking",
+    title: "When the City Stopped Drinking",
+    premise: "A city-wide rupture exposes the habits, loyalties, and desperation hiding beneath routine.",
+    genre: "Speculative drama",
+    tone: "Urban · tense",
+    accent: "city",
+    coverKey: "cityDrinking",
   },
 ];
