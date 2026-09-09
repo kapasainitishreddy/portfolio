@@ -6,7 +6,7 @@ import { withBasePath } from "@/lib/basePath";
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="content-pad mx-auto w-full max-w-7xl py-16">
+    <footer className="portfolio-footer content-pad mx-auto w-full max-w-7xl py-16">
       <div className="hairline pt-12">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>

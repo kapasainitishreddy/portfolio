@@ -3,13 +3,14 @@ export const site = {
   name: "Sai Nitish Reddy Kapa",
   shortName: "Sai Nitish",
   initials: "SK",
-  roles: ["AI Builder", "Forward Deployed Engineer", "Applied AI Engineer", "AI Governance Engineer", "Founder / Product Builder"],
-  tagline: "Build the useful thing. Wire it in. Prove it works.",
+  roles: ["Forward Deployed Engineer", "Applied AI Engineer", "AI Governance Engineer", "Founder / Product Builder", "Writer"],
+  tagline: "Engineer with heart of a Writer.",
   email: "kapasainitishreddy@gmail.com",
   location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  portraitUrl: "https://avatars.githubusercontent.com/u/95132338?s=1024&v=4",
   description:
-    "Sai Nitish Reddy Kapa builds AI systems, products, and agents across customer workflows, support and CX, operations and data, engineering and integrations, evaluation, and governance, and teaches undergraduate sessions on AI safety and governance.",
+    "Sai Nitish Reddy Kapa is an engineer and writer building AI systems, products, agents, integrations, and safer AI workflows, while writing fiction under the Asta pen name.",
   resumeUrl: "/resume.pdf",
 } as const;
 
@@ -21,7 +22,8 @@ export const socials = {
 
 export const navItems = [
   { label: "AI", href: "#ai-universe" },
-  { label: "Case studies", href: "#flagship-case-studies" },
+  { label: "Case studies", href: "#featured-work" },
+  { label: "Novels", href: "#novels" },
   { label: "Safety", href: "#ai-safety" },
   { label: "Experience", href: "#experience" },
   { label: "About", href: "#about" },
@@ -29,10 +31,10 @@ export const navItems = [
 ] as const;
 
 export const hero = {
-  headline: "I build AI systems, products, and agents that survive contact with reality.",
+  headline: "Engineer with heart of a Writer.",
   supporting:
-    "I have worked across HR and recruiting, support and CX, operations and data, engineering and integrations, and AI safety and governance. AI helps me cross those boundaries fast. Production discipline is what makes the result useful after the demo.",
-  identity: "AI Builder · Forward Deployed Engineer · Founder / Product Builder · Writer",
+    "I build AI systems, products, and agents, and write stories about the people technology is supposed to serve.",
+  identity: "Forward Deployed Engineer · Applied AI · Product Builder · Writer",
   status: "Open to Forward Deployed, Applied AI, Solutions, and AI Governance roles",
   capabilities: ["Agentic AI", "Product systems", "Data + API integration", "AI safety + governance"],
   proof: [
@@ -42,8 +44,8 @@ export const hero = {
     { value: "99.5%", label: "pipeline uptime", detail: "production operations workflow" },
   ],
   actions: [
-    { label: "See how I build", href: "#flagship-case-studies", kind: "primary" as const },
-    { label: "Pick your proof lens", href: "#proof-lens", kind: "ghost" as const },
+    { label: "See how I build", href: "#featured-work", kind: "primary" as const },
+    { label: "Read my novels", href: "#novels", kind: "ghost" as const },
     { label: "Contact me", href: "#contact", kind: "ghost" as const },
   ],
 } as const;
@@ -90,5 +92,5 @@ export const contact = {
 
 export const footer = {
   signature: "Designed and built by Sai Nitish Reddy Kapa",
-  motto: "Understand the workflow. Ship the system. Prove the result.",
+  motto: "Build useful systems. Write human stories.",
 } as const;
