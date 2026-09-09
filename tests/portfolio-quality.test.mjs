@@ -78,8 +78,9 @@ test("portrait has a durable source, valid local icon, and explicit UI fallback"
   const profile = bytes("public/profile.webp");
   assert.equal(profile.subarray(0, 4).toString("ascii"), "RIFF", "Profile asset must start with RIFF");
   assert.equal(profile.subarray(8, 12).toString("ascii"), "WEBP", "Profile asset must be a valid WebP container");
-  assert.match(site, /portraitUrl:\s*"https:\/\/avatars\.githubusercontent\.com\//);
-  assert.match(hero, /site\.portraitUrl/);
+  assert.match(site, /portraitUrl:\s*"\/profile\.webp"/);
+  assert.doesNotMatch(site, /avatars\.githubusercontent\.com/);
+  assert.match(hero, /withBasePath\(site\.portraitUrl\)/);
   assert.match(hero, /hero-portrait__fallback/);
   assert.match(hero, /onError/);
   assert.match(nav, /site\.initials/);
