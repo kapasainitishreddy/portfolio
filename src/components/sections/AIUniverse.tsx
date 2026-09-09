@@ -6,37 +6,32 @@ export default function AIUniverse() {
   return (
     <Section id="ai-universe" label="AI Universe">
       <Reveal>
-        <div className="max-w-4xl">
-          <h2 className="text-rice" style={{ fontSize: "clamp(2.4rem, 5.6vw, 5.3rem)", lineHeight: 0.98 }}>
-            I do not think in isolated repos. I think in systems, patterns, and products.
-          </h2>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-silver md:text-lg md:leading-8">
-            My work spans agents, developer tools, consumer AI, computer vision, language, evaluation, governance, climate, and product infrastructure. This is the map of how those pieces connect.
-          </p>
+        <div className="ai-universe-visual__intro">
+          <div>
+            <p className="font-mono-label" style={{ color: "var(--color-copper)" }}>Built across the stack</p>
+            <h2 className="text-rice">A map of the things I make.</h2>
+          </div>
+          <p>Agents, developer tools, consumer AI, evaluation, voice, research, and public-good systems.</p>
         </div>
       </Reveal>
 
-      <div className="ai-universe-list mt-12">
+      <div className="ai-universe-visual mt-10">
         {aiUniverseGroups.map((group, index) => (
-          <Reveal key={group.id} delay={Math.min(index * 0.035, 0.16)}>
-            <article className={`ai-universe-row ${index % 2 === 1 ? "ai-universe-row--offset" : ""}`}>
-              <div className="ai-universe-row__number" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
+          <Reveal key={group.id} delay={Math.min(index * 0.03, 0.15)}>
+            <article className="ai-universe-visual__card">
+              <div className="ai-universe-visual__topline">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span>{group.focus}</span>
               </div>
-              <div className="ai-universe-row__main">
-                <div className="ai-universe-row__heading">
-                  <h3 className="font-serif text-2xl text-rice md:text-3xl">{group.title}</h3>
-                  <span className="font-mono-label" style={{ color: "var(--color-copper)" }}>
-                    {group.focus}
+              <h3>{group.title}</h3>
+              <div className="ai-universe-visual__projects" aria-label={`${group.title} projects`}>
+                {group.projects.map((project, projectIndex) => (
+                  <span key={project} style={{ "--project-index": projectIndex } as React.CSSProperties}>
+                    {project}
                   </span>
-                </div>
-                <p className="mt-3 max-w-3xl leading-7 text-silver">{group.description}</p>
-                <div className="ai-universe-projects" aria-label={`${group.title} projects`}>
-                  {group.projects.map((project) => (
-                    <span key={project}>{project}</span>
-                  ))}
-                </div>
+                ))}
               </div>
+              <div className="ai-universe-visual__orbit" aria-hidden="true"><i /><i /><i /></div>
             </article>
           </Reveal>
         ))}
