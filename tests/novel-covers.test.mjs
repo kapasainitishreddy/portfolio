@@ -6,10 +6,18 @@ const novels = fs.readFileSync("src/data/novels.ts", "utf8");
 const section = fs.readFileSync("src/components/sections/Novels.tsx", "utf8");
 const covers = fs.existsSync("src/data/bookCovers.ts") ? fs.readFileSync("src/data/bookCovers.ts", "utf8") : "";
 
-test("five featured Asta novels use generated cover artwork", () => {
-  for (const key of ["stillFiguringItOut", "bareMinimum", "regret", "catWhoStayed", "wolfOneRedMonsoon"]) {
+const generatedCovers = {
+  stillFiguringItOut: "still-figuring-it-out.webp",
+  bareMinimum: "bare-minimum.webp",
+  regret: "regret.webp",
+  catWhoStayed: "the-cat-who-stayed.webp",
+  wolfOneRedMonsoon: "wolf-one-red-monsoon.webp",
+};
+
+test("five featured Asta novels use generated local cover artwork", () => {
+  for (const [key, filename] of Object.entries(generatedCovers)) {
     assert.match(novels, new RegExp(`coverKey:\\s*"${key}"`), `Missing generated cover mapping for ${key}`);
-    assert.match(covers, new RegExp(`${key}:\\s*"data:image\\/webp;base64,`), `Missing embedded WebP art for ${key}`);
+    assert.match(covers, new RegExp(`${key}:\\s*withBasePath\\("/book-covers/${filename.replaceAll(".", "\\.")}\\"?\\)`), `Missing local cover path for ${key}`);
   }
 });
 
