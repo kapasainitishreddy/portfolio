@@ -1,0 +1,41 @@
+/* One lightweight Three.js layer shared by the whole portfolio. */
+.portfolio-three-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: .78;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.portfolio-three-layer canvas {
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
+
+.portfolio-three-layer__fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 24%, color-mix(in srgb, var(--color-copper) 7%, transparent), transparent 30%),
+    radial-gradient(circle at 78% 68%, color-mix(in srgb, var(--color-silver) 4%, transparent), transparent 32%);
+}
+
+.portfolio-main {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .portfolio-three-layer {
+    opacity: .52;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-three-layer {
+    opacity: .28;
+  }
+}

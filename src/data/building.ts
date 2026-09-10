@@ -1,7 +1,6 @@
 /**
- * "Currently building" timeline.
- * `phases` is the ordered journey; each active item points at its current phase
- * by index. No completion percentages are used by design.
+ * "Currently building" timeline. Public copy intentionally describes only
+ * capability areas while active product identities remain private.
  */
 
 export const phases = [
@@ -17,15 +16,14 @@ export type Phase = (typeof phases)[number];
 
 export interface BuildingItem {
   name: string;
-  /** Must match one of `phases`. */
   phase: Phase;
   blurb: string;
 }
 
 export const buildingItems: BuildingItem[] = [
-  { name: "GovSeal", phase: "Prototype", blurb: "Deployment governance console for AI" },
-  { name: "TraceGrid", phase: "System Design", blurb: "LLM evaluation & audit platform" },
-  { name: "AI Governance Certification", phase: "Testing", blurb: "Responsible-AI credential in progress" },
-  { name: "Embedded copilot rollouts", phase: "Iteration", blurb: "Shipping AI into live customer workflows" },
-  { name: "Evaluation harness library", phase: "Research", blurb: "Reusable evals for deployed models" },
+  { name: "Private governance system", phase: "Prototype", blurb: "Deployment oversight and evaluation workflows for AI" },
+  { name: "Private evaluation system", phase: "System Design", blurb: "Inspectable model-quality and audit workflows" },
+  { name: "AI governance learning", phase: "Testing", blurb: "Responsible-AI study and applied practice" },
+  { name: "Embedded AI workflows", phase: "Iteration", blurb: "Shipping AI into real operating workflows" },
+  { name: "Reusable evaluation tooling", phase: "Research", blurb: "Repeatable eval patterns for deployed models" },
 ];

@@ -4,14 +4,14 @@ import { aiUniverseGroups } from "@/data/aiUniverse";
 
 export default function AIUniverse() {
   return (
-    <Section id="ai-universe" label="AI Universe">
+    <Section id="ai-universe" label="AI systems">
       <Reveal>
         <div className="ai-universe-visual__intro">
           <div>
             <p className="font-mono-label" style={{ color: "var(--color-copper)" }}>Built across the stack</p>
-            <h2 className="text-rice">A map of the things I make.</h2>
+            <h2 className="text-rice">A map of the systems I know how to build.</h2>
           </div>
-          <p>Agents, developer tools, consumer AI, evaluation, voice, research, and public-good systems.</p>
+          <p>Capability areas instead of product names. The private products stay private while they are being developed and scaled.</p>
         </div>
       </Reveal>
 
@@ -24,8 +24,8 @@ export default function AIUniverse() {
                 <span>{group.focus}</span>
               </div>
               <h3>{group.title}</h3>
-              <div className="ai-universe-visual__projects" aria-label={`${group.title} projects`}>
-                {group.projects.map((project) => <span key={project}>{project}</span>)}
+              <div className="ai-universe-visual__projects" aria-label={`${group.title} capability signals`}>
+                {group.signals.map((signal) => <span key={signal}>{signal}</span>)}
               </div>
               <div className="ai-universe-visual__orbit" aria-hidden="true"><i /><i /><i /></div>
             </article>

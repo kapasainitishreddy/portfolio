@@ -19,9 +19,9 @@ export type RoleCaseStudy = {
 
 export const roleCaseStudies: RoleCaseStudy[] = [
   {
-    id: "fde-freelance",
+    id: "fde-private",
     role: "Forward Deployed Engineer (Freelance)",
-    organization: "Independent / confidential early-stage AI work",
+    organization: "Private AI / product work",
     period: "2024 - Present",
     summary:
       "Embedded delivery across AI workflows, data integration, production debugging, evaluation, and customer feedback loops.",
@@ -38,12 +38,12 @@ export const roleCaseStudies: RoleCaseStudy[] = [
     outcome:
       "The support workflow moved from prototype to production in under four weeks, while the operations pipeline replaced recurring manual reporting with a monitored production system.",
     stack: ["Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "RAG", "APIs", "Evaluation"],
-    note: "Client and customer names stay confidential. Only measurements already documented in the portfolio are shown here.",
+    note: "The client and product identity are intentionally private. Only measurements already documented in the portfolio are shown here.",
   },
   {
-    id: "augmentare",
+    id: "data-automation-private",
     role: "Business Data Analyst",
-    organization: "Augmentare Inc.",
+    organization: "Private data & automation work",
     period: "Aug 2024 - Present",
     summary:
       "Data pipelines, analytics, automation, quality controls, and stakeholder-facing decision support.",
@@ -61,6 +61,7 @@ export const roleCaseStudies: RoleCaseStudy[] = [
     outcome:
       "The work turned loosely framed business questions into reproducible analysis and repeatable operational tooling instead of one-off spreadsheet answers.",
     stack: ["Python", "SQL", "Pandas", "APIs", "Relational data", "Dashboards", "Data quality"],
+    note: "Employer identity is intentionally anonymized in the public portfolio.",
   },
   {
     id: "outlier",
@@ -83,9 +84,9 @@ export const roleCaseStudies: RoleCaseStudy[] = [
     stack: ["LLM evaluation", "Rubrics", "Safety review", "Python", "SQL", "Regression testing"],
   },
   {
-    id: "vn-technologies",
+    id: "operations-private",
     role: "Operations Data Analyst",
-    organization: "VN Technologies",
+    organization: "Private operations analytics work",
     period: "Jun 2020 - Jan 2023",
     summary:
       "Operational analytics, data quality, recurring reporting, and cross-functional issue resolution.",
@@ -100,5 +101,6 @@ export const roleCaseStudies: RoleCaseStudy[] = [
     outcome:
       "Reusable analysis and standardized queries reduced turnaround while making recurring reporting easier to reproduce and maintain.",
     stack: ["SQL", "Python", "KPI reporting", "Data quality", "Operational analytics"],
+    note: "Employer identity is intentionally anonymized in the public portfolio.",
   },
 ];

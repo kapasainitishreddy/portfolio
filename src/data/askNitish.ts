@@ -13,7 +13,7 @@ export const suggestedQuestions = [
   "What have you built with agents?",
   "How do you think about AI safety?",
   "What do you teach undergraduates?",
-  "What is Syrava?",
+  "Why are your product builds private?",
   "Why hire you as a Forward Deployed Engineer?",
   "What do you write outside engineering?",
 ];
@@ -25,16 +25,16 @@ const intents: Intent[] = [
       "I work across agentic AI, data and API integration, internal tools, evaluation, governance, multimodal workflows, and production delivery. I care about the last mile: auth, data quality, failure handling, human review, documentation, and whether a team can actually operate what I ship.",
     keywords: ["ai", "systems", "build", "llm", "multimodal", "integration", "production"],
     links: [
-      { label: "See the AI universe", href: "#ai-universe" },
-      { label: "See featured work", href: "#featured-work" },
+      { label: "See AI capabilities", href: "#ai-universe" },
+      { label: "See case studies", href: "#featured-work" },
     ],
   },
   {
     title: "Agents and infrastructure",
     body:
-      "My agent work includes projects such as Scythe, Future OS, Scribe, Nevra, and AI Browser. The recurring problems are tool use, orchestration, permissions, local or cloud model execution, observability, and making agents useful without giving them uncontrolled freedom.",
-    keywords: ["agent", "agents", "scythe", "scribe", "future", "nevra", "browser", "mcp", "orchestration"],
-    links: [{ label: "Explore agent projects", href: "#ai-universe" }],
+      "My private product work includes agentic systems and supporting infrastructure. The recurring engineering problems are tool use, orchestration, permissions, local or cloud model execution, observability, evaluation, and making agents useful without giving them uncontrolled freedom. Product identities and repositories stay private while I scale them.",
+    keywords: ["agent", "agents", "mcp", "orchestration", "tools", "infrastructure"],
+    links: [{ label: "Explore AI capabilities", href: "#ai-universe" }],
   },
   {
     title: "AI safety and governance",
@@ -51,14 +51,11 @@ const intents: Intent[] = [
     links: [{ label: "See the teaching section", href: "#ai-safety" }],
   },
   {
-    title: "Syrava and product building",
+    title: "Private product building",
     body:
-      "Syrava is the umbrella for my product-building work. I use it to explore multiple AI products and shared infrastructure, including Circuit, Karmakaryam, Lunyra, Gathered, Vakya, and other experiments. The pattern is fast iteration, reusable systems, and learning from products instead of treating every repo as an isolated demo.",
-    keywords: ["syrava", "founder", "startup", "product", "company", "ecosystem"],
-    links: [
-      { label: "Explore the Syrava ecosystem", href: "#ai-universe" },
-      { label: "See projects", href: "#projects" },
-    ],
+      "I am actively developing and scaling a set of private products. The public portfolio intentionally shows system patterns, engineering judgment, and defensible outcomes instead of product names, repositories, roadmaps, or unreleased implementation details.",
+    keywords: ["private", "product", "products", "founder", "startup", "scale", "scaling", "repo", "repository"],
+    links: [{ label: "Why the builds are private", href: "#private-builds" }],
   },
   {
     title: "Forward deployed fit",
@@ -75,16 +72,16 @@ const intents: Intent[] = [
     body:
       "Outside engineering, I write fiction under the Asta pen name. I work across thrillers, horror, fantasy, relationship drama, and speculative stories. Long-form writing is a different craft from engineering, but it strengthens how I think about people, incentives, pacing, ambiguity, and communicating complicated ideas clearly.",
     keywords: ["write", "writing", "writer", "asta", "book", "books", "fiction", "novel"],
-    links: [{ label: "Read about me", href: "#about" }],
+    links: [{ label: "See novels", href: "#novels" }],
   },
   {
-    title: "Projects and breadth",
+    title: "Private systems and breadth",
     body:
-      "My portfolio spans AI agents, developer tools, consumer products, computer vision, language and voice, knowledge systems, governance, climate, and public-good work. I prefer grouping that work by the problem and system pattern rather than presenting a wall of repositories.",
-    keywords: ["project", "projects", "portfolio", "apps", "app", "built", "work"],
+      "The public portfolio groups my private product work by system capability rather than by product identity. It covers agents, developer workflows, consumer AI, computer vision, language and voice, knowledge systems, evaluation, privacy, and governance without exposing names or repositories.",
+    keywords: ["project", "projects", "portfolio", "apps", "app", "built", "work", "systems"],
     links: [
-      { label: "See the AI universe", href: "#ai-universe" },
-      { label: "Browse projects", href: "#projects" },
+      { label: "See AI capabilities", href: "#ai-universe" },
+      { label: "See private builds", href: "#private-builds" },
     ],
   },
 ];
@@ -92,11 +89,11 @@ const intents: Intent[] = [
 const fallback: GroundedAnswer = {
   title: "Try a more specific angle",
   body:
-    "I can answer from the public information in this portfolio about my AI systems, agent work, safety and governance, undergraduate teaching, Syrava, experience, projects, and writing. Try one of the suggested questions or jump straight to the work below.",
+    "I can answer from the public information in this portfolio about AI systems, agent work, safety and governance, undergraduate teaching, anonymized experience, private product building, and writing. Private employer identities, product names, repositories, roadmaps, and unreleased implementation details are intentionally not exposed.",
   links: [
-    { label: "AI universe", href: "#ai-universe" },
+    { label: "AI capabilities", href: "#ai-universe" },
+    { label: "Private builds", href: "#private-builds" },
     { label: "Experience", href: "#experience" },
-    { label: "Contact", href: "#contact" },
   ],
 };
 

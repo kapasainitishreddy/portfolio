@@ -7,7 +7,7 @@ export type AIUniverseGroup = {
   id: string;
   title: string;
   description: string;
-  projects: string[];
+  signals: string[];
   focus: string;
 };
 
@@ -27,7 +27,7 @@ export const identityRail: IdentityItem[] = [
   },
   {
     title: "Founder / Product Builder",
-    description: "I build a broad product ecosystem through Syrava and keep testing where AI can remove real friction.",
+    description: "I build private products, reuse infrastructure across them, and keep product identities private while I scale the work.",
   },
   {
     title: "AI Safety Educator",
@@ -40,64 +40,57 @@ export const aiUniverseGroups: AIUniverseGroup[] = [
     id: "agents",
     title: "Agents and infrastructure",
     description: "Agentic systems, local assistants, orchestration, tool use, and the infrastructure that lets AI act safely across real workflows.",
-    projects: ["Scythe", "Future OS", "Scribe", "Nevra", "AI Browser"],
+    signals: ["Tool orchestration", "Permission boundaries", "Local + cloud execution"],
     focus: "Agents · orchestration · MCP · local AI",
   },
   {
     id: "developer-tools",
-    title: "Developer tools",
-    description: "Tools for building, testing, extending, and evaluating software faster with AI in the loop.",
-    projects: ["AppGraft", "Extforge", "Persona", "Scribe Studio"],
-    focus: "Developer experience · testing · evaluation",
+    title: "Developer systems",
+    description: "AI-assisted workflows for building, testing, extending, debugging, and evaluating software faster.",
+    signals: ["Developer experience", "Testing loops", "Evaluation tooling"],
+    focus: "DX · testing · evaluation",
   },
   {
     id: "consumer-ai",
     title: "Consumer AI",
-    description: "Products that turn messy everyday decisions, relationships, habits, and personal workflows into calmer guided experiences.",
-    projects: ["Lunyra", "Gathered", "Choices", "Become", "Noxly"],
+    description: "Products that turn messy everyday decisions and personal workflows into calmer guided experiences.",
+    signals: ["Personalization", "Multimodal flows", "Product AI"],
     focus: "Personalization · multimodal · product AI",
   },
   {
-    id: "health-fitness",
-    title: "Health and fitness AI",
-    description: "Computer-vision and coaching concepts designed around form, progress, behavior, and usable feedback loops.",
-    projects: ["Gympose / GymLens", "Actra", "Chisel"],
+    id: "computer-vision",
+    title: "Computer vision and feedback",
+    description: "Camera and vision workflows designed around usable feedback, clear uncertainty, and privacy-aware product boundaries.",
+    signals: ["Vision pipelines", "Feedback loops", "On-device patterns"],
     focus: "Computer vision · coaching · feedback",
   },
   {
     id: "language-voice",
     title: "Language and voice",
     description: "Speech, language, and culturally aware AI experiences that make technology feel more natural across languages and contexts.",
-    projects: ["Vakya", "Slango", "Murmur"],
+    signals: ["Speech interfaces", "Localization", "Language workflows"],
     focus: "Speech · language · localization",
   },
   {
     id: "knowledge",
     title: "Knowledge and research",
-    description: "Systems for navigating complex information, AI models, evidence, and research without losing traceability.",
-    projects: ["Circuit / AI Atlas", "Consensus", "Research Swarm"],
+    description: "Systems for navigating complex information, evidence, and research without losing traceability.",
+    signals: ["RAG", "Evidence retrieval", "Research orchestration"],
     focus: "RAG · research · knowledge systems",
   },
   {
     id: "governance",
     title: "Evaluation, privacy, and governance",
-    description: "Testing and oversight layers that ask whether an AI system is safe, private, compliant, explainable, and useful before trust is assumed.",
-    projects: ["Persona", "ProofTimeline", "Risk Ledger", "TraceGrid"],
-    focus: "Evals · privacy · compliance · governance",
+    description: "Testing and oversight layers that ask whether an AI system is safe, private, explainable, and useful before trust is assumed.",
+    signals: ["Evals", "Privacy boundaries", "Auditability"],
+    focus: "Evals · privacy · governance",
   },
   {
-    id: "public-good",
-    title: "Public good and climate",
-    description: "AI and data products aimed at agriculture, climate risk, public infrastructure, and practical social outcomes.",
-    projects: ["Harvestly", "Climate", "Karmakaryam"],
-    focus: "Climate · public good · data systems",
-  },
-  {
-    id: "syrava",
-    title: "Syrava ecosystem",
-    description: "The umbrella for my product-building work: many small bets, shared infrastructure, rapid iteration, and a bias toward shipping usable software.",
-    projects: ["Syrava", "Circuit", "Karmakaryam", "Lunyra", "Gathered", "Vakya"],
-    focus: "Founder work · product systems · shipping",
+    id: "private-studio",
+    title: "Private product studio",
+    description: "The product work itself stays private while I develop and scale it. The public portfolio shows system patterns and defensible outcomes instead of product identities.",
+    signals: ["Shared infrastructure", "Rapid iteration", "Scale-minded product systems"],
+    focus: "Founder work · product systems · scaling",
   },
 ];
 

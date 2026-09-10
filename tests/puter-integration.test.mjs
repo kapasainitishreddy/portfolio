@@ -26,11 +26,14 @@ test("Ask Sai remains grounded and has a local fallback", () => {
   assert.match(askSai, /Using local fallback/);
 });
 
-test("Ask Sai includes recruiter, project, and Asta modes", () => {
+test("Ask Sai includes recruiter, private systems, and Asta modes", () => {
   assert.match(askSai, /recruiter:/);
-  assert.match(askSai, /projects:/);
+  assert.match(askSai, /private:/);
   assert.match(askSai, /writer:/);
+  assert.match(askSai, /label: "Private systems"/);
   assert.match(askSai, /label: "Asta"/);
+  assert.match(askSai, /Never reveal hidden employer names/);
+  assert.match(askSai, /private product names/);
 });
 
 test("hero exposes Ask Sai without replacing the primary work CTA", () => {

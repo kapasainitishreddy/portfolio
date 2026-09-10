@@ -2,54 +2,45 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const read = (path) => fs.readFileSync(path, "utf8");
+const read = (path) => fs.existsSync(path) ? fs.readFileSync(path, "utf8") : "";
 const exists = (path) => fs.existsSync(path);
 
-test("featured FDE case studies show the actual role, period, and structured outcomes", () => {
-  const projects = read("src/data/projects.ts");
-  const card = read("src/components/projects/ProjectCard.tsx");
-  const modal = read("src/components/projects/ProjectModal.tsx");
+test("featured case studies keep real roles, periods, outcomes, and privacy boundaries", () => {
+  const cases = read("src/data/roleCaseStudies.ts");
+  const featured = read("src/components/sections/FeaturedWork.tsx");
 
-  assert.match(projects, /jobTitle:\s*"Forward Deployed Engineer \(Freelance\)"/);
-  assert.match(projects, /jobPeriod:\s*"2024 - Present"/);
-  assert.match(projects, /outcomes:\s*\[/);
-  assert.match(projects, /value:\s*"~60%"/);
-  assert.match(projects, /value:\s*"~20 hrs\/week"/);
-  assert.match(projects, /value:\s*"~4 days"/);
-  assert.match(card, /project\.outcomes/);
-  assert.match(card, /project\.jobTitle/);
-  assert.match(modal, /Measured outcomes/);
-  assert.match(modal, /project\.outcomes/);
+  for (const role of [
+    "Forward Deployed Engineer (Freelance)",
+    "Business Data Analyst",
+    "AI Model Trainer / Evaluation Analyst",
+    "Operations Data Analyst",
+  ]) assert.match(cases, new RegExp(role.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+
+  for (const proof of ["~60%", "~20 hrs/week", "99.5%", "2M", "25+", "65+", "28%", "1,800+", "30%"]){
+    assert.match(cases, new RegExp(proof.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+
+  assert.match(cases, /Outlier AI/);
+  assert.match(cases, /intentionally private|intentionally anonymized/i);
+  assert.match(featured, /roleCaseStudies/);
+  assert.doesNotMatch(featured, /from "@\/data\/projects"/);
 });
 
-test("case study capabilities no longer mix proof labels into the feature list", () => {
+test("named public project dataset is intentionally empty", () => {
   const projects = read("src/data/projects.ts");
-  const featuredBlock = projects.split("// ── Public technical projects")[0];
-  assert.doesNotMatch(featuredBlock, /"Proof:/);
+  assert.match(projects, /export const projects: Project\[\] = \[\];/);
+  assert.doesNotMatch(projects, /github\.com\/kapasainitishreddy/i);
 });
 
-test("homepage includes a curated GitHub-backed project section after case studies", () => {
+test("homepage exposes private builds after case studies instead of public repositories", () => {
   const page = read("src/app/page.tsx");
-  assert.equal(exists("src/data/githubProjects.ts"), true);
-  assert.equal(exists("src/components/sections/GitHubProjects.tsx"), true);
-  assert.match(page, /import GitHubProjects/);
-  assert.match(page, /<FeaturedWork \/>\s*<GitHubProjects \/>/);
-});
+  const privateBuilds = read("src/components/sections/PrivateBuilds.tsx");
 
-test("GitHub project section uses verified public repositories and concrete build facts", () => {
-  const data = read("src/data/githubProjects.ts");
-  const section = read("src/components/sections/GitHubProjects.tsx");
-
-  for (const name of ["Scribe Studio", "ViralEdit AI", "ProofTimeline", "Still"]) {
-    assert.match(data, new RegExp(name));
-  }
-  for (const repo of ["scribe-studio", "videoediting", "PoT", "still-hack-for-humanity-2026"]) {
-    assert.match(data, new RegExp(`github\\.com/kapasainitishreddy/${repo}`, "i"));
-  }
-  for (const fact of ["12 transitions", "SHA-256", "August 7–September 4, 2026", "React Three Fiber"]) {
-    assert.match(data, new RegExp(fact));
-  }
-  assert.match(section, /githubProjects/);
-  assert.match(section, /View repository/);
-  assert.match(section, /target="_blank"/);
+  assert.equal(exists("src/data/githubProjects.ts"), false);
+  assert.equal(exists("src/components/sections/GitHubProjects.tsx"), false);
+  assert.match(page, /import PrivateBuilds/);
+  assert.match(page, /<FeaturedWork \/>\s*<PrivateBuilds \/>/);
+  assert.match(privateBuilds, /Private while scaling/);
+  assert.match(privateBuilds, /product names, repositories, unreleased features, roadmaps/i);
+  assert.doesNotMatch(privateBuilds, /View repository|github\.com/i);
 });
