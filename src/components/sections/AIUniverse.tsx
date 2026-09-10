@@ -24,7 +24,6 @@ export default function AIUniverse() {
                 <span>{group.focus}</span>
               </div>
               <h3>{group.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-silver">{group.description}</p>
               <div className="ai-universe-visual__projects" aria-label={`${group.title} capability signals`}>
                 {group.signals.map((signal) => <span key={signal}>{signal}</span>)}
               </div>
