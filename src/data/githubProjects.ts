@@ -73,4 +73,19 @@ export const githubProjects: GitHubProject[] = [
     stack: ["React Native", "Expo", "TypeScript", "SQLite", "SecureStore"],
     note: "Public judging snapshot for Hack for Humanity Summer 2026.",
   },
+  {
+    name: "Chisel",
+    repo: "Chisel",
+    href: "https://github.com/kapasainitishreddy/Chisel",
+    category: "Android · guided facial routines",
+    summary:
+      "An Android facial-routine assistant built around camera-assisted analysis, guided routines, grooming tools, and persistent daily plans.",
+    facts: [
+      "Six documented screens: Home, Analyze, Affirm, Meditate, Groom, and Connect",
+      "Live camera path uses browser FaceDetector when available with graceful fallback",
+      "Capacitor Android wrapper around a self-contained HTML, CSS, and JavaScript app",
+    ],
+    stack: ["Capacitor", "Android", "JavaScript", "FaceDetector", "localStorage"],
+    note: "The public project describes heuristic facial scoring and a debug-signed APK. It is not presented as a medical or diagnostic system.",
+  },
 ];
