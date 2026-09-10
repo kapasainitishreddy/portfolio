@@ -1,12 +1,13 @@
 name: Portfolio quality
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - feat/portfolio-polish-ink-engines
+      - claude/sharp-tesla-f8epam
   pull_request:
     branches:
-      - main
+      - claude/sharp-tesla-f8epam
 
 permissions:
   contents: read
