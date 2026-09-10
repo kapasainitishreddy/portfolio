@@ -19,8 +19,12 @@ const visibleCopyFiles = [
   "src/data/askNitish.ts",
   "src/data/crossFunctional.ts",
   "src/data/flagshipCaseStudies.ts",
+  "src/data/roleCaseStudies.ts",
+  "src/data/githubProjects.ts",
   "src/data/novels.ts",
   "src/components/sections/Hero.tsx",
+  "src/components/sections/FeaturedWork.tsx",
+  "src/components/sections/Projects.tsx",
   "src/components/sections/Skills.tsx",
   "src/components/sections/StartupCaseStudies.tsx",
   "src/components/sections/Experience.tsx",
@@ -43,6 +47,7 @@ test("homepage tells the engineer-writer story in the intended order", () => {
   const markers = [
     "<Hero />",
     "<FeaturedWork />",
+    "<Projects />",
     "<Novels />",
     "<AIUniverse />",
     "<AISafetyTeaching />",
@@ -61,7 +66,7 @@ test("homepage tells the engineer-writer story in the intended order", () => {
 test("homepage keeps deeper proof focused while promoting Ask Sai", () => {
   const page = read("src/app/page.tsx");
   assert.match(page, /<Hero \/>\s*<AskNitish \/>/, "Ask Sai should sit directly after the hero");
-  for (const marker of ["<CrossFunctional />", "<StartupCaseStudies />", "<Projects />", "<WhyHireMe />"]) {
+  for (const marker of ["<CrossFunctional />", "<StartupCaseStudies />", "<WhyHireMe />"]) {
     assert.equal(page.includes(marker), false, `${marker} should stay out of the primary homepage flow`);
   }
   for (const retained of ["src/components/sections/CrossFunctional.tsx", "src/components/sections/AskNitish.tsx", "src/components/sections/StartupCaseStudies.tsx", "src/components/sections/FlagshipCaseStudies.tsx", "src/components/sections/ProofLens.tsx"]) {
