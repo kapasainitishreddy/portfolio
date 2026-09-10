@@ -9,7 +9,7 @@ export interface Role {
 export const experience: Role[] = [
   {
     title: "Forward Deployed Engineer (Freelance)",
-    organization: "Independent / confidential early-stage AI work",
+    organization: "Private AI / product work",
     period: "2024 - Present",
     summary: "Embedded delivery across AI workflows, data integration, production debugging, evaluation, and customer feedback loops.",
     bullets: [
@@ -22,7 +22,7 @@ export const experience: Role[] = [
   },
   {
     title: "Business Data Analyst",
-    organization: "Augmentare Inc.",
+    organization: "Private data & automation work",
     period: "Aug 2024 - Present",
     summary: "Data pipelines, analytics, automation, quality controls, and stakeholder-facing decision support.",
     bullets: [
@@ -48,7 +48,7 @@ export const experience: Role[] = [
   },
   {
     title: "Operations Data Analyst",
-    organization: "VN Technologies",
+    organization: "Private operations analytics work",
     period: "Jun 2020 - Jan 2023",
     summary: "Operational analytics, data quality, recurring reporting, and cross-functional issue resolution.",
     bullets: [
