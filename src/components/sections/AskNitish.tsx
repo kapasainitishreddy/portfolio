@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { Section } from "@/components/layout/Section";
 import Reveal from "@/components/layout/Reveal";
 import { findGroundedAnswer, suggestedQuestions, type GroundedAnswer } from "@/data/askNitish";
@@ -155,11 +155,14 @@ export default function AskNitish() {
   const [loading, setLoading] = useState(false);
   const [puterReady, setPuterReady] = useState(false);
   const [usedFallback, setUsedFallback] = useState(false);
+  const requestIdRef = useRef(0);
 
   const currentMode = guideModes[mode];
 
   const changeMode = (nextMode: GuideMode) => {
     if (nextMode === mode) return;
+    requestIdRef.current += 1;
+    setLoading(false);
     setMode(nextMode);
     setQuestion("");
     setHistory([]);
@@ -190,6 +193,7 @@ export default function AskNitish() {
       return;
     }
 
+    const requestId = ++requestIdRef.current;
     setLoading(true);
     setUsedFallback(false);
     setAnswer({ title, body: "Thinking with Puter...", links });
@@ -209,13 +213,18 @@ export default function AskNitish() {
         max_tokens: 600,
       });
 
+      if (requestId !== requestIdRef.current) return;
+
       let streamedText = "";
       for await (const part of stream) {
+        if (requestId !== requestIdRef.current) return;
         if (part.type === "error") throw new Error(part.message ?? "Puter AI request failed");
         if (typeof part.text !== "string" || part.text.length === 0) continue;
         streamedText += part.text;
         setAnswer({ title, body: streamedText, links });
       }
+
+      if (requestId !== requestIdRef.current) return;
 
       const finalText = streamedText.trim();
       if (!finalText) throw new Error("Puter AI returned an empty answer");
@@ -224,6 +233,7 @@ export default function AskNitish() {
       setHistory([...nextHistory, assistantMessage].slice(-8));
       setAnswer({ title, body: finalText, links });
     } catch (error) {
+      if (requestId !== requestIdRef.current) return;
       console.error("Ask Sai Puter request failed:", error);
       setUsedFallback(true);
       setAnswer(
@@ -232,7 +242,7 @@ export default function AskNitish() {
           : { ...grounded, links },
       );
     } finally {
-      setLoading(false);
+      if (requestId === requestIdRef.current) setLoading(false);
     }
   };
 
