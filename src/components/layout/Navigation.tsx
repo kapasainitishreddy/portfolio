@@ -85,6 +85,8 @@ export default function Navigation() {
     [activeIndex],
   );
 
+  const mobileMoreActive = !mobileItems.some((item) => item.href === activeHref);
+
   const springTransition = reduceMotion
     ? { duration: 0 }
     : { type: "spring" as const, stiffness: 390, damping: 34, mass: 0.62 };
@@ -421,9 +423,21 @@ export default function Navigation() {
           ref={mobileTriggerRef}
           type="button"
           onClick={() => setMobileOpen(true)}
-          aria-label="More navigation options"
+          data-active={mobileMoreActive ? "true" : "false"}
+          aria-label={mobileMoreActive
+            ? `More navigation options, current section: ${activeLabel}`
+            : "More navigation options"}
           aria-expanded={mobileOpen}
+          style={{ color: mobileMoreActive ? "var(--color-rice)" : undefined }}
         >
+          {mobileMoreActive && !mobileOpen && (
+            <motion.span
+              className="portfolio-mobile-dock__active-pill"
+              layoutId="portfolio-mobile-active-pill"
+              transition={springTransition}
+              aria-hidden="true"
+            />
+          )}
           <span className="portfolio-mobile-dock__icon"><DockGlyph name="more" /></span>
           <span className="portfolio-mobile-dock__label">More</span>
         </button>
