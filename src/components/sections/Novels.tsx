@@ -5,20 +5,15 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/layout/Section";
 import Reveal from "@/components/layout/Reveal";
 import { novels, type Novel } from "@/data/novels";
-import { visualMedia } from "@/data/visualMedia";
-
-const coverImage = {
-  girlDeadMan: visualMedia.girlDeadManCover,
-  cityDrinking: visualMedia.cityDrinkingCover,
-} as const;
+import { bookCovers } from "@/data/bookCovers";
 
 function BookCoverArt({ novel, compact = false }: { novel: Novel; compact?: boolean }) {
-  const image = novel.coverKey ? coverImage[novel.coverKey] : null;
+  const image = novel.coverKey ? bookCovers[novel.coverKey] : null;
 
   if (image) {
     return (
       <div className={`book-cover book-cover--image ${compact ? "book-cover--compact" : ""}`}>
-        <img src={image} alt={`Cover of ${novel.title}`} />
+        <img src={image} alt={`Cover of ${novel.title}`} loading={compact ? "lazy" : "eager"} decoding="async" />
         <span className="book-cover__shine" aria-hidden="true" />
       </div>
     );
