@@ -24,10 +24,10 @@ type PuterApi = {
   ai: {
     chat: (
       messages: ChatMessage[],
+      legacyFlag: false,
       options: {
         model: string;
         stream: true;
-        normalize: true;
         temperature: number;
         max_tokens: number;
       },
@@ -199,10 +199,9 @@ export default function AskNitish() {
     };
 
     try {
-      const stream = await window.puter.ai.chat([systemMessage, ...nextHistory], {
+      const stream = await window.puter.ai.chat([systemMessage, ...nextHistory], false, {
         model: "openai/gpt-5.6-luna",
         stream: true,
-        normalize: true,
         temperature: 0.2,
         max_tokens: 600,
       });
