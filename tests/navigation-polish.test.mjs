@@ -54,6 +54,15 @@ test("mobile dock uses a moving glass active pill", () => {
   assert.match(css, /\.portfolio-mobile-dock__active-pill/);
 });
 
+test("mobile More inherits the active pill for sections outside the visible shortcuts", () => {
+  assert.match(nav, /const mobileMoreActive = !mobileItems\.some\(\(item\) => item\.href === activeHref\)/);
+  assert.match(nav, /data-active=\{mobileMoreActive \? "true" : "false"\}/);
+  assert.match(nav, /current section: \$\{activeLabel\}/);
+  assert.match(nav, /mobileMoreActive && \([\s\S]*?layoutId="portfolio-mobile-active-pill"/);
+  assert.equal([...nav.matchAll(/layoutId="portfolio-mobile-active-pill"/g)].length, 2);
+  assert.match(motionCss, /\.portfolio-mobile-dock button\[data-active="true"\]/);
+});
+
 test("mobile More trigger visibly mirrors the open navigation sheet", () => {
   assert.match(nav, /aria-expanded=\{mobileOpen\}/);
   assert.match(motionCss, /\.portfolio-mobile-dock button::before\s*\{/);
