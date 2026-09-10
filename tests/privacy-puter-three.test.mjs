@@ -65,6 +65,16 @@ test("portfolio uses one section-aware Three.js interaction layer", () => {
   assert.match(threeLayer, /aria-hidden/);
 });
 
+test("Three.js section changes damp spatial targets instead of snapping geometry", () => {
+  assert.match(threeLayer, /MathUtils/);
+  assert.match(threeLayer, /const phaseRef = useRef\(0\)/);
+  assert.match(threeLayer, /const targetPhase = \(activeIndex % 5\) \* 0\.37/);
+  assert.match(threeLayer, /phaseRef\.current = MathUtils\.damp\(/);
+  assert.match(threeLayer, /group\.current\.rotation\.y = MathUtils\.damp\(/);
+  assert.match(threeLayer, /group\.current\.scale\.setScalar\(nextScale\)/);
+  assert.doesNotMatch(threeLayer, /const spread = .*activeIndex/);
+});
+
 test("reduced-motion visitors get the lightweight visual fallback without mounting WebGL", () => {
   assert.match(threeLayer, /if \(reduceMotion\)\s*\{[\s\S]*?portfolio-three-layer__fallback/);
   assert.match(threeLayer, /if \(reduceMotion\)[\s\S]*?return \([\s\S]*?portfolio-three-layer/);
