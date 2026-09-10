@@ -21,10 +21,10 @@ export const socials = {
 } as const;
 
 export const navItems = [
-  { label: "AI", href: "#ai-universe" },
   { label: "Case studies", href: "#featured-work" },
   { label: "Private builds", href: "#private-builds" },
   { label: "Novels", href: "#novels" },
+  { label: "AI", href: "#ai-universe" },
   { label: "Safety", href: "#ai-safety" },
   { label: "Experience", href: "#experience" },
   { label: "About", href: "#about" },
