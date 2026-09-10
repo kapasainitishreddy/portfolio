@@ -41,7 +41,7 @@ test("switching Ask Sai modes invalidates stale Puter streams before they can ov
   assert.match(askSai, /requestIdRef\.current \+= 1/);
   assert.match(askSai, /const requestId = \+\+requestIdRef\.current/);
   assert.match(askSai, /if \(requestId !== requestIdRef\.current\) return/);
-  assert.match(askSai, /if \(requestId === requestIdRef\.current\) setLoading\(false\)/);
+  assert.match(askSai, /if \(requestId === requestIdRef\.current\) \{[\s\S]*?setLoading\(false\)/);
 });
 
 test("Ask Sai lets visitors stop an in-flight Puter response without stale chunks resuming it", () => {
@@ -50,6 +50,15 @@ test("Ask Sai lets visitors stop an in-flight Puter response without stale chunk
   assert.match(askSai, /setLoading\(false\)/);
   assert.match(askSai, /loading && \([\s\S]*?onClick=\{stopResponse\}[\s\S]*?Stop response/);
   assert.match(askSai, /aria-label="Stop Ask Sai response"/);
+});
+
+test("Ask Sai frame-batches streamed UI updates and avoids per-chunk live-region chatter", () => {
+  assert.match(askSai, /streamFrameRef = useRef<number \| null>\(null\)/);
+  assert.match(askSai, /window\.requestAnimationFrame\(\(\) => \{/);
+  assert.match(askSai, /window\.cancelAnimationFrame\(streamFrameRef\.current\)/);
+  assert.match(askSai, /if \(streamFrameRef\.current !== null\) return/);
+  assert.doesNotMatch(askSai, /streamedText \+= part\.text;\s*setAnswer\(/s);
+  assert.match(askSai, /aria-live=\{loading \? "off" : "polite"\}/);
 });
 
 test("hero exposes Ask Sai without replacing the primary work CTA", () => {
