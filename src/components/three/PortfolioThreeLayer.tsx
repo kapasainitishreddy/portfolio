@@ -89,16 +89,24 @@ export default function PortfolioThreeLayer() {
     return () => observer.disconnect();
   }, []);
 
+  if (reduceMotion) {
+    return (
+      <div className="portfolio-three-layer" aria-hidden="true" role="presentation">
+        <div className="portfolio-three-layer__fallback" />
+      </div>
+    );
+  }
+
   return (
     <div className="portfolio-three-layer" aria-hidden="true" role="presentation">
       <Canvas
         camera={{ position: [0, 0, 6.8], fov: 44 }}
         dpr={[1, 1.25]}
-        frameloop={reduceMotion ? "demand" : "always"}
+        frameloop="always"
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         fallback={<div className="portfolio-three-layer__fallback" />}
       >
-        <Scene activeIndex={activeIndex} reduced={Boolean(reduceMotion)} />
+        <Scene activeIndex={activeIndex} reduced={false} />
       </Canvas>
     </div>
   );
