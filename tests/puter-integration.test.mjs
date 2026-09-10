@@ -44,6 +44,14 @@ test("switching Ask Sai modes invalidates stale Puter streams before they can ov
   assert.match(askSai, /if \(requestId === requestIdRef\.current\) setLoading\(false\)/);
 });
 
+test("Ask Sai lets visitors stop an in-flight Puter response without stale chunks resuming it", () => {
+  assert.match(askSai, /const stopResponse = \(\) => \{/);
+  assert.match(askSai, /requestIdRef\.current \+= 1/);
+  assert.match(askSai, /setLoading\(false\)/);
+  assert.match(askSai, /loading && \([\s\S]*?onClick=\{stopResponse\}[\s\S]*?Stop response/);
+  assert.match(askSai, /aria-label="Stop Ask Sai response"/);
+});
+
 test("hero exposes Ask Sai without replacing the primary work CTA", () => {
   assert.match(site, /label: "See how I build", href: "#featured-work", kind: "primary"/);
   assert.match(site, /label: "Ask Sai", href: "#ask-nitish", kind: "ghost"/);
