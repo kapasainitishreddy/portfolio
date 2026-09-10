@@ -23,6 +23,7 @@ export const socials = {
 export const navItems = [
   { label: "AI", href: "#ai-universe" },
   { label: "Case studies", href: "#featured-work" },
+  { label: "Projects", href: "#projects" },
   { label: "Novels", href: "#novels" },
   { label: "Safety", href: "#ai-safety" },
   { label: "Experience", href: "#experience" },
