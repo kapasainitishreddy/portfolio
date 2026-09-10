@@ -56,10 +56,32 @@ export default function ProjectCard({ project, onOpen }: { project: Project; onO
             </span>
           </div>
         </div>
+
         <div className="flex flex-1 flex-col p-5 md:p-6">
           <p className="font-mono-label">{cleanVisibleCopy(project.category)}</p>
+
+          {project.jobTitle && (
+            <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-silver">
+              <span className="text-rice">{cleanVisibleCopy(project.jobTitle)}</span>
+              {project.jobPeriod && <span aria-hidden="true">·</span>}
+              {project.jobPeriod && <span>{cleanVisibleCopy(project.jobPeriod)}</span>}
+            </div>
+          )}
+
           <h3 className="mt-2 font-serif text-2xl text-rice">{name}</h3>
           <p className="mt-3 flex-1 text-sm leading-6 text-silver">{cleanVisibleCopy(project.summary)}</p>
+
+          {project.outcomes && project.outcomes.length > 0 && (
+            <dl className="mt-5 grid grid-cols-3 gap-2 border-y py-4" style={{ borderColor: "color-mix(in srgb, var(--color-silver) 12%, transparent)" }}>
+              {project.outcomes.slice(0, 3).map((outcome) => (
+                <div key={`${outcome.value}-${outcome.label}`} className="min-w-0">
+                  <dt className="font-serif text-xl leading-none text-rice">{cleanVisibleCopy(outcome.value)}</dt>
+                  <dd className="mt-1.5 text-[0.64rem] leading-4 text-silver">{cleanVisibleCopy(outcome.label)}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
           <div className="mt-4 flex flex-wrap gap-2">
             {project.tags.slice(0, 4).map((tag) => (
               <span key={tag} className="rounded-full border px-2.5 py-1 text-xs text-silver">{cleanVisibleCopy(tag)}</span>
