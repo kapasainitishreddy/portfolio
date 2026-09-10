@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Section } from "@/components/layout/Section";
 import Reveal from "@/components/layout/Reveal";
 import { findGroundedAnswer, suggestedQuestions, type GroundedAnswer } from "@/data/askNitish";
@@ -156,11 +156,26 @@ export default function AskNitish() {
   const [puterReady, setPuterReady] = useState(false);
   const [usedFallback, setUsedFallback] = useState(false);
   const requestIdRef = useRef(0);
+  const streamFrameRef = useRef<number | null>(null);
 
   const currentMode = guideModes[mode];
 
+  const cancelStreamFrame = () => {
+    if (streamFrameRef.current === null) return;
+    window.cancelAnimationFrame(streamFrameRef.current);
+    streamFrameRef.current = null;
+  };
+
+  useEffect(() => {
+    return () => {
+      const frame = streamFrameRef.current;
+      if (frame !== null) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   const changeMode = (nextMode: GuideMode) => {
     if (nextMode === mode) return;
+    cancelStreamFrame();
     requestIdRef.current += 1;
     setLoading(false);
     setMode(nextMode);
@@ -175,6 +190,7 @@ export default function AskNitish() {
   };
 
   const stopResponse = () => {
+    cancelStreamFrame();
     requestIdRef.current += 1;
     setLoading(false);
   };
@@ -198,6 +214,7 @@ export default function AskNitish() {
       return;
     }
 
+    cancelStreamFrame();
     const requestId = ++requestIdRef.current;
     setLoading(true);
     setUsedFallback(false);
@@ -221,15 +238,25 @@ export default function AskNitish() {
       if (requestId !== requestIdRef.current) return;
 
       let streamedText = "";
+      const scheduleStreamRender = () => {
+        if (streamFrameRef.current !== null) return;
+        streamFrameRef.current = window.requestAnimationFrame(() => {
+          streamFrameRef.current = null;
+          if (requestId !== requestIdRef.current) return;
+          setAnswer({ title, body: streamedText, links });
+        });
+      };
+
       for await (const part of stream) {
         if (requestId !== requestIdRef.current) return;
         if (part.type === "error") throw new Error(part.message ?? "Puter AI request failed");
         if (typeof part.text !== "string" || part.text.length === 0) continue;
         streamedText += part.text;
-        setAnswer({ title, body: streamedText, links });
+        scheduleStreamRender();
       }
 
       if (requestId !== requestIdRef.current) return;
+      cancelStreamFrame();
 
       const finalText = streamedText.trim();
       if (!finalText) throw new Error("Puter AI returned an empty answer");
@@ -247,7 +274,10 @@ export default function AskNitish() {
           : { ...grounded, links },
       );
     } finally {
-      if (requestId === requestIdRef.current) setLoading(false);
+      if (requestId === requestIdRef.current) {
+        cancelStreamFrame();
+        setLoading(false);
+      }
     }
   };
 
@@ -362,7 +392,7 @@ export default function AskNitish() {
               ))}
             </div>
 
-            <div className="ask-nitish__answer" aria-live="polite" aria-busy={loading}>
+            <div className="ask-nitish__answer" aria-live={loading ? "off" : "polite"} aria-busy={loading}>
               <p className="font-mono-label" style={{ color: "var(--color-copper)" }}>
                 {currentMode.label} · grounded answer
               </p>
