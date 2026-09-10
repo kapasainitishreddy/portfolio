@@ -7,7 +7,10 @@ const baseCss = fs.readFileSync("src/app/portfolio-redesign.css", "utf8");
 const polishCss = fs.existsSync("src/app/navigation-polish.css")
   ? fs.readFileSync("src/app/navigation-polish.css", "utf8")
   : "";
-const css = `${baseCss}\n${polishCss}`;
+const motionCss = fs.existsSync("src/app/navigation-motion.css")
+  ? fs.readFileSync("src/app/navigation-motion.css", "utf8")
+  : "";
+const css = `${baseCss}\n${polishCss}\n${motionCss}`;
 
 test("desktop dock morphs between compact and expanded navigation", () => {
   assert.match(nav, /dockExpanded/);
