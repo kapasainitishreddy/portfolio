@@ -86,7 +86,17 @@ function Scene({ activeIndex, reduced }: { activeIndex: number; reduced: boolean
 
 export default function PortfolioThreeLayer() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [pageVisible, setPageVisible] = useState(true);
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const syncVisibility = () => setPageVisible(document.visibilityState !== "hidden");
+    syncVisibility();
+    document.addEventListener("visibilitychange", syncVisibility);
+    return () => document.removeEventListener("visibilitychange", syncVisibility);
+  }, [reduceMotion]);
 
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
@@ -124,7 +134,7 @@ export default function PortfolioThreeLayer() {
       <Canvas
         camera={{ position: [0, 0, 6.8], fov: 44 }}
         dpr={[1, 1.25]}
-        frameloop="always"
+        frameloop={pageVisible ? "always" : "never"}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         fallback={<div className="portfolio-three-layer__fallback" />}
       >
