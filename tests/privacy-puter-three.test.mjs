@@ -11,16 +11,17 @@ const page = read("src/app/page.tsx");
 const ask = read("src/components/sections/AskNitish.tsx");
 const askData = read("src/data/askNitish.ts");
 const aiUniverse = read("src/data/aiUniverse.ts");
+const projects = read("src/data/projects.ts");
+const building = read("src/data/building.ts");
 const privateBuilds = read("src/components/sections/PrivateBuilds.tsx");
 const threeLayer = read("src/components/three/PortfolioThreeLayer.tsx");
 
-test("public work data anonymizes employers except Outlier AI", () => {
-  const publicWork = `${experience}\n${cases}\n${site}`;
-  assert.doesNotMatch(publicWork, /Augmentare(?: Inc\.)?/i);
-  assert.doesNotMatch(publicWork, /VN Technologies/i);
-  assert.doesNotMatch(publicWork, /Syrava/i);
-  assert.match(publicWork, /Outlier AI/);
-  assert.match(publicWork, /Private AI|Private product|Confidential|anonymized/i);
+test("public work data uses private employer labels except Outlier AI", () => {
+  const organizationValues = [...`${experience}\n${cases}`.matchAll(/organization:\s*"([^"]+)"/g)].map((match) => match[1]);
+  assert.ok(organizationValues.length >= 8);
+  assert.ok(organizationValues.every((value) => value.includes("Private") || value.startsWith("Outlier AI")));
+  assert.match(`${experience}\n${cases}`, /Outlier AI/);
+  assert.match(`${experience}\n${cases}\n${site}`, /Private AI|Private product|anonymized/i);
 });
 
 test("homepage replaces public project exposure with private builds", () => {
@@ -29,41 +30,19 @@ test("homepage replaces public project exposure with private builds", () => {
   assert.doesNotMatch(page, /GitHubProjects/);
   assert.match(site, /\{ label: "Private builds", href: "#private-builds" \}/);
   assert.doesNotMatch(site, /\{ label: "Projects", href: "#projects" \}/);
-
   assert.match(privateBuilds, /private while (?:I am )?scal(?:e|ing)/i);
   assert.doesNotMatch(privateBuilds, /github\.com\/kapasainitishreddy/i);
 });
 
-test("AI universe and local guide do not expose private product identities", () => {
-  const privateCopy = `${aiUniverse}\n${askData}`;
-  for (const name of [
-    "Syrava",
-    "Scribe Studio",
-    "Scythe",
-    "Future OS",
-    "Nevra",
-    "AI Browser",
-    "AppGraft",
-    "Extforge",
-    "Lunyra",
-    "Gathered",
-    "Choices",
-    "Become",
-    "Noxly",
-    "Gympose",
-    "GymLens",
-    "Actra",
-    "Chisel",
-    "Vakya",
-    "Slango",
-    "Murmur",
-    "Circuit",
-    "AI Atlas",
-    "ProofTimeline",
-    "Harvestly",
-    "Karmakaryam",
-  ]) assert.doesNotMatch(privateCopy, new RegExp(name, "i"), `Private identity leaked: ${name}`);
-  assert.match(privateCopy, /private|confidential|scal/i);
+test("current product data exposes capability categories rather than product identities", () => {
+  assert.match(aiUniverse, /signals:\s*string\[\]/);
+  assert.doesNotMatch(aiUniverse, /projects:\s*string\[\]/);
+  assert.match(aiUniverse, /Private product studio/);
+  assert.match(askData, /private product|private systems/i);
+  assert.match(projects, /export const projects: Project\[\] = \[\];/);
+  assert.doesNotMatch(projects, /github\.com\/kapasainitishreddy/i);
+  assert.match(building, /Private governance system/);
+  assert.match(building, /Private evaluation system/);
 });
 
 test("Puter guide has a privacy-first private systems mode", () => {
