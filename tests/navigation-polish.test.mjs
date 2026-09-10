@@ -51,3 +51,10 @@ test("navigation polish keeps reduced-motion coverage for morphing surfaces", ()
   assert.match(reducedMotion, /portfolio-dock__active-pill/);
   assert.match(reducedMotion, /portfolio-mobile-dock__active-pill/);
 });
+
+test("dock portrait accent only pulses when the dock opens", () => {
+  assert.match(motionCss, /\.portfolio-dock\[data-expanded="true"\] \.portfolio-dock__avatar-ring\s*\{/);
+  assert.match(motionCss, /animation:\s*portfolio-dock-arrival/);
+  assert.doesNotMatch(motionCss, /portfolio-dock-breathe/);
+  assert.doesNotMatch(motionCss, /portfolio-dock__avatar-ring\s*\{[^}]*animation:[^;}]*infinite/s);
+});

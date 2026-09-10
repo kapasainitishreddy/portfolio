@@ -102,9 +102,14 @@
     z-index: -1;
     border: 1px solid color-mix(in srgb, var(--color-copper) 32%, transparent);
     border-radius: 1.2rem;
+    opacity: .68;
+    transform: scale(1);
     box-shadow: 0 0 0 .1rem color-mix(in srgb, var(--color-copper) 4%, transparent);
-    animation: portfolio-dock-breathe 3.2s ease-in-out infinite;
     pointer-events: none;
+  }
+
+  .portfolio-dock[data-expanded="true"] .portfolio-dock__avatar-ring {
+    animation: portfolio-dock-arrival .58s cubic-bezier(.22, 1, .36, 1) 1;
   }
 
   .portfolio-dock__identity-copy {
@@ -323,16 +328,21 @@
   }
 }
 
-@keyframes portfolio-dock-breathe {
-  0%, 100% {
-    opacity: .5;
-    transform: scale(.97);
+@keyframes portfolio-dock-arrival {
+  0% {
+    opacity: .58;
+    transform: scale(.985);
     box-shadow: 0 0 0 .08rem color-mix(in srgb, var(--color-copper) 3%, transparent);
   }
-  50% {
-    opacity: .92;
-    transform: scale(1.035);
-    box-shadow: 0 0 1.1rem color-mix(in srgb, var(--color-copper) 16%, transparent);
+  55% {
+    opacity: .9;
+    transform: scale(1.025);
+    box-shadow: 0 0 .9rem color-mix(in srgb, var(--color-copper) 14%, transparent);
+  }
+  100% {
+    opacity: .68;
+    transform: scale(1);
+    box-shadow: 0 0 0 .1rem color-mix(in srgb, var(--color-copper) 4%, transparent);
   }
 }
 
