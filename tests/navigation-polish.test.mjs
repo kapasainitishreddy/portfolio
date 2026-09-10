@@ -38,6 +38,16 @@ test("command palette responds to the dock expansion state", () => {
   assert.match(css, /\.portfolio-command\[data-dock-expanded="true"\]/);
 });
 
+test("desktop quick menu moves focus into its actions and restores the opener", () => {
+  assert.match(nav, /commandTriggerRef = useRef<HTMLButtonElement>/);
+  assert.match(nav, /commandMenuRef = useRef<HTMLDivElement>/);
+  assert.match(nav, /const menu = commandMenuRef\.current/);
+  assert.match(nav, /const commandFocusFrame = window\.requestAnimationFrame\(\(\) => firstAction\?\.focus\(\)\)/);
+  assert.match(nav, /if \(previousFocus\?\.isConnected\) previousFocus\.focus\(\)/);
+  assert.match(nav, /ref=\{commandTriggerRef\}/);
+  assert.match(nav, /ref=\{commandMenuRef\}/);
+});
+
 test("mobile dock uses a moving glass active pill", () => {
   assert.match(nav, /portfolio-mobile-dock__active-pill/);
   assert.match(nav, /layoutId="portfolio-mobile-active-pill"/);

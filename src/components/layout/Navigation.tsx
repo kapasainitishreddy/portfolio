@@ -68,6 +68,8 @@ export default function Navigation() {
   const [commandOpen, setCommandOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dockExpanded, setDockExpanded] = useState(false);
+  const commandTriggerRef = useRef<HTMLButtonElement>(null);
+  const commandMenuRef = useRef<HTMLDivElement>(null);
   const mobileTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileSheetRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
@@ -136,6 +138,28 @@ export default function Navigation() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
+
+  useEffect(() => {
+    if (!commandOpen) return;
+
+    const menu = commandMenuRef.current;
+    if (!menu) return;
+
+    const fallbackTrigger = commandTriggerRef.current;
+    const previousFocus = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : fallbackTrigger;
+    const firstAction = menu.querySelector<HTMLElement>(".portfolio-command__grid a[href]");
+    const commandFocusFrame = window.requestAnimationFrame(() => firstAction?.focus());
+
+    return () => {
+      window.cancelAnimationFrame(commandFocusFrame);
+      window.requestAnimationFrame(() => {
+        if (previousFocus?.isConnected) previousFocus.focus();
+        else fallbackTrigger?.focus();
+      });
+    };
+  }, [commandOpen]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -272,6 +296,7 @@ export default function Navigation() {
         <div className="portfolio-dock__divider" />
 
         <button
+          ref={commandTriggerRef}
           type="button"
           className="portfolio-dock__item portfolio-dock__command-button"
           aria-label="Open quick menu"
@@ -310,6 +335,7 @@ export default function Navigation() {
       <AnimatePresence>
         {commandOpen && (
           <motion.div
+            ref={commandMenuRef}
             className="portfolio-command"
             data-dock-expanded={dockExpanded ? "true" : "false"}
             role="dialog"
