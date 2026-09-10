@@ -5,14 +5,16 @@ import { join } from "node:path";
 
 const read = (path) => readFileSync(join(process.cwd(), path), "utf8");
 
-test("desktop navigation is a compact interactive dock rather than a scrollable rail", () => {
+test("desktop navigation is a compact dock that can morph into labeled navigation", () => {
   const navigation = read("src/components/layout/Navigation.tsx");
-  const css = read("src/app/portfolio-redesign.css");
+  const css = `${read("src/app/portfolio-redesign.css")}\n${read("src/app/navigation-motion.css")}`;
   assert.match(navigation, /portfolio-dock/);
-  assert.match(navigation, /portfolio-dock__tooltip/);
+  assert.match(navigation, /portfolio-dock__label/);
+  assert.match(navigation, /portfolio-dock__active-pill/);
   assert.match(navigation, /portfolio-command/);
   assert.match(navigation, /portfolio-mobile-dock/);
   assert.match(navigation, /metaKey|ctrlKey/);
+  assert.match(css, /portfolio-dock\[data-expanded="true"\]/);
   assert.doesNotMatch(navigation, /portfolio-rail__nav/);
   assert.doesNotMatch(css, /portfolio-rail__nav/);
 });
