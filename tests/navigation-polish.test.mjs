@@ -53,10 +53,11 @@ test("mobile More trigger visibly mirrors the open navigation sheet", () => {
 
 test("mobile More sheet owns vertical touch scrolling without globally freezing the page", () => {
   assert.doesNotMatch(nav, /document\.body\.style\.overflow/);
-  assert.match(motionCss, /\.portfolio-mobile-sheet__panel\s*\{[^}]*overflow-y:\s*auto/s);
-  assert.match(motionCss, /\.portfolio-mobile-sheet__panel\s*\{[^}]*touch-action:\s*pan-y/s);
-  assert.match(motionCss, /\.portfolio-mobile-sheet__panel\s*\{[^}]*overscroll-behavior:\s*contain/s);
-  assert.match(motionCss, /\.portfolio-mobile-sheet__panel\s*\{[^}]*-webkit-overflow-scrolling:\s*touch/s);
+  assert.match(nav, /overflowY:\s*"auto"/);
+  assert.match(nav, /touchAction:\s*"pan-y"/);
+  assert.match(nav, /overscrollBehavior:\s*"contain"/);
+  assert.match(nav, /WebkitOverflowScrolling:\s*"touch"/);
+  assert.match(nav, /portfolio-mobile-sheet__backdrop[\s\S]*touchAction:\s*"none"/);
 });
 
 test("mobile navigation sheet contains keyboard focus and returns it to the trigger", () => {
