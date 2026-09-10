@@ -39,6 +39,11 @@ export interface ProjectLink {
   href: string;
 }
 
+export interface ProjectOutcome {
+  value: string;
+  label: string;
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -51,6 +56,9 @@ export interface Project {
   problem: string;
   solution: string;
   role: string;
+  jobTitle?: string;
+  jobPeriod?: string;
+  outcomes?: ProjectOutcome[];
   features: string[];
   technologies: string[];
   /** Optional path under /public, e.g. "/projects/govseal.svg". */
@@ -64,25 +72,31 @@ export const projects: Project[] = [
   // ── Forward Deployed Engineer case studies (confidential freelance engagement) ──
   {
     id: "fde-support-copilot",
-    name: "FDE Case Study — Embedded Support Copilot",
-    category: "Forward Deployed · AI in Production",
+    name: "Embedded Support Copilot",
+    category: "Support + CX",
     status: "Shipped",
     tags: ["AI", "Deployment", "Integration"],
     inkPattern: "network",
+    jobTitle: "Forward Deployed Engineer (Freelance)",
+    jobPeriod: "2024 - Present",
+    outcomes: [
+      { value: "~60%", label: "faster first response on covered ticket types" },
+      { value: "~45%", label: "routine tickets resolved from copilot drafts" },
+      { value: "<4 weeks", label: "prototype-to-production delivery" },
+    ],
     summary:
-      "Embedded with a seed-stage startup as a Forward Deployed Engineer to design, integrate, and ship an AI support copilot into their live customer workflow — taking it from a demo that impressed to a system the team relied on daily.",
+      "Took an LLM support prototype into a real customer-support workflow by connecting approved knowledge, ticket context, review gates, and evaluation logging.",
     problem:
-      "The team had a promising LLM prototype but nothing in production. Support agents drowned in repetitive tickets, answers were inconsistent, and the prototype had no connection to the company's real knowledge base, ticketing system, or approval process.",
+      "The startup had a promising demo, but it was disconnected from the knowledge base, ticketing flow, and approval process. Agents still handled repetitive work manually, and an unsupported model answer could become a customer-facing mistake.",
     solution:
-      "I sat with the support team for the first week, mapped the real workflow, and built a copilot wired into their live help-center content and ticketing system. It drafted grounded answers with citations, routed edge cases to a human, and logged every interaction for review. We shipped a thin working slice in two weeks, then iterated weekly from real usage.",
-    role: "Forward Deployed Engineer — discovery, architecture, integration, RAG pipeline, evaluation harness, and production rollout.",
+      "I mapped the live support workflow, wired retrieval to approved help content, added cited drafts and human review, integrated the ticketing path, and logged interactions so quality could be evaluated after launch. The first usable slice shipped quickly, then improved from real agent feedback.",
+    role: "Discovery, architecture, RAG pipeline, ticketing integration, evaluation harness, human-review controls, and production rollout.",
     features: [
-      "Proof: first-response time cut ~60% on covered ticket types",
-      "Proof: ~45% of routine tickets resolved with copilot-drafted answers",
-      "Proof: from prototype to production in under 4 weeks",
-      "Grounded, cited answers from the live knowledge base",
+      "Grounded answers from approved support content",
+      "Citations attached to drafted responses",
       "Human approval before customer-facing sends",
-      "Full interaction logging for evaluation and audit",
+      "Unsupported-question fallback and escalation",
+      "Interaction logging for evaluation and debugging",
     ],
     technologies: ["Python", "LLM orchestration", "RAG", "PostgreSQL", "Ticketing API", "Next.js"],
     note:
@@ -90,25 +104,31 @@ export const projects: Project[] = [
   },
   {
     id: "fde-data-pipeline",
-    name: "FDE Case Study — Production Data & Ops Pipeline",
-    category: "Forward Deployed · Data Integration",
+    name: "Production Data & Ops Pipeline",
+    category: "Operations + Data",
     status: "Shipped",
     tags: ["Data", "Integration", "Deployment"],
     inkPattern: "streams",
+    jobTitle: "Forward Deployed Engineer (Freelance)",
+    jobPeriod: "2024 - Present",
+    outcomes: [
+      { value: "~20 hrs/week", label: "manual reporting work removed" },
+      { value: "Near real-time", label: "reporting cadence after automation" },
+      { value: "99.5%", label: "pipeline uptime across the engagement" },
+    ],
     summary:
-      "Replaced a founder's fragile spreadsheet-and-copy-paste reporting ritual with a deployed data pipeline and live operations dashboard, wired directly into the systems the business already ran on.",
+      "Replaced a recurring spreadsheet-and-copy-paste reporting process with an automated data pipeline, reconciliation layer, dashboard, alerts, and operational handoff.",
     problem:
-      "Every Monday the founding team spent hours manually pulling numbers from four disconnected tools into a spreadsheet. The reports were late, error-prone, and out of date the moment they were finished — and no one trusted them enough to act quickly.",
+      "The founding team manually pulled numbers from four disconnected systems every week. Reporting was slow, fragile, and stale by the time it was assembled.",
     solution:
-      "Embedded with the ops and founding team to understand which decisions the numbers actually drove, then built an automated pipeline that ingested from their live sources, reconciled the data, and surfaced it in a real-time dashboard with alerting. I handed over runbooks so the team could own it.",
-    role: "Forward Deployed Engineer — requirements discovery, pipeline engineering, dashboard build, and operational handover.",
+      "I identified the decisions the reports actually supported, automated ingestion from the live sources, made joins and business rules deterministic, added validation and failure alerts, and delivered a current operating view with runbooks for team ownership.",
+    role: "Requirements discovery, source integration, pipeline engineering, validation, dashboard delivery, alerting, and operational handoff.",
     features: [
-      "Proof: ~20 analyst-hours/week of manual reporting eliminated",
-      "Proof: reporting latency dropped from weekly to near real-time",
-      "Proof: 99.5% pipeline uptime across the engagement",
-      "Automated ingestion and reconciliation across four sources",
-      "Live operations dashboard with threshold alerting",
-      "Runbooks and docs for team self-service ownership",
+      "Automated ingestion across four live sources",
+      "Deterministic reconciliation and schema validation",
+      "Live operations dashboard with threshold alerts",
+      "Failure handling and idempotent scheduled jobs",
+      "Runbooks and documentation for self-service ownership",
     ],
     technologies: ["Python", "SQL", "PostgreSQL", "Supabase", "Power BI", "Scheduled jobs"],
     note:
@@ -116,25 +136,31 @@ export const projects: Project[] = [
   },
   {
     id: "fde-onboarding-agent",
-    name: "FDE Case Study — Customer Onboarding Agent",
-    category: "Forward Deployed · Agent Automation",
+    name: "Customer Onboarding Agent",
+    category: "Customer onboarding",
     status: "Shipped",
     tags: ["AI", "Deployment", "Product"],
     inkPattern: "graph",
+    jobTitle: "Forward Deployed Engineer (Freelance)",
+    jobPeriod: "2024 - Present",
+    outcomes: [
+      { value: "~4 days", label: "onboarding time, down from ~3 weeks" },
+      { value: "~90%", label: "manual founder onboarding steps removed" },
+      { value: "0", label: "irreversible actions without human approval" },
+    ],
     summary:
-      "Designed and deployed a human-in-the-loop onboarding agent that walked each new customer through setup, collected the right data, and unblocked the team — turning a three-week manual scramble into a guided, days-long flow.",
+      "Converted a manual onboarding process into a guided state-based workflow that collected inputs, validated each step, called provisioning APIs, and stopped for human review when the path became ambiguous.",
     problem:
-      "Onboarding new customers was entirely manual: back-and-forth emails, missed steps, and a founder personally chasing every account. It didn't scale, and slow onboarding was quietly costing the startup early customers.",
+      "New customers moved through email threads, missed setup steps, and founder follow-up. The process was hard to scale and slow enough to hurt early customer momentum.",
     solution:
-      "After shadowing two real onboardings, I built an agent that guided customers step by step, validated their inputs, integrated with the product's provisioning APIs, and escalated anything ambiguous to a human with full context. Nothing irreversible happened without a person approving it.",
-    role: "Forward Deployed Engineer — workflow design, agent orchestration, API integration, and human-approval guardrails.",
+      "After shadowing real onboardings, I modeled the process as explicit states, validated inputs before progression, connected allowed provisioning actions, and packaged exceptions with context for human review instead of pretending the agent knew what to do.",
+    role: "Workflow discovery, state-machine design, agent orchestration, provisioning API integration, validation, and human-approval guardrails.",
     features: [
-      "Proof: onboarding time cut from ~3 weeks to ~4 days",
-      "Proof: founder freed from ~90% of manual onboarding steps",
-      "Proof: zero irreversible actions taken without human approval",
-      "Guided, validated step-by-step customer flow",
-      "Deep integration with product provisioning APIs",
+      "State-based onboarding progression",
+      "Input validation before workflow advancement",
+      "Provisioning API actions with confirmation",
       "Human escalation with full context on ambiguity",
+      "Retry and exception handling for failed steps",
     ],
     technologies: ["LLM agents", "Python", "REST APIs", "Next.js", "Webhooks"],
     note:
