@@ -11,11 +11,11 @@ test("Ask Sai is rendered immediately after the hero", () => {
   assert.match(page, /<Hero \/>\s*<AskNitish \/>/);
 });
 
-test("Ask Sai loads Puter.js and uses a current Puter model", () => {
+test("Ask Sai loads Puter.js and uses the documented streamed conversation form", () => {
   assert.match(askSai, /https:\/\/js\.puter\.com\/v2\//);
   assert.match(askSai, /openai\/gpt-5\.6-luna/);
+  assert.match(askSai, /\.ai\.chat\(\[systemMessage, \.\.\.nextHistory\], false, \{/);
   assert.match(askSai, /stream:\s*true/);
-  assert.match(askSai, /normalize:\s*true/);
 });
 
 test("Ask Sai remains grounded and has a local fallback", () => {
