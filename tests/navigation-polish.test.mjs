@@ -51,6 +51,18 @@ test("mobile More trigger visibly mirrors the open navigation sheet", () => {
   assert.match(motionCss, /\.portfolio-mobile-dock button\[aria-expanded="true"\] svg\s*\{[^}]*rotate\(90deg\)/s);
 });
 
+test("mobile navigation sheet contains keyboard focus and returns it to the trigger", () => {
+  assert.match(nav, /mobileTriggerRef = useRef<HTMLButtonElement>/);
+  assert.match(nav, /mobileSheetRef = useRef<HTMLDivElement>/);
+  assert.match(nav, /panel\.querySelectorAll<HTMLElement>/);
+  assert.match(nav, /event\.key !== "Tab"/);
+  assert.match(nav, /document\.activeElement === first/);
+  assert.match(nav, /document\.activeElement === last/);
+  assert.match(nav, /previousFocus\?\.isConnected/);
+  assert.match(nav, /ref=\{mobileTriggerRef\}/);
+  assert.match(nav, /ref=\{mobileSheetRef\}/);
+});
+
 test("navigation controls keep an explicit keyboard focus halo", () => {
   assert.match(motionCss, /\.portfolio-dock__identity:focus-visible/);
   assert.match(motionCss, /\.portfolio-dock__item:focus-visible/);
