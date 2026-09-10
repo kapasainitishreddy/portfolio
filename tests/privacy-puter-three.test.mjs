@@ -65,6 +65,12 @@ test("portfolio uses one section-aware Three.js interaction layer", () => {
   assert.match(threeLayer, /aria-hidden/);
 });
 
+test("reduced-motion visitors get the lightweight visual fallback without mounting WebGL", () => {
+  assert.match(threeLayer, /if \(reduceMotion\)\s*\{[\s\S]*?portfolio-three-layer__fallback/);
+  assert.match(threeLayer, /if \(reduceMotion\)[\s\S]*?return \([\s\S]*?portfolio-three-layer/);
+  assert.doesNotMatch(threeLayer, /frameloop=\{reduceMotion \? "demand" : "always"\}/);
+});
+
 test("public GitHub project data files are removed from the current tree", () => {
   assert.equal(fs.existsSync("src/data/githubProjects.ts"), false);
   assert.equal(fs.existsSync("src/components/sections/GitHubProjects.tsx"), false);
