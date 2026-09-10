@@ -12,13 +12,13 @@ test("hero copy and novels navigation stay intentional", () => {
   assert.match(site, /Read my novels/);
 });
 
-test("homepage keeps the shorter portfolio story", () => {
+test("homepage keeps the shorter portfolio story with Ask Sai as the one promoted utility", () => {
   const page = read("src/app/page.tsx");
   assert.match(page, /<Novels \/>/);
   assert.match(page, /<FeaturedWork \/>/);
+  assert.match(page, /<Hero \/>\s*<AskNitish \/>/);
   assert.doesNotMatch(page, /<IdentityRail \/>/);
   assert.doesNotMatch(page, /<ProofLens \/>/);
-  assert.doesNotMatch(page, /<AskNitish \/>/);
   assert.doesNotMatch(page, /<StartupCaseStudies \/>/);
   assert.doesNotMatch(page, /<WhyHireMe \/>/);
 });
