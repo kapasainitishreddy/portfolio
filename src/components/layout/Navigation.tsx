@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FocusEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { navItems, site, socials } from "@/data/site";
 import { visualMedia } from "@/data/visualMedia";
@@ -67,6 +67,7 @@ export default function Navigation() {
   const [progress, setProgress] = useState(0);
   const [commandOpen, setCommandOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dockExpanded, setDockExpanded] = useState(false);
   const { theme } = useTheme();
   const reduceMotion = useReducedMotion();
 
@@ -82,7 +83,7 @@ export default function Navigation() {
 
   const springTransition = reduceMotion
     ? { duration: 0 }
-    : { type: "spring" as const, stiffness: 420, damping: 38, mass: 0.55 };
+    : { type: "spring" as const, stiffness: 390, damping: 34, mass: 0.62 };
 
   useEffect(() => {
     const onScroll = () => {
@@ -118,10 +119,15 @@ export default function Navigation() {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
-        setCommandOpen((open) => !open);
+        setCommandOpen((open) => {
+          const next = !open;
+          setDockExpanded(next);
+          return next;
+        });
       }
       if (event.key === "Escape") {
         setCommandOpen(false);
+        setDockExpanded(false);
         setMobileOpen(false);
       }
     };
@@ -138,16 +144,44 @@ export default function Navigation() {
 
   const closeOverlays = () => {
     setCommandOpen(false);
+    setDockExpanded(false);
     setMobileOpen(false);
+  };
+
+  const handleDockBlur = (event: FocusEvent<HTMLElement>) => {
+    const nextTarget = event.relatedTarget;
+    if (nextTarget instanceof Node && event.currentTarget.contains(nextTarget)) return;
+    if (!commandOpen) setDockExpanded(false);
   };
 
   return (
     <>
-      <aside className="portfolio-dock" aria-label="Portfolio navigation">
-        <a href="#home" className="portfolio-dock__avatar" aria-label={`${site.name}, home`}>
-          <img src={visualMedia.portrait} alt="" />
-          <span className="portfolio-dock__presence" aria-hidden="true" />
-          <span className="portfolio-dock__tooltip portfolio-dock__tooltip--brand">Sai Nitish</span>
+      <aside
+        className="portfolio-dock"
+        data-expanded={dockExpanded ? "true" : "false"}
+        aria-label="Portfolio navigation"
+        onMouseEnter={() => setDockExpanded(true)}
+        onMouseLeave={() => {
+          if (!commandOpen) setDockExpanded(false);
+        }}
+        onFocusCapture={() => setDockExpanded(true)}
+        onBlurCapture={handleDockBlur}
+      >
+        <a href="#home" className="portfolio-dock__identity" aria-label={`${site.name}, home`}>
+          <span className="portfolio-dock__avatar">
+            <span className="portfolio-dock__avatar-ring" aria-hidden="true" />
+            <img src={visualMedia.portrait} alt="" />
+            <span className="portfolio-dock__presence" aria-hidden="true" />
+          </span>
+          <motion.span
+            className="portfolio-dock__identity-copy"
+            aria-hidden={!dockExpanded}
+            animate={dockExpanded ? { opacity: 1, x: 0 } : { opacity: 0, x: -7 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <strong>{site.shortName}</strong>
+            <small>Engineer · Writer</small>
+          </motion.span>
         </a>
 
         <div className="portfolio-dock__current" aria-live="polite" aria-atomic="true">
@@ -158,12 +192,6 @@ export default function Navigation() {
         <div className="portfolio-dock__divider" />
 
         <nav className="portfolio-dock__nav" aria-label="Primary">
-          <motion.span
-            className="portfolio-dock__active-rail"
-            aria-hidden="true"
-            animate={{ y: `${activeIndex * 2.98}rem` }}
-            transition={springTransition}
-          />
           {dockItems.map((item) => {
             const active = activeHref === item.href;
             return (
@@ -172,13 +200,35 @@ export default function Navigation() {
                 href={item.href}
                 className="portfolio-dock__item"
                 data-active={active ? "true" : "false"}
+                aria-label={item.label}
                 aria-current={active ? "location" : undefined}
-                whileHover={reduceMotion ? undefined : { x: 3, scale: 1.04 }}
-                whileFocus={reduceMotion ? undefined : { x: 2, scale: 1.025 }}
+                whileHover={reduceMotion ? undefined : { x: dockExpanded ? 2 : 1, scale: dockExpanded ? 1.012 : 1.035 }}
+                whileFocus={reduceMotion ? undefined : { x: dockExpanded ? 2 : 1, scale: 1.012 }}
                 transition={springTransition}
               >
-                <DockGlyph name={item.icon} />
-                <span className="portfolio-dock__tooltip">{item.label}</span>
+                {active && (
+                  <motion.span
+                    className="portfolio-dock__active-pill"
+                    layoutId="portfolio-desktop-active-pill"
+                    transition={springTransition}
+                    aria-hidden="true"
+                  />
+                )}
+                <motion.span
+                  className="portfolio-dock__icon"
+                  animate={active && !reduceMotion ? { scale: [1, 1.12, 1], rotate: [0, -2, 0] } : { scale: 1, rotate: 0 }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <DockGlyph name={item.icon} />
+                </motion.span>
+                <motion.span
+                  className="portfolio-dock__label"
+                  aria-hidden={!dockExpanded}
+                  animate={dockExpanded ? { opacity: 1, x: 0 } : { opacity: 0, x: -7 }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {item.label}
+                </motion.span>
               </motion.a>
             );
           })}
@@ -189,12 +239,32 @@ export default function Navigation() {
         <button
           type="button"
           className="portfolio-dock__item portfolio-dock__command-button"
-          aria-label="Open command menu"
+          aria-label="Open quick menu"
           aria-expanded={commandOpen}
-          onClick={() => setCommandOpen((open) => !open)}
+          onClick={() => {
+            setCommandOpen((open) => {
+              const next = !open;
+              setDockExpanded(next);
+              return next;
+            });
+          }}
         >
-          <DockGlyph name="more" />
-          <span className="portfolio-dock__tooltip">Quick menu · Ctrl/⌘ K</span>
+          <motion.span
+            className="portfolio-dock__icon"
+            animate={commandOpen && !reduceMotion ? { rotate: 90, scale: 1.05 } : { rotate: 0, scale: 1 }}
+            transition={springTransition}
+          >
+            <DockGlyph name="more" />
+          </motion.span>
+          <motion.span
+            className="portfolio-dock__label"
+            aria-hidden={!dockExpanded}
+            animate={dockExpanded ? { opacity: 1, x: 0 } : { opacity: 0, x: -7 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
+          >
+            Quick menu
+          </motion.span>
+          <span className="portfolio-dock__shortcut" aria-hidden="true">⌘K</span>
         </button>
 
         <div className="portfolio-dock__progress" aria-hidden="true">
@@ -206,13 +276,14 @@ export default function Navigation() {
         {commandOpen && (
           <motion.div
             className="portfolio-command"
+            data-dock-expanded={dockExpanded ? "true" : "false"}
             role="dialog"
             aria-modal="false"
             aria-label="Portfolio command menu"
-            initial={reduceMotion ? false : { opacity: 0, x: -12, scale: 0.97 }}
+            initial={reduceMotion ? false : { opacity: 0, x: -18, scale: 0.965 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -8, scale: 0.98 }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -12, scale: 0.98 }}
+            transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 30, mass: 0.65 }}
           >
             <div className="portfolio-command__header">
               <div>
@@ -221,7 +292,7 @@ export default function Navigation() {
               </div>
               <div className="portfolio-command__header-actions">
                 <span className="portfolio-command__kbd" aria-hidden="true">Ctrl/⌘ K</span>
-                <button type="button" onClick={() => setCommandOpen(false)} aria-label="Close command menu">
+                <button type="button" onClick={closeOverlays} aria-label="Close command menu">
                   <CloseIcon width={17} height={17} />
                 </button>
               </div>
@@ -266,22 +337,28 @@ export default function Navigation() {
           const active = activeHref === item.href;
           return (
             <a key={item.href} href={item.href} data-active={active ? "true" : "false"} aria-current={active ? "location" : undefined}>
-              <DockGlyph name={item.icon} />
-              <span>{item.label === "Case studies" ? "Work" : item.label}</span>
               {active && (
                 <motion.span
-                  className="portfolio-mobile-dock__indicator"
-                  layoutId="portfolio-mobile-active-indicator"
+                  className="portfolio-mobile-dock__active-pill"
+                  layoutId="portfolio-mobile-active-pill"
                   transition={springTransition}
                   aria-hidden="true"
                 />
               )}
+              <motion.span
+                className="portfolio-mobile-dock__icon"
+                animate={active && !reduceMotion ? { y: -2, scale: 1.08 } : { y: 0, scale: 1 }}
+                transition={springTransition}
+              >
+                <DockGlyph name={item.icon} />
+              </motion.span>
+              <span className="portfolio-mobile-dock__label">{item.label === "Case studies" ? "Work" : item.label}</span>
             </a>
           );
         })}
         <button type="button" onClick={() => setMobileOpen(true)} aria-label="More navigation options" aria-expanded={mobileOpen}>
-          <DockGlyph name="more" />
-          <span>More</span>
+          <span className="portfolio-mobile-dock__icon"><DockGlyph name="more" /></span>
+          <span className="portfolio-mobile-dock__label">More</span>
         </button>
       </nav>
 
