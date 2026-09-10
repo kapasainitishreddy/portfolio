@@ -48,6 +48,19 @@ test("desktop quick menu moves focus into its actions and restores the opener", 
   assert.match(nav, /ref=\{commandMenuRef\}/);
 });
 
+test("desktop quick menu supports arrow, Home, and End navigation without trapping Tab", () => {
+  assert.match(nav, /handleCommandGridKeyDown/);
+  assert.match(nav, /event\.key === "ArrowDown"/);
+  assert.match(nav, /event\.key === "ArrowUp"/);
+  assert.match(nav, /event\.key === "Home"/);
+  assert.match(nav, /event\.key === "End"/);
+  assert.match(nav, /querySelectorAll<HTMLAnchorElement>\("a\[href\]"\)/);
+  assert.match(nav, /event\.preventDefault\(\)/);
+  assert.match(nav, /actions\[nextIndex\]\?\.focus\(\)/);
+  assert.match(nav, /onKeyDown=\{handleCommandGridKeyDown\}/);
+  assert.doesNotMatch(nav, /event\.key === "Tab"[\s\S]*?preventDefault\(\)/);
+});
+
 test("mobile dock uses a moving glass active pill", () => {
   assert.match(nav, /portfolio-mobile-dock__active-pill/);
   assert.match(nav, /layoutId="portfolio-mobile-active-pill"/);
