@@ -44,12 +44,21 @@ test("mobile dock uses a moving glass active pill", () => {
   assert.match(css, /\.portfolio-mobile-dock__active-pill/);
 });
 
+test("mobile More trigger visibly mirrors the open navigation sheet", () => {
+  assert.match(nav, /aria-expanded=\{mobileOpen\}/);
+  assert.match(motionCss, /\.portfolio-mobile-dock button::before\s*\{/);
+  assert.match(motionCss, /\.portfolio-mobile-dock button\[aria-expanded="true"\]::before\s*\{/);
+  assert.match(motionCss, /\.portfolio-mobile-dock button\[aria-expanded="true"\] svg\s*\{[^}]*rotate\(90deg\)/s);
+});
+
 test("navigation polish keeps reduced-motion coverage for morphing surfaces", () => {
   const reducedMotion = css.split("@media (prefers-reduced-motion: reduce)").pop() ?? "";
   assert.match(reducedMotion, /portfolio-dock/);
   assert.match(reducedMotion, /portfolio-dock__label/);
   assert.match(reducedMotion, /portfolio-dock__active-pill/);
   assert.match(reducedMotion, /portfolio-mobile-dock__active-pill/);
+  assert.match(reducedMotion, /portfolio-mobile-dock button::before/);
+  assert.match(reducedMotion, /portfolio-mobile-dock button svg/);
 });
 
 test("dock portrait accent only pulses when the dock opens", () => {

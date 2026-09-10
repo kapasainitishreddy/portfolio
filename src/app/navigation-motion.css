@@ -35,6 +35,44 @@
   color: var(--color-rice);
 }
 
+/* Keep the mobile More trigger visually connected to the sheet it controls.
+   The semantic aria-expanded state drives the same restrained glass treatment
+   as the active-section pill, while the ellipsis quietly morphs vertical. */
+.portfolio-mobile-dock button::before {
+  content: "";
+  position: absolute;
+  inset: .18rem;
+  z-index: 0;
+  border: 1px solid color-mix(in srgb, var(--color-copper) 24%, transparent);
+  border-radius: .9rem;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--color-copper) 18%, transparent), color-mix(in srgb, var(--color-charcoal) 42%, transparent));
+  box-shadow:
+    0 8px 20px color-mix(in srgb, var(--color-copper) 9%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, .04);
+  opacity: 0;
+  transform: scale(.94);
+  transition: opacity .18s ease, transform .22s cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+}
+
+.portfolio-mobile-dock button[aria-expanded="true"] {
+  color: var(--color-rice);
+}
+
+.portfolio-mobile-dock button[aria-expanded="true"]::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.portfolio-mobile-dock button[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+.portfolio-mobile-dock button[aria-expanded="true"] .portfolio-mobile-dock__label {
+  color: var(--color-rice);
+}
+
 @media (min-width: 1024px) {
   .portfolio-dock {
     overflow: hidden;
@@ -356,7 +394,9 @@
   .portfolio-dock__avatar-ring,
   .portfolio-command,
   .portfolio-mobile-dock__active-pill,
-  .portfolio-mobile-dock__icon {
+  .portfolio-mobile-dock__icon,
+  .portfolio-mobile-dock button::before,
+  .portfolio-mobile-dock button svg {
     transition: none !important;
     animation: none !important;
   }
