@@ -5,6 +5,7 @@ import "./polish.css";
 import "./portfolio-redesign.css";
 import "./navigation-polish.css";
 import "./navigation-motion.css";
+import "./section-transitions.css";
 import "./three-layer.css";
 import { site, socials } from "@/data/site";
 import { InkProvider } from "@/components/ink/InkProvider";
