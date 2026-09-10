@@ -16,6 +16,7 @@ test("Ask Sai loads Puter.js and uses the documented streamed conversation form"
   assert.match(askSai, /openai\/gpt-5\.6-luna/);
   assert.match(askSai, /\.ai\.chat\(\[systemMessage, \.\.\.nextHistory\], false, \{/);
   assert.match(askSai, /stream:\s*true/);
+  assert.match(askSai, /max_tokens:\s*600/);
 });
 
 test("Ask Sai remains grounded and has a local fallback", () => {
