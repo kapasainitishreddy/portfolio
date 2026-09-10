@@ -36,6 +36,14 @@ test("Ask Sai includes recruiter, private systems, and Asta modes", () => {
   assert.match(askSai, /private product names/);
 });
 
+test("switching Ask Sai modes invalidates stale Puter streams before they can overwrite the new mode", () => {
+  assert.match(askSai, /requestIdRef = useRef\(0\)/);
+  assert.match(askSai, /requestIdRef\.current \+= 1/);
+  assert.match(askSai, /const requestId = \+\+requestIdRef\.current/);
+  assert.match(askSai, /if \(requestId !== requestIdRef\.current\) return/);
+  assert.match(askSai, /if \(requestId === requestIdRef\.current\) setLoading\(false\)/);
+});
+
 test("hero exposes Ask Sai without replacing the primary work CTA", () => {
   assert.match(site, /label: "See how I build", href: "#featured-work", kind: "primary"/);
   assert.match(site, /label: "Ask Sai", href: "#ask-nitish", kind: "ghost"/);
