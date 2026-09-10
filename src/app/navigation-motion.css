@@ -285,6 +285,44 @@
   }
 }
 
+/* Landscape tablets and other coarse-pointer desktop-width devices do not have
+   a reliable hover state. Keep the dock readable instead of making labels
+   dependent on a hover-only morph, and skip the decorative sweep animation. */
+@media (min-width: 1024px) and (hover: none),
+       (min-width: 1024px) and (pointer: coarse) {
+  .portfolio-dock,
+  .portfolio-dock[data-expanded="false"],
+  .portfolio-dock[data-expanded="true"] {
+    width: 12.25rem;
+    will-change: auto;
+  }
+
+  .portfolio-dock::before {
+    display: none;
+  }
+
+  .portfolio-dock__identity-copy,
+  .portfolio-dock__label {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .portfolio-dock__shortcut,
+  .portfolio-dock[data-expanded="false"] .portfolio-dock__shortcut {
+    opacity: 1;
+  }
+
+  .portfolio-dock[data-expanded="false"] .portfolio-dock__divider {
+    width: calc(100% - .65rem);
+  }
+
+  .portfolio-command,
+  .portfolio-command[data-dock-expanded="false"],
+  .portfolio-command[data-dock-expanded="true"] {
+    left: 14rem;
+  }
+}
+
 @keyframes portfolio-dock-breathe {
   0%, 100% {
     opacity: .5;
