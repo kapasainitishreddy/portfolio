@@ -41,7 +41,7 @@ test("switching Ask Sai modes invalidates stale Puter streams before they can ov
   assert.match(askSai, /requestIdRef\.current \+= 1/);
   assert.match(askSai, /const requestId = \+\+requestIdRef\.current/);
   assert.match(askSai, /if \(requestId !== requestIdRef\.current\) return/);
-  assert.match(askSai, /if \(requestId === requestIdRef\.current\) setLoading\(false\)/);
+  assert.match(askSai, /if \(requestId === requestIdRef\.current\) \{[\s\S]*?setLoading\(false\)/);
 });
 
 test("Ask Sai lets visitors stop an in-flight Puter response without stale chunks resuming it", () => {
