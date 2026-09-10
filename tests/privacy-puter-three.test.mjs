@@ -81,6 +81,14 @@ test("reduced-motion visitors get the lightweight visual fallback without mounti
   assert.doesNotMatch(threeLayer, /frameloop=\{reduceMotion \? "demand" : "always"\}/);
 });
 
+test("Three.js pauses continuous rendering while the browser tab is hidden", () => {
+  assert.match(threeLayer, /const \[pageVisible, setPageVisible\] = useState\(true\)/);
+  assert.match(threeLayer, /document\.visibilityState !== "hidden"/);
+  assert.match(threeLayer, /addEventListener\("visibilitychange"/);
+  assert.match(threeLayer, /removeEventListener\("visibilitychange"/);
+  assert.match(threeLayer, /frameloop=\{pageVisible \? "always" : "never"\}/);
+});
+
 test("public GitHub project data files are removed from the current tree", () => {
   assert.equal(fs.existsSync("src/data/githubProjects.ts"), false);
   assert.equal(fs.existsSync("src/components/sections/GitHubProjects.tsx"), false);
