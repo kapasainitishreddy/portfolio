@@ -4,6 +4,7 @@ import fs from "node:fs";
 
 const nav = fs.readFileSync("src/components/layout/Navigation.tsx", "utf8");
 const page = fs.readFileSync("src/app/page.tsx", "utf8");
+const site = fs.readFileSync("src/data/site.ts", "utf8");
 const quickMenuKeyboard = fs.existsSync("src/components/layout/QuickMenuKeyboardNavigation.tsx")
   ? fs.readFileSync("src/components/layout/QuickMenuKeyboardNavigation.tsx", "utf8")
   : "";
@@ -40,6 +41,26 @@ test("expanded dock reveals identity context beside the portrait", () => {
 test("command palette responds to the dock expansion state", () => {
   assert.match(nav, /data-dock-expanded=\{dockExpanded \? "true" : "false"\}/);
   assert.match(css, /\.portfolio-command\[data-dock-expanded="true"\]/);
+});
+
+test("morphing navigation follows the homepage section order", () => {
+  const orderedHrefs = [
+    "#featured-work",
+    "#private-builds",
+    "#novels",
+    "#ai-universe",
+    "#ai-safety",
+    "#experience",
+    "#about",
+    "#contact",
+  ];
+
+  let previousIndex = -1;
+  for (const href of orderedHrefs) {
+    const index = site.indexOf(`href: "${href}"`);
+    assert.ok(index > previousIndex, `${href} should follow the same downward order as the homepage`);
+    previousIndex = index;
+  }
 });
 
 test("desktop quick menu moves focus into its actions and restores the opener", () => {
