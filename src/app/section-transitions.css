@@ -1,0 +1,13 @@
+/* Keep semantic anchor navigation visually connected to the morphing dock.
+   Native smooth scrolling is lightweight and leaves manual scrolling untouched. */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respect the visitor's motion preference for every dock, quick-menu, skip-link,
+   and in-page anchor jump. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
