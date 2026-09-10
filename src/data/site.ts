@@ -45,6 +45,7 @@ export const hero = {
   ],
   actions: [
     { label: "See how I build", href: "#featured-work", kind: "primary" as const },
+    { label: "Ask Sai", href: "#ask-nitish", kind: "ghost" as const },
     { label: "Read my novels", href: "#novels", kind: "ghost" as const },
     { label: "Contact me", href: "#contact", kind: "ghost" as const },
   ],

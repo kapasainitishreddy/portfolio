@@ -42,7 +42,7 @@ test("novels section is an interactive visual book stage", () => {
   assert.match(novels, /novel-stage/);
   assert.match(novels, /novel-cover-rail/);
   assert.match(novels, /aria-live/);
-  assert.match(novels, /visualMedia/);
+  assert.match(novels, /bookCovers/);
 });
 
 test("portfolio includes the additional Asta covers already present in the user's library", () => {

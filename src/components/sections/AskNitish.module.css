@@ -1,0 +1,95 @@
+.modeRail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.modeButton {
+  border: 1px solid color-mix(in srgb, var(--color-silver) 16%, transparent);
+  border-radius: 999px;
+  padding: 0.5rem 0.72rem;
+  background: color-mix(in srgb, var(--color-charcoal) 42%, transparent);
+  color: var(--color-silver);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.modeButton:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--color-copper) 56%, transparent);
+  color: var(--color-rice);
+}
+
+.modeButton[data-active="true"] {
+  border-color: color-mix(in srgb, var(--color-copper) 70%, transparent);
+  background: color-mix(in srgb, var(--color-copper) 15%, var(--color-charcoal));
+  color: var(--color-rice);
+}
+
+.modeButton:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 3px;
+}
+
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem 1rem;
+  margin-top: 0.8rem;
+  color: var(--color-silver);
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.statusDot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-silver) 58%, transparent);
+}
+
+.statusDot[data-ready="true"] {
+  background: #78b98e;
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, #78b98e 13%, transparent);
+}
+
+.statusDot[data-busy="true"] {
+  background: var(--color-copper);
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--color-copper) 13%, transparent);
+  animation: ask-sai-pulse 1.15s ease-in-out infinite;
+}
+
+.fallback {
+  color: color-mix(in srgb, var(--color-copper) 78%, var(--color-silver));
+}
+
+.answerBody {
+  white-space: pre-wrap;
+}
+
+@keyframes ask-sai-pulse {
+  0%, 100% { opacity: 0.62; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modeButton,
+  .statusDot[data-busy="true"] {
+    animation: none;
+    transition: none;
+  }
+
+  .modeButton:hover {
+    transform: none;
+  }
+}

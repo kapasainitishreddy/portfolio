@@ -58,9 +58,10 @@ test("homepage tells the engineer-writer story in the intended order", () => {
   assert.equal(page.includes("<Loader />"), false, "Homepage should not block first paint with an intro loader");
 });
 
-test("homepage keeps deeper proof available without restoring the old endless scroll", () => {
+test("homepage keeps deeper proof focused while promoting Ask Sai", () => {
   const page = read("src/app/page.tsx");
-  for (const marker of ["<CrossFunctional />", "<AskNitish />", "<StartupCaseStudies />", "<Projects />", "<WhyHireMe />"]) {
+  assert.match(page, /<Hero \/>\s*<AskNitish \/>/, "Ask Sai should sit directly after the hero");
+  for (const marker of ["<CrossFunctional />", "<StartupCaseStudies />", "<Projects />", "<WhyHireMe />"]) {
     assert.equal(page.includes(marker), false, `${marker} should stay out of the primary homepage flow`);
   }
   for (const retained of ["src/components/sections/CrossFunctional.tsx", "src/components/sections/AskNitish.tsx", "src/components/sections/StartupCaseStudies.tsx", "src/components/sections/FlagshipCaseStudies.tsx", "src/components/sections/ProofLens.tsx"]) {
@@ -150,12 +151,16 @@ test("portfolio states undergraduate AI safety teaching clearly", () => {
   assert.match(teaching, /evaluations|guardrails|oversight/i);
 });
 
-test("Ask Nitish is grounded locally and does not pretend to be an external LLM", () => {
+test("Ask Sai uses Puter while preserving portfolio grounding and a local fallback", () => {
   const guide = read("src/data/askNitish.ts");
   const section = read("src/components/sections/AskNitish.tsx");
   assert.match(guide, /findGroundedAnswer/);
-  assert.match(section, /A grounded guide to my work/i);
-  assert.doesNotMatch(section, /GPT|OpenAI|large language model/i);
+  assert.match(section, /Ask the portfolio/i);
+  assert.match(section, /js\.puter\.com\/v2/);
+  assert.match(section, /openai\/gpt-5\.6-luna/);
+  assert.match(section, /Use ONLY the PORTFOLIO CONTEXT/);
+  assert.match(section, /findGroundedAnswer/);
+  assert.match(section, /Using local fallback/);
 });
 
 test("three visual themes use three independent background engines", () => {

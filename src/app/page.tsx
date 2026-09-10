@@ -1,6 +1,7 @@
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
+import AskNitish from "@/components/sections/AskNitish";
 import FeaturedWork from "@/components/sections/FeaturedWork";
 import Novels from "@/components/sections/Novels";
 import AIUniverse from "@/components/sections/AIUniverse";
@@ -16,6 +17,7 @@ export default function Home() {
       <Navigation />
       <main id="main" className="portfolio-main">
         <Hero />
+        <AskNitish />
         <FeaturedWork />
         <Novels />
         <AIUniverse />
