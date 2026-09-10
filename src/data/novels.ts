@@ -1,5 +1,12 @@
 export type NovelAccent = "amber" | "blue" | "crimson" | "gold" | "violet" | "monsoon" | "noir" | "city";
-export type NovelCoverKey = "girlDeadMan" | "cityDrinking";
+export type NovelCoverKey =
+  | "stillFiguringItOut"
+  | "bareMinimum"
+  | "regret"
+  | "catWhoStayed"
+  | "wolfOneRedMonsoon"
+  | "girlDeadMan"
+  | "cityDrinking";
 
 export interface Novel {
   id: string;
@@ -19,6 +26,7 @@ export const novels: Novel[] = [
     genre: "Autofiction",
     tone: "Reflective · intimate",
     accent: "blue",
+    coverKey: "stillFiguringItOut",
   },
   {
     id: "bare-minimum",
@@ -27,6 +35,7 @@ export const novels: Novel[] = [
     genre: "Relationship drama",
     tone: "Intimate · cautionary",
     accent: "amber",
+    coverKey: "bareMinimum",
   },
   {
     id: "you-always-come-back",
@@ -43,6 +52,7 @@ export const novels: Novel[] = [
     genre: "Literary drama",
     tone: "Adult · reflective",
     accent: "crimson",
+    coverKey: "regret",
   },
   {
     id: "the-cat-who-stayed",
@@ -51,6 +61,7 @@ export const novels: Novel[] = [
     genre: "Contemporary fiction",
     tone: "Warm · bittersweet",
     accent: "gold",
+    coverKey: "catWhoStayed",
   },
   {
     id: "wolf-one-red-monsoon",
@@ -59,6 +70,7 @@ export const novels: Novel[] = [
     genre: "Vigilante thriller",
     tone: "Dark · kinetic",
     accent: "monsoon",
+    coverKey: "wolfOneRedMonsoon",
   },
   {
     id: "girl-who-drew-a-dead-man",
