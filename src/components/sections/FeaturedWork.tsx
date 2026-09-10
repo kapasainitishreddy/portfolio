@@ -12,14 +12,18 @@ export default function FeaturedWork() {
   const featured = projects.slice(0, 3);
 
   return (
-    <Section id="featured-work" label="Selected work">
+    <Section id="featured-work" label="Forward-deployed work">
       <Reveal>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
-            <h2 className="text-rice" style={{ fontSize: "clamp(2.1rem, 4vw, 3.6rem)" }}>Three examples where the work had to survive real operations.</h2>
-            <p className="mt-5 max-w-2xl leading-7 text-silver">These are the clearest examples of how I discover a workflow, build the working slice, integrate it, and measure whether it actually improved the job.</p>
+            <h2 className="text-rice" style={{ fontSize: "clamp(2.1rem, 4vw, 3.6rem)" }}>
+              The job, system, and measured result are visible up front.
+            </h2>
+            <p className="mt-5 max-w-2xl leading-7 text-silver">
+              Client names stay confidential, but the role, time period, implementation scope, stack, and measured outcomes stay concrete. Open a card for the workflow, controls, and what actually shipped.
+            </p>
           </div>
-          <p className="font-mono-label">Problem → system → measured change</p>
+          <p className="font-mono-label">Role → build → measured outcome</p>
         </div>
       </Reveal>
       <div className="mt-10 grid gap-5 lg:grid-cols-3">
