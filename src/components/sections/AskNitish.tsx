@@ -174,6 +174,11 @@ export default function AskNitish() {
     });
   };
 
+  const stopResponse = () => {
+    requestIdRef.current += 1;
+    setLoading(false);
+  };
+
   const ask = async (value: string) => {
     const trimmed = value.trim();
     if (!trimmed || loading) return;
@@ -311,6 +316,16 @@ export default function AskNitish() {
                 <button type="submit" className="portfolio-cta portfolio-cta--primary ask-nitish__submit" disabled={loading || !question.trim()}>
                   {loading ? "Thinking..." : "Ask Sai"}
                 </button>
+                {loading && (
+                  <button
+                    type="button"
+                    className="portfolio-cta portfolio-cta--ghost"
+                    onClick={stopResponse}
+                    aria-label="Stop Ask Sai response"
+                  >
+                    Stop response
+                  </button>
+                )}
               </div>
 
               <div className={styles.statusRow} aria-live="polite">
