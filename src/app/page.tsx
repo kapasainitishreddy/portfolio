@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import AskNitish from "@/components/sections/AskNitish";
 import FeaturedWork from "@/components/sections/FeaturedWork";
+import Projects from "@/components/sections/Projects";
 import Novels from "@/components/sections/Novels";
 import AIUniverse from "@/components/sections/AIUniverse";
 import AISafetyTeaching from "@/components/sections/AISafetyTeaching";
@@ -19,6 +20,7 @@ export default function Home() {
         <Hero />
         <AskNitish />
         <FeaturedWork />
+        <Projects />
         <Novels />
         <AIUniverse />
         <AISafetyTeaching />
