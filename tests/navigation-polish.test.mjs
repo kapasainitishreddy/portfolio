@@ -51,6 +51,16 @@ test("mobile More trigger visibly mirrors the open navigation sheet", () => {
   assert.match(motionCss, /\.portfolio-mobile-dock button\[aria-expanded="true"\] svg\s*\{[^}]*rotate\(90deg\)/s);
 });
 
+test("navigation controls keep an explicit keyboard focus halo", () => {
+  assert.match(motionCss, /\.portfolio-dock__identity:focus-visible/);
+  assert.match(motionCss, /\.portfolio-dock__item:focus-visible/);
+  assert.match(motionCss, /\.portfolio-command a:focus-visible/);
+  assert.match(motionCss, /\.portfolio-mobile-dock a:focus-visible/);
+  assert.match(motionCss, /\.portfolio-mobile-sheet button:focus-visible/);
+  assert.match(motionCss, /outline:\s*2px solid/);
+  assert.match(motionCss, /outline-offset:\s*2px/);
+});
+
 test("navigation polish keeps reduced-motion coverage for morphing surfaces", () => {
   const reducedMotion = css.split("@media (prefers-reduced-motion: reduce)").pop() ?? "";
   assert.match(reducedMotion, /portfolio-dock/);
