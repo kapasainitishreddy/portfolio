@@ -138,13 +138,6 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileOpen]);
-
-  useEffect(() => {
     if (!mobileOpen) return;
 
     const panel = mobileSheetRef.current;
@@ -421,10 +414,22 @@ export default function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <button className="portfolio-mobile-sheet__backdrop" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation" />
+            <button
+              className="portfolio-mobile-sheet__backdrop"
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close navigation"
+              style={{ touchAction: "none" }}
+            />
             <motion.div
               ref={mobileSheetRef}
               className="portfolio-mobile-sheet__panel"
+              style={{
+                overflowY: "auto",
+                overscrollBehavior: "contain",
+                touchAction: "pan-y",
+                WebkitOverflowScrolling: "touch",
+              }}
               initial={reduceMotion ? false : { y: 38 }}
               animate={{ y: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { y: 38 }}
