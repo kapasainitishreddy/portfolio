@@ -1,4 +1,5 @@
 import Navigation from "@/components/layout/Navigation";
+import QuickMenuKeyboardNavigation from "@/components/layout/QuickMenuKeyboardNavigation";
 import Footer from "@/components/layout/Footer";
 import PortfolioThreeLayer from "@/components/three/PortfolioThreeLayer";
 import Hero from "@/components/sections/Hero";
@@ -17,6 +18,7 @@ export default function Home() {
     <>
       <a href="#main" className="skip-link">Skip to content</a>
       <Navigation />
+      <QuickMenuKeyboardNavigation />
       <PortfolioThreeLayer />
       <main id="main" className="portfolio-main">
         <Hero />
