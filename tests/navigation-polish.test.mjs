@@ -58,7 +58,7 @@ test("desktop quick menu supports arrow, Home, and End navigation without trappi
   assert.match(quickMenuKeyboard, /event\.key === "ArrowUp"/);
   assert.match(quickMenuKeyboard, /event\.key === "Home"/);
   assert.match(quickMenuKeyboard, /event\.key === "End"/);
-  assert.match(quickMenuKeyboard, /closest<HTMLElement>\("\.portfolio-command__grid"\)/);
+  assert.match(quickMenuKeyboard, /closest\("\.portfolio-command__grid"\)/);
   assert.match(quickMenuKeyboard, /querySelectorAll<HTMLAnchorElement>\("a\[href\]"\)/);
   assert.match(quickMenuKeyboard, /actions\[nextIndex\]\?\.focus\(\)/);
   assert.match(quickMenuKeyboard, /document\.addEventListener\("keydown", onKeyDown\)/);
