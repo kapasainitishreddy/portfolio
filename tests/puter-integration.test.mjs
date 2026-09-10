@@ -52,6 +52,15 @@ test("Ask Sai lets visitors stop an in-flight Puter response without stale chunk
   assert.match(askSai, /aria-label="Stop Ask Sai response"/);
 });
 
+test("Ask Sai frame-batches streamed UI updates and avoids per-chunk live-region chatter", () => {
+  assert.match(askSai, /streamFrameRef = useRef<number \| null>\(null\)/);
+  assert.match(askSai, /window\.requestAnimationFrame\(\(\) => \{/);
+  assert.match(askSai, /window\.cancelAnimationFrame\(streamFrameRef\.current\)/);
+  assert.match(askSai, /if \(streamFrameRef\.current !== null\) return/);
+  assert.doesNotMatch(askSai, /streamedText \+= part\.text;\s*setAnswer\(/s);
+  assert.match(askSai, /aria-live=\{loading \? "off" : "polite"\}/);
+});
+
 test("hero exposes Ask Sai without replacing the primary work CTA", () => {
   assert.match(site, /label: "See how I build", href: "#featured-work", kind: "primary"/);
   assert.match(site, /label: "Ask Sai", href: "#ask-nitish", kind: "ghost"/);
