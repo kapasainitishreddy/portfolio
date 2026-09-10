@@ -17,9 +17,9 @@ test("featured work is anchored to four real roles while employer identities sta
     "Operations Data Analyst",
   ]) assert.match(cases, new RegExp(role.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 
-  assert.match(cases, /Outlier AI/);
-  assert.doesNotMatch(cases, /Augmentare(?: Inc\.)?/i);
-  assert.doesNotMatch(cases, /VN Technologies/i);
+  const organizations = [...cases.matchAll(/organization:\s*"([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(organizations.length, 4);
+  assert.ok(organizations.every((value) => value.includes("Private") || value === "Outlier AI"));
   assert.match(cases, /Private data & automation work/);
   assert.match(cases, /Private operations analytics work/);
 
