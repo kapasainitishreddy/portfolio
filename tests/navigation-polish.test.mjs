@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const nav = fs.readFileSync("src/components/layout/Navigation.tsx", "utf8");
+const page = fs.readFileSync("src/app/page.tsx", "utf8");
+const quickMenuKeyboard = fs.existsSync("src/components/layout/QuickMenuKeyboardNavigation.tsx")
+  ? fs.readFileSync("src/components/layout/QuickMenuKeyboardNavigation.tsx", "utf8")
+  : "";
 const baseCss = fs.readFileSync("src/app/portfolio-redesign.css", "utf8");
 const polishCss = fs.existsSync("src/app/navigation-polish.css")
   ? fs.readFileSync("src/app/navigation-polish.css", "utf8")
@@ -46,6 +50,20 @@ test("desktop quick menu moves focus into its actions and restores the opener", 
   assert.match(nav, /if \(previousFocus\?\.isConnected\) previousFocus\.focus\(\)/);
   assert.match(nav, /ref=\{commandTriggerRef\}/);
   assert.match(nav, /ref=\{commandMenuRef\}/);
+});
+
+test("desktop quick menu supports arrow, Home, and End navigation without trapping Tab", () => {
+  assert.match(page, /QuickMenuKeyboardNavigation/);
+  assert.match(quickMenuKeyboard, /event\.key === "ArrowDown"/);
+  assert.match(quickMenuKeyboard, /event\.key === "ArrowUp"/);
+  assert.match(quickMenuKeyboard, /event\.key === "Home"/);
+  assert.match(quickMenuKeyboard, /event\.key === "End"/);
+  assert.match(quickMenuKeyboard, /closest\("\.portfolio-command__grid"\)/);
+  assert.match(quickMenuKeyboard, /querySelectorAll<HTMLAnchorElement>\("a\[href\]"\)/);
+  assert.match(quickMenuKeyboard, /actions\[nextIndex\]\?\.focus\(\)/);
+  assert.match(quickMenuKeyboard, /document\.addEventListener\("keydown", onKeyDown\)/);
+  assert.match(quickMenuKeyboard, /document\.removeEventListener\("keydown", onKeyDown\)/);
+  assert.doesNotMatch(quickMenuKeyboard, /event\.key === "Tab"/);
 });
 
 test("mobile dock uses a moving glass active pill", () => {
