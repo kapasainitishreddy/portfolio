@@ -45,6 +45,7 @@ test("project library contains only verified public GitHub projects", () => {
   const urls = [...githubProjects.matchAll(/href:\s*"([^"]+)"/g)].map((match) => match[1]);
   assert.equal(urls.length, 5);
   assert.ok(urls.every((url) => url.startsWith("https://github.com/kapasainitishreddy/")));
+  assert.equal([...githubProjects.matchAll(/boundary:/g)].length, 5, "Every public project should disclose an honest implementation boundary");
   assert.match(projectsSection, /githubProjects/);
   assert.match(projectsSection, /View repository/);
 });
