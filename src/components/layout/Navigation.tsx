@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FocusEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FocusEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { navItems, site, socials } from "@/data/site";
 import { visualMedia } from "@/data/visualMedia";
@@ -68,6 +68,8 @@ export default function Navigation() {
   const [commandOpen, setCommandOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dockExpanded, setDockExpanded] = useState(false);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
+  const mobileSheetRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const reduceMotion = useReducedMotion();
 
@@ -139,6 +141,46 @@ export default function Navigation() {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const panel = mobileSheetRef.current;
+    if (!panel) return;
+
+    const previousFocus = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : mobileTriggerRef.current;
+    const focusable = Array.from(
+      panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const focusFrame = window.requestAnimationFrame(() => first?.focus());
+
+    const keepFocusInside = (event: KeyboardEvent) => {
+      if (event.key !== "Tab" || focusable.length === 0) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+
+    panel.addEventListener("keydown", keepFocusInside);
+
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      panel.removeEventListener("keydown", keepFocusInside);
+      window.requestAnimationFrame(() => {
+        if (previousFocus?.isConnected) previousFocus.focus();
+        else mobileTriggerRef.current?.focus();
+      });
     };
   }, [mobileOpen]);
 
@@ -356,7 +398,13 @@ export default function Navigation() {
             </a>
           );
         })}
-        <button type="button" onClick={() => setMobileOpen(true)} aria-label="More navigation options" aria-expanded={mobileOpen}>
+        <button
+          ref={mobileTriggerRef}
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          aria-label="More navigation options"
+          aria-expanded={mobileOpen}
+        >
           <span className="portfolio-mobile-dock__icon"><DockGlyph name="more" /></span>
           <span className="portfolio-mobile-dock__label">More</span>
         </button>
@@ -375,6 +423,7 @@ export default function Navigation() {
           >
             <button className="portfolio-mobile-sheet__backdrop" type="button" onClick={() => setMobileOpen(false)} aria-label="Close navigation" />
             <motion.div
+              ref={mobileSheetRef}
               className="portfolio-mobile-sheet__panel"
               initial={reduceMotion ? false : { y: 38 }}
               animate={{ y: 0 }}
