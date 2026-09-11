@@ -5,6 +5,7 @@ import "./polish.css";
 import "./portfolio-redesign.css";
 import "./navigation-polish.css";
 import "./navigation-motion.css";
+import "./navigation-forced-colors.css";
 import "./mobile-sheet-scroll-lock.css";
 import "./section-transitions.css";
 import "./three-layer.css";
