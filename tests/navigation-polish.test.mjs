@@ -63,11 +63,13 @@ test("morphing navigation follows the homepage section order", () => {
   }
 });
 
-test("desktop quick menu moves focus into its actions and restores the opener", () => {
+test("desktop quick menu focuses the active section action and restores the opener", () => {
   assert.match(nav, /commandTriggerRef = useRef<HTMLButtonElement>/);
   assert.match(nav, /commandMenuRef = useRef<HTMLDivElement>/);
   assert.match(nav, /const menu = commandMenuRef\.current/);
-  assert.match(nav, /const commandFocusFrame = window\.requestAnimationFrame\(\(\) => firstAction\?\.focus\(\)\)/);
+  assert.match(nav, /const activeAction = menu\.querySelector<HTMLElement>\('\.portfolio-command__grid a\[data-active="true"\]'\)/);
+  assert.match(nav, /const firstAction = menu\.querySelector<HTMLElement>\("\.portfolio-command__grid a\[href\]"\)/);
+  assert.match(nav, /window\.requestAnimationFrame\(\(\) => \(activeAction \?\? firstAction\)\?\.focus\(\)\)/);
   assert.match(nav, /if \(previousFocus\?\.isConnected\) previousFocus\.focus\(\)/);
   assert.match(nav, /ref=\{commandTriggerRef\}/);
   assert.match(nav, /ref=\{commandMenuRef\}/);
