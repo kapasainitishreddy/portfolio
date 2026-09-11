@@ -19,3 +19,13 @@ test("section anchor destinations keep comfortable arrival spacing", () => {
     /\.portfolio-main\s+section\[id\]\s*\{[^}]*scroll-margin-block-start:\s*clamp\(1\.5rem,\s*6vh,\s*4rem\);/s,
   );
 });
+
+test("section jumps briefly cue the destination label only when motion is allowed", () => {
+  const motionAllowed = transitions.split("@media (prefers-reduced-motion: no-preference)").pop()?.split("@keyframes")[0] ?? "";
+  assert.match(motionAllowed, /\.portfolio-main\s+section\[id\]:target\s*>\s*\.font-mono-label/);
+  assert.match(motionAllowed, /animation:\s*portfolio-section-label-arrival\s+560ms/);
+  assert.match(transitions, /@keyframes\s+portfolio-section-label-arrival/);
+
+  const reducedMotion = transitions.split("@media (prefers-reduced-motion: reduce)").pop() ?? "";
+  assert.doesNotMatch(reducedMotion, /portfolio-section-label-arrival/);
+});
