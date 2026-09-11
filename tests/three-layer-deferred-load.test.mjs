@@ -18,3 +18,10 @@ test("decorative Three.js work is deferred without delaying semantic portfolio c
   assert.match(deferred, /setTimeout\(\(\) => setReady\(true\), 220\)/);
   assert.match(deferred, /aria-hidden="true" role="presentation"/);
 });
+
+test("reduced-motion visitors stay on the lightweight fallback without mounting the Three.js scene", () => {
+  assert.match(deferred, /window\.matchMedia\("\(prefers-reduced-motion: reduce\)"\)/);
+  assert.match(deferred, /if \(motionPreference\.matches\) \{\s*setReady\(false\);\s*return;/s);
+  assert.match(deferred, /motionPreference\.addEventListener\("change", scheduleThreeLayer\)/);
+  assert.match(deferred, /motionPreference\.removeEventListener\("change", scheduleThreeLayer\)/);
+});
