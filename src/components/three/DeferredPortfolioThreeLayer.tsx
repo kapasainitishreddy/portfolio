@@ -25,8 +25,8 @@ export default function DeferredPortfolioThreeLayer() {
       return () => window.cancelIdleCallback(idleId);
     }
 
-    const timeoutId = window.setTimeout(() => setReady(true), 220);
-    return () => window.clearTimeout(timeoutId);
+    const timeoutId = setTimeout(() => setReady(true), 220);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   if (!ready) return <StaticThreeLayer />;
