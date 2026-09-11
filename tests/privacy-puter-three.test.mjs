@@ -14,6 +14,7 @@ const aiUniverse = read("src/data/aiUniverse.ts");
 const projects = read("src/data/projects.ts");
 const building = read("src/data/building.ts");
 const privateBuilds = read("src/components/sections/PrivateBuilds.tsx");
+const deferredThreeLayer = read("src/components/three/DeferredPortfolioThreeLayer.tsx");
 const threeLayer = read("src/components/three/PortfolioThreeLayer.tsx");
 
 test("public work data uses private employer labels except Outlier AI", () => {
@@ -55,8 +56,9 @@ test("Puter guide has a privacy-first private systems mode", () => {
 });
 
 test("portfolio uses one section-aware Three.js interaction layer", () => {
-  assert.match(page, /PortfolioThreeLayer/);
-  assert.match(page, /<PortfolioThreeLayer \/>/);
+  assert.match(page, /DeferredPortfolioThreeLayer/);
+  assert.match(page, /<DeferredPortfolioThreeLayer \/>/);
+  assert.match(deferredThreeLayer, /import\("\.\/PortfolioThreeLayer"\)/);
   assert.match(threeLayer, /@react-three\/fiber/);
   assert.match(threeLayer, /Canvas/);
   assert.match(threeLayer, /useFrame/);
