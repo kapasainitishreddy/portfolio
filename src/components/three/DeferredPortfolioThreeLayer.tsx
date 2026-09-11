@@ -22,7 +22,7 @@ export default function DeferredPortfolioThreeLayer() {
   useEffect(() => {
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let idleId: number | null = null;
-    let timeoutId: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const cancelScheduledWork = () => {
       if (idleId !== null) {
@@ -30,7 +30,7 @@ export default function DeferredPortfolioThreeLayer() {
         idleId = null;
       }
       if (timeoutId !== null) {
-        window.clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
         timeoutId = null;
       }
     };
@@ -48,7 +48,7 @@ export default function DeferredPortfolioThreeLayer() {
         return;
       }
 
-      timeoutId = window.setTimeout(() => setReady(true), 220);
+      timeoutId = setTimeout(() => setReady(true), 220);
     };
 
     scheduleThreeLayer();
