@@ -4,6 +4,7 @@ import fs from "node:fs";
 
 const page = fs.readFileSync("src/app/page.tsx", "utf8");
 const askSai = fs.readFileSync("src/components/sections/AskNitish.tsx", "utf8");
+const askSaiStyles = fs.readFileSync("src/components/sections/AskNitish.module.css", "utf8");
 const site = fs.readFileSync("src/data/site.ts", "utf8");
 
 test("Ask Sai is rendered immediately after the hero", () => {
@@ -59,6 +60,14 @@ test("Ask Sai frame-batches streamed UI updates and avoids per-chunk live-region
   assert.match(askSai, /if \(streamFrameRef\.current !== null\) return/);
   assert.doesNotMatch(askSai, /streamedText \+= part\.text;\s*setAnswer\(/s);
   assert.match(askSai, /aria-live=\{loading \? "off" : "polite"\}/);
+});
+
+test("Ask Sai mode controls stay in one native-scroll rail on compact screens", () => {
+  const compact = askSaiStyles.split("@media (max-width: 520px)").pop() ?? "";
+  assert.match(compact, /\.modeRail\s*\{[^}]*flex-wrap:\s*nowrap;/s);
+  assert.match(compact, /\.modeRail\s*\{[^}]*overflow-x:\s*auto;/s);
+  assert.match(compact, /\.modeRail\s*\{[^}]*overscroll-behavior-inline:\s*contain;/s);
+  assert.match(compact, /\.modeButton\s*\{[^}]*flex:\s*0\s+0\s+auto;/s);
 });
 
 test("hero exposes Ask Sai without replacing the primary work CTA", () => {

@@ -82,6 +82,21 @@
   50% { opacity: 1; transform: scale(1.08); }
 }
 
+@media (max-width: 520px) {
+  .modeRail {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-bottom: 0.2rem;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modeButton {
+    flex: 0 0 auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .modeButton,
   .statusDot[data-busy="true"] {
