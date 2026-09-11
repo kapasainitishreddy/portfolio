@@ -3,6 +3,8 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
+type NavigatorWithConnection = Navigator & { connection?: { saveData?: boolean } };
+
 function StaticThreeLayer() {
   return (
     <div className="portfolio-three-layer" aria-hidden="true" role="presentation">
@@ -21,6 +23,7 @@ export default function DeferredPortfolioThreeLayer() {
 
   useEffect(() => {
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const saveData = (navigator as NavigatorWithConnection).connection?.saveData === true;
     let idleId: number | null = null;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -39,6 +42,11 @@ export default function DeferredPortfolioThreeLayer() {
       cancelScheduledWork();
 
       if (motionPreference.matches) {
+        setReady(false);
+        return;
+      }
+
+      if (saveData) {
         setReady(false);
         return;
       }
