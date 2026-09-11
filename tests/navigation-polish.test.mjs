@@ -63,6 +63,16 @@ test("morphing navigation follows the homepage section order", () => {
   }
 });
 
+test("morphing navigation tracks the strongest visible section across observer callbacks", () => {
+  assert.match(nav, /sectionRatiosRef = useRef\(new Map<string, number>\(\)\)/);
+  assert.match(nav, /entries\.forEach\(\(entry\) => \{/);
+  assert.match(nav, /sectionRatiosRef\.current\.set\(entry\.target\.id, entry\.isIntersecting \? entry\.intersectionRatio : 0\)/);
+  assert.match(nav, /dockItems\.forEach\(\(item\) => \{/);
+  assert.match(nav, /const ratio = sectionRatiosRef\.current\.get\(item\.href\.slice\(1\)\) \?\? 0/);
+  assert.match(nav, /sectionRatiosRef\.current\.clear\(\)/);
+  assert.doesNotMatch(nav, /const visible = entries/);
+});
+
 test("desktop quick menu focuses the active section action and restores the opener", () => {
   assert.match(nav, /commandTriggerRef = useRef<HTMLButtonElement>/);
   assert.match(nav, /commandMenuRef = useRef<HTMLDivElement>/);
