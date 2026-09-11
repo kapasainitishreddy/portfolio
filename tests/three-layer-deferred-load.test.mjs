@@ -14,8 +14,8 @@ test("decorative Three.js work is deferred without delaying semantic portfolio c
   assert.match(deferred, /ssr:\s*false/);
   assert.match(deferred, /loading:\s*StaticThreeLayer/);
   assert.match(deferred, /"requestIdleCallback" in window/);
-  assert.match(deferred, /requestIdleCallback\(\(\) => setReady\(true\), \{ timeout: 1200 \}\)/);
-  assert.match(deferred, /setTimeout\(\(\) => setReady\(true\), 220\)/);
+  assert.match(deferred, /requestIdleCallback\(enableThreeLayer, \{ timeout: 1200 \}\)/);
+  assert.match(deferred, /setTimeout\(enableThreeLayer, 220\)/);
   assert.match(deferred, /aria-hidden="true" role="presentation"/);
 });
 
@@ -30,4 +30,12 @@ test("data-saver visitors avoid decorative Three.js loading and keep the lightwe
   assert.match(deferred, /type NavigatorWithConnection = Navigator & \{ connection\?: \{ saveData\?: boolean \} \}/);
   assert.match(deferred, /const saveData = \(navigator as NavigatorWithConnection\)\.connection\?\.saveData === true/);
   assert.match(deferred, /if \(saveData\) \{\s*setReady\(false\);\s*return;/s);
+});
+
+test("browsers without a usable WebGL context never mount the decorative Three.js bundle", () => {
+  assert.match(deferred, /function supportsWebGL\(\)/);
+  assert.match(deferred, /document\.createElement\("canvas"\)/);
+  assert.match(deferred, /canvas\.getContext\("webgl2"\) \?\? canvas\.getContext\("webgl"\)/);
+  assert.match(deferred, /catch \{\s*return false;\s*\}/s);
+  assert.match(deferred, /const enableThreeLayer = \(\) => \{\s*setReady\(supportsWebGL\(\)\);\s*\};/s);
 });
