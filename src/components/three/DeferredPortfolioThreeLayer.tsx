@@ -20,13 +20,44 @@ export default function DeferredPortfolioThreeLayer() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if ("requestIdleCallback" in window) {
-      const idleId = window.requestIdleCallback(() => setReady(true), { timeout: 1200 });
-      return () => window.cancelIdleCallback(idleId);
-    }
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let idleId: number | null = null;
+    let timeoutId: number | null = null;
 
-    const timeoutId = setTimeout(() => setReady(true), 220);
-    return () => clearTimeout(timeoutId);
+    const cancelScheduledWork = () => {
+      if (idleId !== null) {
+        window.cancelIdleCallback(idleId);
+        idleId = null;
+      }
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    };
+
+    const scheduleThreeLayer = () => {
+      cancelScheduledWork();
+
+      if (motionPreference.matches) {
+        setReady(false);
+        return;
+      }
+
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(() => setReady(true), { timeout: 1200 });
+        return;
+      }
+
+      timeoutId = window.setTimeout(() => setReady(true), 220);
+    };
+
+    scheduleThreeLayer();
+    motionPreference.addEventListener("change", scheduleThreeLayer);
+
+    return () => {
+      cancelScheduledWork();
+      motionPreference.removeEventListener("change", scheduleThreeLayer);
+    };
   }, []);
 
   if (!ready) return <StaticThreeLayer />;
