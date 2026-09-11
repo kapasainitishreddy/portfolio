@@ -13,6 +13,15 @@ function StaticThreeLayer() {
   );
 }
 
+function supportsWebGL() {
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
 const PortfolioThreeLayer = dynamic(() => import("./PortfolioThreeLayer"), {
   ssr: false,
   loading: StaticThreeLayer,
@@ -38,6 +47,10 @@ export default function DeferredPortfolioThreeLayer() {
       }
     };
 
+    const enableThreeLayer = () => {
+      setReady(supportsWebGL());
+    };
+
     const scheduleThreeLayer = () => {
       cancelScheduledWork();
 
@@ -52,11 +65,11 @@ export default function DeferredPortfolioThreeLayer() {
       }
 
       if ("requestIdleCallback" in window) {
-        idleId = window.requestIdleCallback(() => setReady(true), { timeout: 1200 });
+        idleId = window.requestIdleCallback(enableThreeLayer, { timeout: 1200 });
         return;
       }
 
-      timeoutId = setTimeout(() => setReady(true), 220);
+      timeoutId = setTimeout(enableThreeLayer, 220);
     };
 
     scheduleThreeLayer();
