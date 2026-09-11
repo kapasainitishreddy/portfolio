@@ -10,6 +10,28 @@ html {
   scroll-margin-block-start: clamp(1.5rem, 6vh, 4rem);
 }
 
+/* Briefly cue the destination label after a semantic in-page jump. The movement
+   is intentionally small and only runs when the visitor has not reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .portfolio-main section[id]:target > .font-mono-label {
+    animation: portfolio-section-label-arrival 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+@keyframes portfolio-section-label-arrival {
+  0% {
+    transform: translateX(-0.35rem);
+    text-shadow: 0 0 1.25rem color-mix(in srgb, var(--color-copper) 60%, transparent);
+  }
+  58% {
+    transform: translateX(0.08rem);
+  }
+  100% {
+    transform: none;
+    text-shadow: none;
+  }
+}
+
 /* Respect the visitor's motion preference for every dock, quick-menu, skip-link,
    and in-page anchor jump. */
 @media (prefers-reduced-motion: reduce) {
