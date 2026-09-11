@@ -1,0 +1,7 @@
+/* Keep the final footer controls clear of the fixed mobile dock and the device
+   home-indicator safe area. Desktop spacing stays unchanged. */
+@media (max-width: 1023px) {
+  .portfolio-footer {
+    padding-block-end: calc(6.75rem + env(safe-area-inset-bottom));
+  }
+}
