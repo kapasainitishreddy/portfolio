@@ -151,8 +151,9 @@ export default function Navigation() {
     const previousFocus = document.activeElement instanceof HTMLElement
       ? document.activeElement
       : fallbackTrigger;
+    const activeAction = menu.querySelector<HTMLElement>('.portfolio-command__grid a[data-active="true"]');
     const firstAction = menu.querySelector<HTMLElement>(".portfolio-command__grid a[href]");
-    const commandFocusFrame = window.requestAnimationFrame(() => firstAction?.focus());
+    const commandFocusFrame = window.requestAnimationFrame(() => (activeAction ?? firstAction)?.focus());
 
     return () => {
       window.cancelAnimationFrame(commandFocusFrame);
