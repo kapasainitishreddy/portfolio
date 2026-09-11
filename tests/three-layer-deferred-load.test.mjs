@@ -29,5 +29,5 @@ test("reduced-motion visitors stay on the lightweight fallback without mounting 
 test("data-saver visitors avoid decorative Three.js loading and keep the lightweight fallback", () => {
   assert.match(deferred, /type NavigatorWithConnection = Navigator & \{ connection\?: \{ saveData\?: boolean \} \}/);
   assert.match(deferred, /const saveData = \(navigator as NavigatorWithConnection\)\.connection\?\.saveData === true/);
-  assert.match(deferred, /if \(motionPreference\.matches \|\| saveData\) \{/);
+  assert.match(deferred, /if \(saveData\) \{\s*setReady\(false\);\s*return;/s);
 });
