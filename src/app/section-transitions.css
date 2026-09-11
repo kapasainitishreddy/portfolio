@@ -4,6 +4,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Give dock, quick-menu, and other in-page jumps enough top breathing room so
+   the destination label and opening content arrive as a composed section. */
+.portfolio-main section[id] {
+  scroll-margin-block-start: clamp(1.5rem, 6vh, 4rem);
+}
+
 /* Respect the visitor's motion preference for every dock, quick-menu, skip-link,
    and in-page anchor jump. */
 @media (prefers-reduced-motion: reduce) {
