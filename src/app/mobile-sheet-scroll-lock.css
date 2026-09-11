@@ -1,0 +1,10 @@
+/* Keep the mobile navigation truly modal: the page behind the sheet stays put,
+   while the sheet panel itself remains independently scrollable on small screens. */
+body:has(.portfolio-mobile-sheet[aria-modal="true"]) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.portfolio-mobile-sheet__panel {
+  overscroll-behavior: contain;
+}
