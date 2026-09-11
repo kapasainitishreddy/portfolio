@@ -7,6 +7,7 @@ import "./navigation-polish.css";
 import "./navigation-motion.css";
 import "./navigation-forced-colors.css";
 import "./mobile-sheet-scroll-lock.css";
+import "./mobile-dock-clearance.css";
 import "./section-transitions.css";
 import "./three-layer.css";
 import { site, socials } from "@/data/site";
