@@ -87,6 +87,7 @@ function Scene({ activeIndex, reduced }: { activeIndex: number; reduced: boolean
 export default function PortfolioThreeLayer() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [pageVisible, setPageVisible] = useState(true);
+  const sectionRatiosRef = useRef(new Map<string, number>());
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -107,18 +108,30 @@ export default function PortfolioThreeLayer() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible?.target.id) return;
-        const nextIndex = sectionIds.indexOf(visible.target.id as (typeof sectionIds)[number]);
+        entries.forEach((entry) => {
+          sectionRatiosRef.current.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let nextIndex = -1;
+        let nextRatio = 0;
+        sectionIds.forEach((id, index) => {
+          const ratio = sectionRatiosRef.current.get(id) ?? 0;
+          if (ratio > nextRatio) {
+            nextRatio = ratio;
+            nextIndex = index;
+          }
+        });
+
         if (nextIndex >= 0) setActiveIndex(nextIndex);
       },
       { rootMargin: "-30% 0px -55% 0px", threshold: [0.01, 0.18, 0.42] },
     );
 
     sections.forEach(({ element }) => observer.observe(element));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      sectionRatiosRef.current.clear();
+    };
   }, []);
 
   if (reduceMotion) {

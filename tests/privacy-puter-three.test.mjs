@@ -65,6 +65,15 @@ test("portfolio uses one section-aware Three.js interaction layer", () => {
   assert.match(threeLayer, /aria-hidden/);
 });
 
+test("Three.js active section selection tracks all observed intersections instead of only the latest callback batch", () => {
+  assert.match(threeLayer, /sectionRatiosRef = useRef\(new Map<string, number>\(\)\)/);
+  assert.match(threeLayer, /entries\.forEach\(\(entry\) => \{/);
+  assert.match(threeLayer, /sectionRatiosRef\.current\.set\(entry\.target\.id, entry\.isIntersecting \? entry\.intersectionRatio : 0\)/);
+  assert.match(threeLayer, /sectionIds\.forEach\(\(id, index\) => \{/);
+  assert.match(threeLayer, /const ratio = sectionRatiosRef\.current\.get\(id\) \?\? 0/);
+  assert.doesNotMatch(threeLayer, /const visible = entries/);
+});
+
 test("Three.js section changes damp spatial targets instead of snapping geometry", () => {
   assert.match(threeLayer, /MathUtils/);
   assert.match(threeLayer, /const phaseRef = useRef\(0\)/);
