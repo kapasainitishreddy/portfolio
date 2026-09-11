@@ -1,0 +1,34 @@
+/* Keep the morphing navigation legible when Windows/browser forced colors
+   replace translucent surfaces, gradients, and accent fills with system colors. */
+@media (forced-colors: active) {
+  .portfolio-dock,
+  .portfolio-command,
+  .portfolio-mobile-dock,
+  .portfolio-mobile-sheet__panel {
+    border-color: CanvasText;
+    background: Canvas;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  .portfolio-dock__item[data-active="true"],
+  .portfolio-command__grid a[data-active="true"],
+  .portfolio-mobile-dock a[data-active="true"],
+  .portfolio-mobile-sheet__links a[data-active="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+    border-color: CanvasText;
+    color: CanvasText;
+  }
+
+  .portfolio-dock__active-pill,
+  .portfolio-mobile-dock__active-pill {
+    background: Highlight;
+    box-shadow: none;
+  }
+
+  .portfolio-dock__progress span {
+    background: Highlight;
+    box-shadow: none;
+  }
+}
