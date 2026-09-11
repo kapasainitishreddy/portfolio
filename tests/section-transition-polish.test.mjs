@@ -12,3 +12,10 @@ test("semantic anchor navigation scrolls smoothly without overriding reduced-mot
   const reducedMotion = transitions.split("@media (prefers-reduced-motion: reduce)").pop() ?? "";
   assert.match(reducedMotion, /html\s*\{[^}]*scroll-behavior:\s*auto;/s);
 });
+
+test("section anchor destinations keep comfortable arrival spacing", () => {
+  assert.match(
+    transitions,
+    /\.portfolio-main\s+section\[id\]\s*\{[^}]*scroll-margin-block-start:\s*clamp\(1\.5rem,\s*6vh,\s*4rem\);/s,
+  );
+});
