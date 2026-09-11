@@ -72,6 +72,7 @@ export default function Navigation() {
   const commandMenuRef = useRef<HTMLDivElement>(null);
   const mobileTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileSheetRef = useRef<HTMLDivElement>(null);
+  const sectionRatiosRef = useRef(new Map<string, number>());
   const { theme } = useTheme();
   const reduceMotion = useReducedMotion();
 
@@ -109,16 +110,30 @@ export default function Navigation() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) setActiveHref(`#${visible.target.id}`);
+        entries.forEach((entry) => {
+          sectionRatiosRef.current.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let nextHref: string | null = null;
+        let nextRatio = 0;
+        dockItems.forEach((item) => {
+          const ratio = sectionRatiosRef.current.get(item.href.slice(1)) ?? 0;
+          if (ratio > nextRatio) {
+            nextRatio = ratio;
+            nextHref = item.href;
+          }
+        });
+
+        if (nextHref) setActiveHref(nextHref);
       },
       { rootMargin: "-28% 0px -62% 0px", threshold: [0.01, 0.2, 0.45] },
     );
 
     sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      sectionRatiosRef.current.clear();
+    };
   }, []);
 
   useEffect(() => {
