@@ -1,0 +1,8 @@
+[
+  { "name": "Frontend", "value": 92 },
+  { "name": "Backend", "value": 78 },
+  { "name": "Data viz", "value": 88 },
+  { "name": "Animation", "value": 84 },
+  { "name": "AI tooling", "value": 90 },
+  { "name": "DevOps", "value": 70 }
+]

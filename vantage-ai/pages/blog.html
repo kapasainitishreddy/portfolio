@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — Vantage AI</title>
+  <meta name="description" content="Writing on AI tooling, frontend craft, and shipped experiments." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23c6ff3d'/><text x='32' y='42' font-size='34' text-anchor='middle' font-family='monospace' font-weight='700' fill='%23050816'>V</text></svg>" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="../index.html"><span class="brand-mark">V</span><span>VANTAGE&nbsp;AI</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <span class="theme-label">Light mode</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div class="section-head">
+        <span class="eyebrow">Page 05 · Writing</span>
+        <h1>Notes from the <span class="accent">build</span>.</h1>
+        <p class="lead">Short essays on the AI tools I lean on, the problems I'm solving with them, and the craft of shipping interfaces that don't embarrass the model that helped build them.</p>
+      </div>
+
+      <div class="grid grid-3 reveal">
+        <article class="blog-card tilt">
+          <div class="blog-cover" aria-hidden="true">
+            <svg class="cover-svg" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#0f1a36"/>
+                  <stop offset="1" stop-color="#1f2a52"/>
+                </linearGradient>
+              </defs>
+              <rect width="400" height="225" fill="url(#b1)"/>
+              <circle cx="120" cy="110" r="60" fill="none" stroke="#c6ff3d" stroke-width="2" opacity="0.7"/>
+              <circle cx="200" cy="110" r="60" fill="none" stroke="#c6ff3d" stroke-width="2" opacity="0.5"/>
+              <circle cx="280" cy="110" r="60" fill="none" stroke="#c6ff3d" stroke-width="2" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="blog-body">
+            <span class="blog-meta">2026 · 6 min · AI tooling</span>
+            <h3>How I evaluate LLM coding agents</h3>
+            <p>The harness I use, the prompt suite it runs against, and why I report pass-rates AND cost-per-task.</p>
+            <span class="blog-link">Read →</span>
+          </div>
+        </article>
+
+        <article class="blog-card tilt">
+          <div class="blog-cover" aria-hidden="true">
+            <svg class="cover-svg" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="225" fill="#0a1124"/>
+              <g stroke="#c6ff3d" stroke-width="1.5" fill="none" opacity="0.8">
+                <path d="M 20 180 Q 100 40 200 120 T 380 60"/>
+                <path d="M 20 180 L 380 180"/>
+                <path d="M 20 180 L 20 20"/>
+              </g>
+              <g fill="#c6ff3d">
+                <circle cx="60" cy="160" r="3"/>
+                <circle cx="120" cy="110" r="3"/>
+                <circle cx="180" cy="130" r="3"/>
+                <circle cx="240" cy="100" r="3"/>
+                <circle cx="300" cy="80" r="3"/>
+                <circle cx="360" cy="70" r="3"/>
+              </g>
+            </svg>
+          </div>
+          <div class="blog-body">
+            <span class="blog-meta">2026 · 4 min · Frontend</span>
+            <h3>3D card hovers without a library</h3>
+            <p>Eight lines of JavaScript, three CSS rules, and a perspective transform. Why the lift is real.</p>
+            <span class="blog-link">Read →</span>
+          </div>
+        </article>
+
+        <article class="blog-card tilt">
+          <div class="blog-cover" aria-hidden="true">
+            <svg class="cover-svg" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="225" fill="#0f1a36"/>
+              <g transform="translate(200,112)">
+                <polygon points="0,-80 70,-40 70,40 0,80 -70,40 -70,-40" fill="none" stroke="#c6ff3d" stroke-width="2"/>
+                <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="none" stroke="#c6ff3d" stroke-width="2" opacity="0.7"/>
+                <polygon points="0,-40 35,-20 35,20 0,40 -35,20 -35,-20" fill="#c6ff3d" opacity="0.25"/>
+              </g>
+            </svg>
+          </div>
+          <div class="blog-body">
+            <span class="blog-meta">2025 · 8 min · Motion</span>
+            <h3>Why radar charts fight hover state</h3>
+            <p>The layering trap, the hit-area fix, and why SVG draw order is the thing you keep forgetting.</p>
+            <span class="blog-link">Read →</span>
+          </div>
+        </article>
+
+        <article class="blog-card tilt">
+          <div class="blog-cover" aria-hidden="true">
+            <svg class="cover-svg" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="225" fill="#0a1124"/>
+              <g fill="none" stroke="#c6ff3d" stroke-width="1.5">
+                <rect x="50" y="50" width="80" height="80" rx="6"/>
+                <rect x="160" y="50" width="80" height="80" rx="6" opacity="0.7"/>
+                <rect x="270" y="50" width="80" height="80" rx="6" opacity="0.5"/>
+                <rect x="50" y="140" width="80" height="40" rx="6" opacity="0.7"/>
+                <rect x="160" y="140" width="80" height="40" rx="6" opacity="0.5"/>
+                <rect x="270" y="140" width="80" height="40" rx="6" opacity="0.4"/>
+              </g>
+            </svg>
+          </div>
+          <div class="blog-body">
+            <span class="blog-meta">2025 · 5 min · Architecture</span>
+            <h3>Static-first portfolios in a Next.js world</h3>
+            <p>When to ship six HTML files instead of reaching for a framework. The tradeoffs in plain language.</p>
+            <span class="blog-link">Read →</span>
+          </div>
+        </article>
+
+        <article class="blog-card tilt">
+          <div class="blog-cover" aria-hidden="true">
+            <svg class="cover-svg" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="225" fill="#131e3f"/>
+              <g stroke="#c6ff3d" stroke-width="2" fill="none">
+                <path d="M 40 180 C 100 80, 200 80, 360 180" opacity="0.8"/>
+                <circle cx="40" cy="180" r="5" fill="#c6ff3d"/>
+                <circle cx="360" cy="180" r="5" fill="#c6ff3d"/>
+                <circle cx="200" cy="80" r="5" fill="#c6ff3d"/>
+              </g>
+            </svg>
+          </div>
+          <div class="blog-body">
+            <span class="blog-meta">2024 · 7 min · Workflow</span>
+            <h3>Magic-link auth in a weekend</h3>
+            <p>The minimum viable flow that doesn't leak tokens in your logs. Includes the animated UI.</p>
+            <span class="blog-link">Read →</span>
+          </div>
+        </article>
+
+        <article class="blog-card tilt">
+          <div class="blog-cover" aria-hidden="true">
+            <svg class="cover-svg" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="225" fill="#0f1a36"/>
+              <g fill="#c6ff3d" opacity="0.85">
+                <rect x="40" y="160" width="20" height="20" rx="2"/>
+                <rect x="70" y="140" width="20" height="40" rx="2"/>
+                <rect x="100" y="100" width="20" height="80" rx="2"/>
+                <rect x="130" y="120" width="20" height="60" rx="2"/>
+                <rect x="160" y="80" width="20" height="100" rx="2"/>
+                <rect x="190" y="60" width="20" height="120" rx="2"/>
+                <rect x="220" y="90" width="20" height="90" rx="2"/>
+                <rect x="250" y="110" width="20" height="70" rx="2"/>
+                <rect x="280" y="130" width="20" height="50" rx="2"/>
+                <rect x="310" y="100" width="20" height="80" rx="2"/>
+                <rect x="340" y="120" width="20" height="60" rx="2"/>
+              </g>
+            </svg>
+          </div>
+          <div class="blog-body">
+            <span class="blog-meta">2024 · 9 min · Data</span>
+            <h3>Cost-anomaly detection without the math PhD</h3>
+            <p>A simple baseline + MAD threshold that catches 80% of the surprises on a $50k/month AWS bill.</p>
+            <span class="blog-link">Read →</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Vantage AI · Writing.</span>
+      <span><a href="../index.html">← Home</a></span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
