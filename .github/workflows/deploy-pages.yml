@@ -32,16 +32,10 @@ jobs:
 
       - run: npm ci
 
-      # Static export has no server, so the /api/contact route is stripped
-      # before build. The contact form falls back to a mailto flow when
-      # NEXT_PUBLIC_STATIC_EXPORT is enabled.
-      - run: rm -rf src/app/api
-
       - name: Build static export
         run: npm run build
         env:
           STATIC_EXPORT: "true"
-          NEXT_PUBLIC_STATIC_EXPORT: "true"
           NEXT_PUBLIC_SITE_URL: https://kapasainitishreddy.github.io/portfolio
 
       - uses: actions/configure-pages@v5

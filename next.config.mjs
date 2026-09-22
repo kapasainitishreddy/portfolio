@@ -14,6 +14,7 @@ const nextConfig = {
     output: "export",
     basePath,
     assetPrefix: `${basePath}/`,
+    trailingSlash: true,
   }),
   // Exposed to client code so plain <a href> / next/image string sources
   // (which Next does not auto-prefix, unlike next/link) can prepend it via

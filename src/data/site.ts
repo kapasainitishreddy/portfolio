@@ -2,15 +2,14 @@
 export const site = {
   name: "Sai Nitish Reddy Kapa",
   shortName: "Sai Nitish",
-  initials: "SK",
-  roles: ["Forward Deployed Engineer", "Applied AI Engineer", "AI Governance Engineer", "Founder / Product Builder", "Writer"],
-  tagline: "Engineer with heart of a Writer.",
+  initials: "SN",
+  roles: ["Forward Deployed Engineer", "AI Product Builder", "Full-Stack Engineer", "Founder / Builder at Syrava"],
+  tagline: "From ambiguous problem to working system.",
   email: "kapasainitishreddy@gmail.com",
   location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  portraitUrl: "/profile.webp",
   description:
-    "Sai Nitish Reddy Kapa is an engineer and writer building AI systems, private products, agents, integrations, and safer AI workflows, while writing fiction under the Asta pen name.",
+    "Sai Nitish Reddy Kapa is a Forward Deployed Engineer and AI product builder who turns ambiguous workflows into reliable products, integrations, and production systems.",
   resumeUrl: "/resume.pdf",
 } as const;
 
@@ -21,23 +20,20 @@ export const socials = {
 } as const;
 
 export const navItems = [
-  { label: "Case studies", href: "#featured-work" },
-  { label: "Private builds", href: "#private-builds" },
-  { label: "Novels", href: "#novels" },
-  { label: "AI", href: "#ai-universe" },
-  { label: "Safety", href: "#ai-safety" },
+  { label: "Work", href: "#work" },
+  { label: "Systems", href: "#systems" },
   { label: "Experience", href: "#experience" },
+  { label: "Writing", href: "#writing" },
   { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
 ] as const;
 
 export const hero = {
-  headline: "Engineer with heart of a Writer.",
+  headline: "From ambiguous problem to working system.",
   supporting:
-    "I build AI systems, private products, and agents, and write stories about the people technology is supposed to serve.",
-  identity: "Forward Deployed Engineer · Applied AI · Product Builder · Writer",
-  status: "Open to Forward Deployed, Applied AI, Solutions, and AI Governance roles",
-  capabilities: ["Agentic AI", "Product systems", "Data + API integration", "AI safety + governance"],
+    "Forward Deployed Engineer and AI product builder working across agents, web, mobile, infrastructure, and production systems.",
+  identity: "Forward Deployed Engineer · AI Product Builder · Founder / Builder at Syrava",
+  status: "Open to forward-deployed, product engineering, and applied AI roles",
+  capabilities: ["AI-native products", "Web + mobile", "Agent workflows", "Production systems"],
   proof: [
     { value: "~60%", label: "faster first response", detail: "AI support workflow" },
     { value: "~20 hrs", label: "manual work removed weekly", detail: "production data pipeline" },
@@ -45,10 +41,8 @@ export const hero = {
     { value: "99.5%", label: "pipeline uptime", detail: "production operations workflow" },
   ],
   actions: [
-    { label: "See how I build", href: "#featured-work", kind: "primary" as const },
-    { label: "Ask Sai", href: "#ask-nitish", kind: "ghost" as const },
-    { label: "Read my novels", href: "#novels", kind: "ghost" as const },
-    { label: "Contact me", href: "#contact", kind: "ghost" as const },
+    { label: "Explore selected work", href: "#work", kind: "primary" as const },
+    { label: "Resume", href: site.resumeUrl, kind: "ghost" as const },
   ],
 } as const;
 
@@ -93,6 +87,6 @@ export const contact = {
 } as const;
 
 export const footer = {
-  signature: "Designed and built by Sai Nitish Reddy Kapa",
-  motto: "Build useful systems. Write human stories.",
+  signature: "Designed and built with care by Sai Nitish Reddy Kapa",
+  motto: "Build · integrate · prove · iterate",
 } as const;
