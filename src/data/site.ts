@@ -4,7 +4,7 @@ export const site = {
   shortName: "Sai Nitish",
   initials: "SN",
   roles: ["Forward Deployed Engineer", "AI Product Builder", "Full-Stack Engineer", "Founder / Builder at Syrava"],
-  tagline: "From ambiguous problem to working system.",
+  tagline: "Engineer with heart of writer.",
   email: "kapasainitishreddy@gmail.com",
   location: "United States · Remote-first",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
@@ -28,9 +28,9 @@ export const navItems = [
 ] as const;
 
 export const hero = {
-  headline: "From ambiguous problem to working system.",
+  headline: "Engineer with heart of writer.",
   supporting:
-    "Forward Deployed Engineer and AI product builder working across agents, web, mobile, infrastructure, and production systems.",
+    "Forward Deployed Engineer and AI product builder working across agents, data, integrations, and production systems. Fiction keeps me close to people, incentives, and ambiguity.",
   identity: "Forward Deployed Engineer · AI Product Builder · Founder / Builder at Syrava",
   status: "Open to forward-deployed, product engineering, and applied AI roles",
   capabilities: ["AI-native products", "Web + mobile", "Agent workflows", "Production systems"],
