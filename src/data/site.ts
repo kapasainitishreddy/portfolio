@@ -10,7 +10,7 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
     "Sai Nitish Reddy Kapa is a Forward Deployed Engineer and AI product builder who turns ambiguous workflows into reliable products, integrations, and production systems.",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/sai_resume_fde.pdf",
 } as const;
 
 export const socials = {
