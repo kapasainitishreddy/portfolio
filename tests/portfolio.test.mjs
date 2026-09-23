@@ -12,6 +12,22 @@ test("portfolio has no personal-photo assets or references", () => {
   assert.doesNotMatch(source, /portrait|profile\.webp|headshot|avatar/i);
 });
 
+test("hero uses the writer-engineer identity and real Three.js artwork", () => {
+  const site = read("src/data/site.ts");
+  const hero = read("src/components/portfolio/DocsHero.tsx");
+  const artwork = read("src/components/portfolio/ProjectArtwork.tsx");
+  const three = read("src/components/portfolio/ThreeArtifact.tsx");
+  const pkg = read("package.json");
+
+  assert.match(site, /Engineer with heart of writer\./);
+  assert.match(hero, /hero-writer-line/);
+  assert.match(hero, /ThreeArtifact/);
+  assert.match(artwork, /ThreeArtifact/);
+  assert.match(three, /WebGLRenderer/);
+  assert.match(three, /prefers-reduced-motion/);
+  assert.match(pkg, /"three": "\^0\.182\.0"/);
+});
+
 test("magnetic dock shell preserves portfolio content and navigation", () => {
   const site = read("src/data/site.ts");
   const page = read("src/app/page.tsx");
@@ -21,7 +37,7 @@ test("magnetic dock shell preserves portfolio content and navigation", () => {
   const magnetic = read("src/components/ui/magnetic-dock.tsx");
   const css = read("src/app/docs.css");
   const pkg = read("package.json");
-  assert.match(site, /From ambiguous problem to working system\./);
+
   assert.match(site, /sai_resume_fde\.pdf/);
   assert.match(hero, /Explore selected work/);
   assert.match(hero, /hero\.proof\.map/);
@@ -36,7 +52,7 @@ test("magnetic dock shell preserves portfolio content and navigation", () => {
   assert.match(magnetic, /useReducedMotion/);
   assert.match(magnetic, /useMotionValue/);
   assert.match(css, /portfolio-dock-shell/);
-  assert.match(css, /portfolio-magnetic-dock/);
+  assert.match(css, /grid-template-columns: 1fr !important/);
   assert.match(pkg, /framer-motion/);
 });
 
