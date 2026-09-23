@@ -12,11 +12,7 @@ import {
 import { site } from "@/data/site";
 import { withBasePath } from "@/lib/basePath";
 
-const sections = [
-  "overview", "work", "experience", "systems", "method",
-  "lab", "writing", "about", "contact",
-] as const;
-
+const sections = ["overview","work","experience","systems","method","lab","writing","about","contact"] as const;
 type SectionId = (typeof sections)[number];
 
 function Glyph({ children }: { children: ReactNode }) {
@@ -28,24 +24,12 @@ function Glyph({ children }: { children: ReactNode }) {
   );
 }
 
-function BriefcaseIcon() {
-  return <Glyph><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" /></Glyph>;
-}
-function RouteIcon() {
-  return <Glyph><circle cx="5" cy="5" r="2" /><circle cx="19" cy="19" r="2" /><path d="M7 5h4a4 4 0 0 1 4 4v1a4 4 0 0 1-4 4H9a4 4 0 0 0-4 4v1M14 19h3" /></Glyph>;
-}
-function FlaskIcon() {
-  return <Glyph><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.75 3h10.5A2 2 0 0 0 19 18l-5-9V3" /><path d="M8 15h8" /></Glyph>;
-}
-function BookIcon() {
-  return <Glyph><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z" /><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" /></Glyph>;
-}
-function PersonIcon() {
-  return <Glyph><circle cx="12" cy="8" r="3.25" /><path d="M5 21a7 7 0 0 1 14 0" /></Glyph>;
-}
-function DocumentIcon() {
-  return <Glyph><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></Glyph>;
-}
+function BriefcaseIcon() { return <Glyph><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" /></Glyph>; }
+function RouteIcon() { return <Glyph><circle cx="5" cy="5" r="2" /><circle cx="19" cy="19" r="2" /><path d="M7 5h4a4 4 0 0 1 4 4v1a4 4 0 0 1-4 4H9a4 4 0 0 0-4 4v1M14 19h3" /></Glyph>; }
+function FlaskIcon() { return <Glyph><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.75 3h10.5A2 2 0 0 0 19 18l-5-9V3" /><path d="M8 15h8" /></Glyph>; }
+function BookIcon() { return <Glyph><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z" /><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" /></Glyph>; }
+function PersonIcon() { return <Glyph><circle cx="12" cy="8" r="3.25" /><path d="M5 21a7 7 0 0 1 14 0" /></Glyph>; }
+function DocumentIcon() { return <Glyph><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></Glyph>; }
 
 function getHashSection(): SectionId {
   if (typeof window === "undefined") return "overview";
@@ -110,18 +94,13 @@ export default function PortfolioDock() {
       sectionItem("lab", "Lab", <FlaskIcon />),
       sectionItem("writing", "Writing", <BookIcon />),
       sectionItem("about", "About", <PersonIcon />),
-      {
-        id: "resume",
-        label: "Résumé",
-        icon: <DocumentIcon />,
-        onClick: () => window.location.assign(withBasePath(site.resumeUrl)),
-      },
+      { id: "resume", label: "Résumé", icon: <DocumentIcon />, onClick: () => window.location.assign(withBasePath(site.resumeUrl)) },
       sectionItem("contact", "Contact", <DockIconMail />),
     ];
   }, [activeId]);
 
   const visibleItems = compact
-    ? items.filter((item) => ["overview", "work", "experience", "systems", "resume", "contact"].includes(item.id))
+    ? items.filter((item) => ["overview","work","experience","systems","resume","contact"].includes(item.id))
     : items;
 
   return (
@@ -129,9 +108,9 @@ export default function PortfolioDock() {
       <nav aria-label="Portfolio navigation">
         <MagneticDock
           items={visibleItems}
-          iconSize={compact ? 42 : 46}
-          maxScale={compact ? 1.18 : 1.5}
-          magneticDistance={compact ? 80 : 135}
+          iconSize={compact ? 34 : 39}
+          maxScale={compact ? 1.1 : 1.28}
+          magneticDistance={compact ? 58 : 92}
           showLabels={!compact}
           position="bottom"
           variant="glass"
