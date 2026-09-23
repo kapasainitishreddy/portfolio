@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./docs.css";
 import { site, socials } from "@/data/site";
 
 const siteBase = site.url.replace(/\/$/, "");

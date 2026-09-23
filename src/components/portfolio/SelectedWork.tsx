@@ -41,7 +41,7 @@ export default function SelectedWork() {
         <div className="section-intro section-intro-wide">
           <div>
             <p className="section-index">01 / Selected work</p>
-            <h2>Systems that made it out of the demo.</h2>
+            <h2>Selected work</h2>
           </div>
           <p>Five real systems, each shaped around the work people needed to get done and the evidence that shows what changed.</p>
         </div>
@@ -89,32 +89,35 @@ export default function SelectedWork() {
               <div><h4>Role</h4><p>{roleByProject[active.id]}</p></div>
             </div>
 
-            <div className="anatomy-block">
-              <p className="section-index">System anatomy</p>
-              <div className="anatomy-path" role="group" aria-label="System stages">
-                {active.systemAnatomy.map((step, index) => (
-                  <button
-                    type="button"
-                    key={`${active.id}-${step.title}`}
-                    className="anatomy-step"
-                    aria-pressed={activeStep === index}
-                    onClick={() => setActiveStep(index)}
-                  >
-                    <span className="anatomy-dot" aria-hidden="true" />
-                    <small>{step.kind}</small>
-                    <strong>{step.title}</strong>
-                  </button>
-                ))}
+            <details className="project-details">
+              <summary>Architecture, controls &amp; proof</summary>
+              <div className="anatomy-block">
+                <p className="section-index">System anatomy</p>
+                <div className="anatomy-path" role="group" aria-label="System stages">
+                  {active.systemAnatomy.map((step, index) => (
+                    <button
+                      type="button"
+                      key={`${active.id}-${step.title}`}
+                      className="anatomy-step"
+                      aria-pressed={activeStep === index}
+                      onClick={() => setActiveStep(index)}
+                    >
+                      <span className="anatomy-dot" aria-hidden="true" />
+                      <small>{step.kind}</small>
+                      <strong>{step.title}</strong>
+                    </button>
+                  ))}
+                </div>
+                <p className="step-detail" aria-live="polite">{active.systemAnatomy[activeStep].body}</p>
               </div>
-              <p className="step-detail" aria-live="polite">{active.systemAnatomy[activeStep].body}</p>
-            </div>
 
-            <div className="evidence-grid">
-              <div><h4>Controls</h4><ul>{active.controls.map((item) => <li key={item}>{item}</li>)}</ul></div>
-              <div><h4>Proof</h4><ul>{active.proof.map((item) => <li key={item}>{item}</li>)}</ul></div>
-            </div>
+              <div className="evidence-grid">
+                <div><h4>Controls</h4><ul>{active.controls.map((item) => <li key={item}>{item}</li>)}</ul></div>
+                <div><h4>Proof</h4><ul>{active.proof.map((item) => <li key={item}>{item}</li>)}</ul></div>
+              </div>
 
-            <div className="technology-line"><span>Technology</span>{active.stack.join("  ·  ")}</div>
+              <div className="technology-line"><span>Technology</span>{active.stack.join("  ·  ")}</div>
+            </details>
           </article>
         </div>
         <p className="truth-note">{flagshipNote}</p>

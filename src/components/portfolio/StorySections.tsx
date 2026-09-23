@@ -5,7 +5,6 @@ import { experience } from "@/data/experience";
 import { novels } from "@/data/novels";
 import { withBasePath } from "@/lib/basePath";
 import { ArrowIcon, ExternalIcon } from "./icons";
-import SystemExplorer from "./SystemExplorer";
 
 const method = about.keywords;
 
@@ -31,10 +30,10 @@ const featuredBooks = novels.filter((novel) => novel.coverKey && coverByKey[nove
 export default function StorySections() {
   return (
     <>
-      <section className="technical section-rule" aria-labelledby="technical-title">
+      <section className="technical section-rule" id="systems" aria-labelledby="technical-title">
         <div className="shell section-pad technical-layout">
           <div>
-            <p className="section-index">04 / White archive</p>
+            <p className="section-index">REFERENCE / STACK</p>
             <h2 id="technical-title">Tools, technologies, and systems I work with.</h2>
           </div>
           <p>A focused view of the stack I use across product, infrastructure, data, and applied AI.</p>
@@ -49,7 +48,7 @@ export default function StorySections() {
       <section className="experience section-rule" id="experience">
         <div className="shell section-pad">
           <div className="section-intro">
-            <div><p className="section-index">05 / Experience</p><h2>Work history with the evidence left in.</h2></div>
+            <div><p className="section-index">REFERENCE / EXPERIENCE</p><h2>Work history with the evidence left in.</h2></div>
             <p>A selective view of the roles that shaped how I work across customers, data, product, and production systems.</p>
           </div>
           <div className="timeline">
@@ -70,12 +69,10 @@ export default function StorySections() {
         </div>
       </section>
 
-      <SystemExplorer />
-
       <section className="method section-rule" id="method">
         <div className="shell section-pad method-layout">
           <div className="method-heading">
-            <p className="section-index">06 / How I work</p>
+            <p className="section-index">REFERENCE / METHOD</p>
             <h2>One repeatable way to ship.</h2>
           </div>
           <div className="method-steps">
@@ -90,10 +87,10 @@ export default function StorySections() {
         </div>
       </section>
 
-      <section className="lab section-rule" aria-labelledby="lab-title">
+      <section className="lab section-rule" id="lab" aria-labelledby="lab-title">
         <div className="shell section-pad lab-layout">
           <div>
-            <p className="section-index">05 / Lab</p>
+            <p className="section-index">REFERENCE / LAB</p>
             <h2 id="lab-title">Experiments and what&apos;s next.</h2>
           </div>
           <p className="lab-copy">A living view of the systems, evaluation patterns, and deployment ideas I am actively testing.</p>
@@ -112,7 +109,7 @@ export default function StorySections() {
       <section className="writing section-rule" id="writing">
         <div className="shell section-pad writing-layout">
           <div className="writing-heading">
-            <p className="section-index">06 / Writing</p>
+            <p className="section-index">REFERENCE / WRITING</p>
             <h2>Asta Books</h2>
             <p>Software is how I build systems. Fiction is how I study people, incentives, and ambiguity.</p>
           </div>
@@ -137,7 +134,7 @@ export default function StorySections() {
 
       <section className="about section-rule" id="about">
         <div className="shell section-pad about-layout">
-          <div><p className="section-index">08 / About</p><h2>Same curiosity. Bigger problems.</h2></div>
+          <div><p className="section-index">REFERENCE / ABOUT</p><h2>Same curiosity. Bigger problems.</h2></div>
           <div className="about-copy">
             <p>{about.paragraphs[0]}</p>
             <p>{about.paragraphs[1]}</p>
@@ -149,7 +146,7 @@ export default function StorySections() {
       <section className="contact section-rule" id="contact">
         <div className="shell contact-layout">
           <div>
-            <p className="section-index">09 / Contact</p>
+            <p className="section-index">REFERENCE / CONTACT</p>
             <h2>Let&apos;s build something difficult.</h2>
             <p>I&apos;m interested in forward-deployed, product engineering, applied AI, and technical integration work.</p>
           </div>
