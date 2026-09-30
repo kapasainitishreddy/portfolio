@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skills — Vantage AI</title>
+  <meta name="description" content="Six-axis radar chart with per-vertex hover highlighting." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23c6ff3d'/><text x='32' y='42' font-size='34' text-anchor='middle' font-family='monospace' font-weight='700' fill='%23050816'>V</text></svg>" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="../index.html"><span class="brand-mark">V</span><span>VANTAGE&nbsp;AI</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="timeline.html">Timeline</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <span class="theme-label">Light mode</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div class="section-head">
+        <span class="eyebrow">Page 03 · Skills radar</span>
+        <h1>Hover any vertex to <span class="accent">isolate it</span>.</h1>
+        <p class="lead">This is the fix for the original 4/5 review: each vertex is drawn AFTER the polygon in the SVG and wrapped in a larger transparent hit-area, so the front-end dot stays visually distinct on hover even when overlapping with the back-end polygons.</p>
+      </div>
+
+      <div class="grid grid-2 reveal">
+        <div class="radar-wrap">
+          <svg id="radar-svg" class="radar-svg" aria-label="Skills radar chart" data-skills='[{"name":"Frontend","value":92},{"name":"Backend","value":78},{"name":"Data viz","value":88},{"name":"Animation","value":84},{"name":"AI tooling","value":90},{"name":"DevOps","value":70}]'></svg>
+        </div>
+        <div>
+          <h2 style="margin-bottom:1rem">Reading the chart</h2>
+          <p style="margin-bottom:1rem">Vertices sit on a 0–100 scale relative to where I am comfortable shipping production work, not personal bests.</p>
+          <ul style="list-style:none; display:grid; gap:0.6rem; color:var(--fg-1); font-size:0.95rem">
+            <li><strong style="color:var(--fg-0)">Frontend · 92</strong> — TypeScript, React/Next, accessibility, motion.</li>
+            <li><strong style="color:var(--fg-0)">Backend · 78</strong> — Node, Python services, REST + streaming APIs.</li>
+            <li><strong style="color:var(--fg-0)">Data viz · 88</strong> — D3, observable plot, custom SVG (this chart included).</li>
+            <li><strong style="color:var(--fg-0)">Animation · 84</strong> — CSS motion, WAAPI, requestAnimationFrame choreography.</li>
+            <li><strong style="color:var(--fg-0)">AI tooling · 90</strong> — Prompt engineering, eval harnesses, MCP server design.</li>
+            <li><strong style="color:var(--fg-0)">DevOps · 70</strong> — Docker, GH Actions, Netlify/Vercel, basic k8s.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Vantage AI · Skills radar.</span>
+      <span><a href="../index.html">← Home</a></span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

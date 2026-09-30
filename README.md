@@ -169,6 +169,13 @@ Analytics are **disabled by default**. The `NEXT_PUBLIC_ENABLE_ANALYTICS` flag i
 See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for step-by-step Vercel and Netlify
 instructions.
 
+## Vantage AI — static demo
+
+[`vantage-ai/`](./vantage-ai/) is a self-contained static site living alongside the
+Next.js app: six pages, custom cursor, light/dark mode, 3D cards, scroll animations,
+radar chart, and a working contact form. Pure HTML/CSS/JS — open it directly or
+serve it with any static host. See [`vantage-ai/README.md`](./vantage-ai/README.md).
+
 ## License
 
 Personal portfolio. Content © Sai Nitish Reddy Kapa. Code is free to learn from.
