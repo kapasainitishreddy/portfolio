@@ -14,7 +14,7 @@ test("portfolio has no personal-photo assets or references", () => {
   assert.doesNotMatch(source, /portrait|profile\.webp|headshot|avatar/i);
 });
 
-test("homepage is the editorial portfolio, not docs or 3D UI", () => {
+test("homepage is the retro recruiter portfolio, not docs or 3D UI", () => {
   const page = read("src/app/page.tsx");
   const portfolio = read("src/components/portfolio/PortfolioV4.tsx");
   const css = read("src/app/portfolio-v4.css");
@@ -49,4 +49,23 @@ test("responsive and reduced-motion guards are present", () => {
   assert.match(css, /max-width: 720px/);
   assert.match(css, /overflow-x: hidden/);
   assert.match(css, /focus-visible/);
+});
+
+test("Windows 98 shell offers genuine navigation and accessible case files", () => {
+  const source = read("src/components/portfolio/PortfolioV4.tsx");
+  const css = read("src/app/portfolio-v4.css");
+  assert.match(source, /retro-desktop-shortcuts/);
+  assert.match(source, /<details className="retro-start-menu">/);
+  assert.match(source, /<details className="retro-case-details">/);
+  assert.match(source, /project\.problem/);
+  assert.match(source, /project\.whyNotEverything/);
+  assert.match(source, /withBasePath\(site\.resumeUrl\)/);
+  assert.match(css, /--retro-face: #c0c0c0/);
+  assert.match(css, /retro-window-caption/);
+  assert.match(css, /retro-marquee/);
+  assert.match(css, /retro-rainbow/);
+  assert.match(css, /retro-hit-counter/);
+  assert.match(css, /retro-start-panel/);
+  assert.match(css, /prefers-reduced-motion: reduce/);
+  assert.match(css, /\.portfolio-v4 :focus-visible/);
 });

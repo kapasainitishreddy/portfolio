@@ -31,6 +31,11 @@ export default function PortfolioV4() {
       <a className="v4-skip" href="#main">Skip to content</a>
 
       <header className="v4-header">
+        <div className="retro-window-caption">
+          <span className="retro-win-icon" aria-hidden="true">▣</span>
+          <strong>NITISH.EXE - PERSONAL PORTFOLIO</strong>
+          <span className="retro-caption-glyphs" aria-hidden="true">_ □ ×</span>
+        </div>
         <div className="v4-shell v4-header-inner">
           <a className="v4-brand" href="#home" aria-label="Sai Nitish portfolio home">
             <span className="v4-brand-mark">SN</span>
@@ -54,8 +59,30 @@ export default function PortfolioV4() {
         </div>
       </header>
 
+      <div className="retro-marquee-bar">
+        <span className="sr-only">Welcome to my engineering portfolio. Explore selected projects, experience, and my résumé.</span>
+        <div className="retro-marquee-track" aria-hidden="true">
+          <span>★ WELCOME TO MY CORNER OF THE INTERNET ★ FORWARD DEPLOYED ENGINEERING ★ AI SYSTEMS ★ WRITING ★</span>
+          <span>★ WELCOME TO MY CORNER OF THE INTERNET ★ FORWARD DEPLOYED ENGINEERING ★ AI SYSTEMS ★ WRITING ★</span>
+        </div>
+      </div>
+
+      <nav className="retro-desktop-shortcuts" aria-label="Desktop shortcuts">
+        <a href="#work"><span aria-hidden="true">▤</span>MY WORK</a>
+        <a href="#experience"><span aria-hidden="true">▣</span>EXPERIENCE</a>
+        <a href="#systems"><span aria-hidden="true">⌘</span>SKILLS</a>
+        <a href="#writing"><span aria-hidden="true">✎</span>WRITING</a>
+        <a href={withBasePath(site.resumeUrl)}><span aria-hidden="true">▧</span>RESUME.PDF</a>
+        <a href="#contact"><span aria-hidden="true">✉</span>CONTACT</a>
+      </nav>
+
       <main id="main">
         <section className="v4-shell v4-hero" id="home">
+          <div className="retro-hero-titlebar">
+            <span aria-hidden="true">▣</span>
+            <strong>WELCOME.EXE</strong>
+            <span className="retro-chrome-buttons" aria-hidden="true">_ □ ×</span>
+          </div>
           <div className="v4-hero-copy">
             <p className="v4-eyebrow">{site.name} · United States</p>
             <h1>
@@ -63,9 +90,15 @@ export default function PortfolioV4() {
               <em>with heart of writer.</em>
             </h1>
             <p className="v4-hero-lede">{hero.supporting}</p>
+            <p className="retro-intro-status"><span aria-hidden="true">●</span> {hero.status}</p>
             <div className="v4-hero-actions">
               <a className="v4-pill v4-pill-blue" href="#work">See selected work</a>
               <a className="v4-link-arrow" href={withBasePath(site.resumeUrl)}>Open résumé <span>↗</span></a>
+            </div>
+            <div className="retro-hit-counter">
+              <span>CASE FILES</span>
+              <strong>{String(flagshipCaseStudies.length).padStart(7, "0")}</strong>
+              <small>NO FAKE COUNTERS. REAL WORK.</small>
             </div>
           </div>
 
@@ -125,6 +158,19 @@ export default function PortfolioV4() {
                   </div>
 
                   <div className="v4-stack-line">{project.stack.join(" · ")}</div>
+                  <details className="retro-case-details">
+                    <summary>OPEN FULL CASE FILE <span aria-hidden="true">▸</span></summary>
+                    <div className="retro-case-body">
+                      <h4>THE PROBLEM</h4>
+                      <p>{project.problem}</p>
+                      <h4>DISCOVERY</h4>
+                      <p>{project.discovery}</p>
+                      <h4>SAFEGUARDS</h4>
+                      <ul>{project.controls.map((control) => <li key={control}>{control}</li>)}</ul>
+                      <h4>WHY NOT AUTOMATE EVERYTHING?</h4>
+                      <p>{project.whyNotEverything}</p>
+                    </div>
+                  </details>
                 </article>
               ))}
             </div>
@@ -263,6 +309,25 @@ export default function PortfolioV4() {
           <span>© 2026</span>
         </div>
       </footer>
+
+      <nav className="retro-taskbar" aria-label="Desktop taskbar">
+        <details className="retro-start-menu">
+          <summary className="retro-start-button">▦ START</summary>
+          <div className="retro-start-panel">
+            <strong>SAI NITISH 98</strong>
+            <a href="#home">⌂ Home</a>
+            <a href="#work">▤ Selected work</a>
+            <a href="#experience">▣ Experience</a>
+            <a href="#systems">⌘ Systems</a>
+            <a href="#writing">✎ Writing</a>
+            <a href="#contact">✉ Contact</a>
+            <a href={withBasePath(site.resumeUrl)}>▧ Open résumé</a>
+          </div>
+        </details>
+        <a className="retro-task-button" href="#home">▣ PORTFOLIO.EXE</a>
+        <a className="retro-task-button" href={withBasePath(site.resumeUrl)}>▤ RESUME.PDF</a>
+        <span className="retro-task-clock">2026 <span aria-hidden="true">◆</span></span>
+      </nav>
     </div>
   );
 }
