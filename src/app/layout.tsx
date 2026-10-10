@@ -7,7 +7,7 @@ const siteBase = site.url.replace(/\/$/, "");
 const siteOrigin = new URL(site.url).origin;
 
 export const viewport: Viewport = {
-  themeColor: "#050505",
+  themeColor: "#c0c0c0",
   width: "device-width",
   initialScale: 1,
 };
