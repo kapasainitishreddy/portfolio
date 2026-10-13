@@ -43,6 +43,15 @@ test("GitHub Pages static export remains configured", () => {
   assert.match(workflow, /upload-pages-artifact/);
 });
 
+test("serverful build includes baseline security headers", () => {
+  const config = read("next.config.mjs");
+  assert.match(config, /Content-Security-Policy/);
+  assert.match(config, /Strict-Transport-Security/);
+  assert.match(config, /X-Content-Type-Options/);
+  assert.match(config, /Referrer-Policy/);
+  assert.match(config, /Permissions-Policy/);
+});
+
 test("responsive and reduced-motion guards are present", () => {
   const css = read("src/app/globals.css") + read("src/app/portfolio-v4.css");
   assert.match(css, /prefers-reduced-motion: reduce/);
@@ -68,4 +77,14 @@ test("Windows 98 shell offers genuine navigation and accessible case files", () 
   assert.match(css, /retro-start-panel/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /\.portfolio-v4 :focus-visible/);
+});
+
+test("legal pages match static portfolio data handling", () => {
+  const privacy = read("src/app/privacy/page.tsx");
+  const terms = read("src/app/terms/page.tsx");
+  assert.match(privacy, /does not use visitor accounts/i);
+  assert.match(privacy, /does not set non-essential cookies/i);
+  assert.match(terms, /Draft — pending legal review/);
+  assert.match(terms, /As-is disclaimer/);
+  assert.match(terms, /\[GOVERNING LAW PLACEHOLDER\]/);
 });

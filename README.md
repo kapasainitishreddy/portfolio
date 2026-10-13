@@ -20,8 +20,8 @@ custom GLSL ink engine running on React Three Fiber.
 - **Editable from data files** — all copy, projects, skills, experience and links
   live in `src/data`.
 - **Production ready** — SEO + Open Graph + JSON-LD structured data, generated
-  favicon and social image, sitemap, robots, a contact API with spam protection,
-  a dispersed-ink 404 page, and error boundaries.
+  favicon and social image, sitemap, robots, legal pages, a dispersed-ink 404 page,
+  and error boundaries.
 
 ## Themes
 
@@ -79,7 +79,6 @@ Node 18.18+ (Node 20 or 22 recommended).
 ```
 src/
 ├── app/                  # routes, metadata, sitemap, robots, icon, og image, 404
-│   ├── api/contact/      # contact form endpoint (spam-protected)
 │   ├── layout.tsx        # fonts, SEO, structured data, providers
 │   ├── page.tsx          # the homepage (assembles all sections)
 │   ├── not-found.tsx     # dispersed-ink 404
@@ -90,7 +89,6 @@ src/
 │   ├── sections/         # hero, about, skills, projects, building, experience…
 │   ├── skills/           # interactive skills network graph
 │   ├── projects/         # cards, case-study modal, generated placeholders
-│   └── contact/          # contact form
 ├── data/                 # ← EDIT EVERYTHING HERE
 │   ├── site.ts           # name, links, nav, hero/about/principles/contact copy
 │   ├── projects.ts       # project case studies + filter tags
@@ -136,21 +134,6 @@ Both are generated from the initials "SK" in `src/app/icon.tsx` and
 `src/app/opengraph-image.tsx`. Edit those files (colors, text) to restyle them, or
 replace with static files (`app/icon.png`, `app/opengraph-image.png`).
 
-## Contact form
-
-The form works out of the box: with no configuration it validates input and logs
-submissions on the server. To deliver messages by email, add a free
-[Resend](https://resend.com) API key to `.env.local`:
-
-```
-RESEND_API_KEY=re_xxxxxxxx
-CONTACT_FROM_EMAIL=portfolio@yourdomain.com
-CONTACT_TO_EMAIL=kapasainitishreddy@gmail.com
-```
-
-Spam protection uses a hidden honeypot field plus a submit-timing check. No
-third-party scripts are loaded.
-
 ## Accessibility & motion
 
 - A wave icon in the navigation opens an **ink control**: a slider to set ink
@@ -159,10 +142,10 @@ third-party scripts are loaded.
   scroll/loader animations automatically.
 - All interactive elements are keyboard reachable with visible focus rings.
 
-## Analytics
+## Privacy note
 
-Analytics are **disabled by default**. The `NEXT_PUBLIC_ENABLE_ANALYTICS` flag in
-`.env.example` is reserved for opt-in use; nothing tracks visitors out of the box.
+The current portfolio is static and does not include visitor accounts, analytics
+scripts, or contact-form collection.
 
 ## Deployment
 
