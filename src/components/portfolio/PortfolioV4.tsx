@@ -1,4 +1,5 @@
 import Image from "next/image";
+import DesktopCat from "@/components/portfolio/DesktopCat";
 import { about, hero, site, socials } from "@/data/site";
 import { experience } from "@/data/experience";
 import { flagshipCaseStudies } from "@/data/flagshipCaseStudies";
@@ -309,6 +310,8 @@ export default function PortfolioV4() {
           <span>© 2026</span>
         </div>
       </footer>
+
+      <DesktopCat />
 
       <nav className="retro-taskbar" aria-label="Desktop taskbar">
         <details className="retro-start-menu">
