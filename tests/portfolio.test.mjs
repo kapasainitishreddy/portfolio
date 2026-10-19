@@ -69,3 +69,17 @@ test("Windows 98 shell offers genuine navigation and accessible case files", () 
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /\.portfolio-v4 :focus-visible/);
 });
+
+
+test("desktop kitten is a lightweight and optional local video", () => {
+  const source = read("src/components/portfolio/DesktopCat.tsx");
+  const page = read("src/components/portfolio/PortfolioV4.tsx");
+  assert.match(page, /<DesktopCat \/>/);
+  assert.match(source, /withBasePath\("\/media\/desktop-kitten\.mp4"\)/);
+  assert.match(source, /desktop-kitten-poster\.webp/);
+  assert.match(source, /prefers-reduced-motion: reduce/);
+  assert.match(source, /Minimize desktop kitten/);
+  assert.match(source, /Play kitten animation/);
+  assert.ok(fs.statSync("public/media/desktop-kitten.mp4").size < 100_000);
+  assert.ok(fs.statSync("public/media/desktop-kitten-poster.webp").size < 20_000);
+});

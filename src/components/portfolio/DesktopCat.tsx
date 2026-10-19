@@ -37,12 +37,14 @@ export default function DesktopCat() {
     const video = videoRef.current;
     if (!video || !open || reducedMotion) {
       video?.pause();
+      setPlaying(false);
       return;
     }
     let active = true;
     const maybePlay = () => {
       if (document.hidden) {
         video.pause();
+        setPlaying(false);
         return;
       }
       video.play().then(() => {
@@ -119,7 +121,7 @@ export default function DesktopCat() {
           aria-label="Minimize desktop kitten" title="Minimize">_</button>
       </div>
       <div className="retro-cat-screen">
-        <video ref={videoRef} muted playsInline loop preload="metadata" width={320} height={180}
+        <video ref={videoRef} muted playsInline loop preload="metadata" poster={withBasePath("/media/desktop-kitten-poster.webp")} width={320} height={180}
           aria-label="A fluffy white kitten with blue eyes and a blue bow blinks, meows, plays, and falls asleep">
           <source src={withBasePath("/media/desktop-kitten.mp4")} type="video/mp4" />
           Animated kitten video.
